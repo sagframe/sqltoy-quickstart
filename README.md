@@ -11,7 +11,8 @@
 ## 3. 配置application.yml
 ## 4. 编写springboot 主程序,注意@ComponentScan配置
 ## 5. 初始化数据库
-## 6. 利用quickvo生产VO(或POJO),在出问题时关注schema配置,其他问题请参见quickvo.xml中的注释
+## 6. 利用quickvo生产VO(或POJO)
+* 在出问题时关注dataSource中的schema配置,其他问题请参见quickvo.xml中的注释
 
 ## 1. 请参见pom.xml 引入sqltoy,注意版本号使用最新版本
 
