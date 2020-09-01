@@ -17,57 +17,57 @@
 ## 1. 请参见pom.xml 引入sqltoy,注意版本号使用最新版本
 
 ```xml
-    <dependency>
-		<groupId>com.sagframe</groupId>
-		<artifactId>sagacity-sqltoy-starter</artifactId>
-		<version>4.15.0</version>
-	</dependency>
+<dependency>
+	<groupId>com.sagframe</groupId>
+	<artifactId>sagacity-sqltoy-starter</artifactId>
+	<version>4.15.0</version>
+</dependency>
 ```
 
 ## 2. 注意pom中build的配置,否则导致 *.sql.xml文件无法编译到classes下面去
 * 核心配置:src/main/java 下面的<include>**/*.xml</include>
 
 ```xml
+<resource>
+	<directory>src/main/java</directory>
+		<excludes>
+			<exclude>**/*.java</exclude>
+		</excludes>
+		<includes>
+			<include>**/*.xml</include>
+		</includes>
+	</resource>
 	<resource>
-			<directory>src/main/java</directory>
-			<excludes>
-				<exclude>**/*.java</exclude>
-			</excludes>
-			<includes>
-				<include>**/*.xml</include>
-			</includes>
-		</resource>
-		<resource>
-			<directory>src/main/resources</directory>
-			<includes>
-				<include>**/*.xml</include>
-				<include>**/*.properties</include>
-				<include>**/*.yml</include>
-				<include>**/*.sql</include>
-				<include>**/*.jpg</include>
-			</includes>
-		</resource>
-	</resources>
-	<testResources>
-		<testResource>
-			<directory>src/test/java</directory>
-			<excludes>
-				<exclude>**/*.java</exclude>
-			</excludes>
-			<includes>
-				<include>**/*.xml</include>
-			</includes>
-		</testResource>
-		<testResource>
-			<directory>src/test/resources</directory>
-			<includes>
-				<include>**/*.xml</include>
-				<include>**/*.properties</include>
-				<include>**/*.yml</include>
-				<include>**/*.sql</include>
-			</includes>
-		</testResource>
-	</testResources>
+		<directory>src/main/resources</directory>
+		<includes>
+			<include>**/*.xml</include>
+			<include>**/*.properties</include>
+			<include>**/*.yml</include>
+			<include>**/*.sql</include>
+			<include>**/*.jpg</include>
+		</includes>
+	</resource>
+</resources>
+<testResources>
+	<testResource>
+		<directory>src/test/java</directory>
+		<excludes>
+			<exclude>**/*.java</exclude>
+		</excludes>
+		<includes>
+			<include>**/*.xml</include>
+		</includes>
+	</testResource>
+	<testResource>
+		<directory>src/test/resources</directory>
+		<includes>
+			<include>**/*.xml</include>
+			<include>**/*.properties</include>
+			<include>**/*.yml</include>
+			<include>**/*.sql</include>
+		</includes>
+	</testResource>
+</testResources>
 ```
 
 ##  3. application.yml配置
@@ -235,9 +235,3 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 ## 为什么要将*.sql.xml 放在java路径下?
 * sqltoy推荐大家项目按照业务划分先分模块(消息中心、系统管理、订单管理等)后分层(web层、service)，sql文件放于模块中便于模块整体迁移和产品化，同时有利于开发过程，让开发者不需要不断的切换目录
 * 当然这个是sqltoy推荐做法，开发者则可以根据自身实际情况而定,并非强制!
-
-
-
-
-
-
