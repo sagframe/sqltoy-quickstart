@@ -105,10 +105,15 @@ public class StaffInfoServiceTest {
 	public void testDelete() {
 		sqlToyCRUDService.delete(new StaffInfoVO("S2007"));
 	}
-	
+
 	@Test
 	public void testLoad() {
-		StaffInfoVO staff=sqlToyCRUDService.load(new StaffInfoVO("S2007"));
+		StaffInfoVO staff = sqlToyCRUDService.load(new StaffInfoVO("S2007"));
+	}
+
+	@Test
+	public void testLoadByIds() {
+		List<StaffInfoVO> staffInfos = sqlToyCRUDService.loadByIds(StaffInfoVO.class, "S2007", "S0001");
 	}
 
 	@Test

@@ -117,6 +117,27 @@ public class JavaCodeSqlCaseTest {
 
 	}
 
+	@Test
+	public void findPage() {
+		// 在代码中实现单表查询
+		// 1、可指定特定字段
+		// 2、提供了分页和非分页两种
+		// 3、可以排序
+		// 4、可以进行缓存翻译
+		// 5、可以做分页优化
+		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new PaginationModel(),
+				// select 指定字段
+				EntityQuery.create().select("staffId", "staffCode", "staffName", "organId", "sexType")
+						// 支持动态条件
+						.where("STATUS=1 #[and STAFF_NAME like :staffName]").orderByDesc("entryDate")
+						.values(new StaffInfoVO().setStaffName("陈")).filters(new ParamsFilter("staffName").rlike())
+						// 支持缓存翻译
+						.translates(new Translate("organIdName").setKeyColumn("organId").setColumn("organName"))
+						// 支持分页优化
+						.pageOptimize(new PageOptimize().aliveSeconds(120)));
+
+	}
+
 	// 演示了查询条件处理中的primary首要条件处理，当这个条件参数不为空，其他参数都为空
 	// 当指定orderId 对应的值时生效
 	@Test
