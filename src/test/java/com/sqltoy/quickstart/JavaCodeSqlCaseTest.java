@@ -126,8 +126,13 @@ public class JavaCodeSqlCaseTest {
 		// 4、可以进行缓存翻译
 		// 5、可以做分页优化
 		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new PaginationModel(),
-				// select 指定字段
-				EntityQuery.create().select("staffId", "staffCode", "staffName", "organId", "sexType")
+				// 支持三种方式指定字段:
+			    //1、用一个字符串写多个字段
+				// EntityQuery.create().select("staffId,staffCode, staffName, organId, sexType")、
+			    //2、按数组形式提供字段
+				// EntityQuery.create().select("staffId", "staffCode", "staffName", "organId","sexType")
+				//3、采用链式模式提供字段
+				EntityQuery.create().select(StaffInfoVO.select().staffId().staffCode().staffName().organId().sexType())
 						// 支持动态条件
 						.where("STATUS=1 #[and STAFF_NAME like :staffName]").orderByDesc("entryDate")
 						.values(new StaffInfoVO().setStaffName("陈")).filters(new ParamsFilter("staffName").rlike())
@@ -135,6 +140,10 @@ public class JavaCodeSqlCaseTest {
 						.translates(new Translate("organIdName").setKeyColumn("organId").setColumn("organName"))
 						// 支持分页优化
 						.pageOptimize(new PageOptimize().aliveSeconds(120)));
+
+		for (StaffInfoVO staff : result.getRows()) {
+			System.err.println(JSON.toJSONString(staff));
+		}
 
 	}
 
