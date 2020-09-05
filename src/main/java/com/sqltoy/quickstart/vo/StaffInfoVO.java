@@ -100,6 +100,13 @@ public class StaffInfoVO extends AbstractStaffInfoVO {
 		return super.toString();
 	}
 	
+    /**
+	 * @TODO create entityQuery fields
+	 */
+	public static SelectFieldsImpl select() {
+		return new SelectFieldsImpl();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
