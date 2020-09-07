@@ -30,4 +30,16 @@ public interface StaffInfoService {
 	public void updateLockStaff(String id, String address);
 
 	public List<StaffInfoVO> callStore();
+
+	/**
+	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录修改
+	 * @return
+	 */
+	public Long updateByQuery();
+
+	/**
+	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录删除
+	 * @return
+	 */
+	public Long deleteByQuery();
 }
