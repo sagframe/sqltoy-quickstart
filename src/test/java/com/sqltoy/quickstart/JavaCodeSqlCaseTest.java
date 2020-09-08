@@ -136,11 +136,14 @@ public class JavaCodeSqlCaseTest {
 				// 3、采用链式模式提供字段
 				EntityQuery.create().select(StaffInfoVO.select().staffId().staffCode().staffName().organId().sexType())
 						// 支持动态条件
-						.where("#[STATUS=?] #[and STAFF_NAME like ?]").orderByDesc("entryDate").values(1, "")
+						.where("#[STATUS=?] #[and STAFF_NAME like ?]").orderByDesc("entryDate").values(1, "陈")
 						// 支持缓存翻译
 						.translates(new Translate("organIdName").setKeyColumn("organId").setColumn("organName"))
 						// 支持分页优化
-						.pageOptimize(new PageOptimize().aliveSeconds(120)));
+						.pageOptimize(new PageOptimize().aliveSeconds(120))
+						//开关空白转null
+						//.blankNotNull()
+						);
 
 		for (StaffInfoVO staff : result.getRows()) {
 			System.err.println(JSON.toJSONString(staff));
