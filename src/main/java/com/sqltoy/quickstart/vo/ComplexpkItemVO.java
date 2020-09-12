@@ -66,13 +66,6 @@ public class ComplexpkItemVO extends AbstractComplexpkItemVO {
 		return super.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
 	/*
 	 * (non-Javadoc)
 	 * 

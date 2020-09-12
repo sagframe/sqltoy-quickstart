@@ -455,6 +455,13 @@ public abstract class AbstractDeviceOrderVO implements Serializable,
 		return columnsBuffer.toString();
 	}
 	
+	/**
+	 * @TODO create entityQuery fields
+	 */
+	public static SelectFieldsImpl select() {
+		return new SelectFieldsImpl();
+	}
+	
 	public static class SelectFieldsImpl extends SelectFields {
 		private List<String> fields = new ArrayList<String>();
 

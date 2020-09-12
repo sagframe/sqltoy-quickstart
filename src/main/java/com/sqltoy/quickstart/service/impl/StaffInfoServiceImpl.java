@@ -12,6 +12,8 @@ import org.sagacity.sqltoy.callback.UpdateRowHandler;
 import org.sagacity.sqltoy.config.model.Translate;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.executor.QueryExecutor;
+import org.sagacity.sqltoy.model.EntityQuery;
+import org.sagacity.sqltoy.model.EntityUpdate;
 import org.sagacity.sqltoy.model.PaginationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,6 @@ import com.sqltoy.quickstart.service.StaffInfoService;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
- * 
  * @project sqltoy-quickstart
  * @description 演示
  * @author zhongxuchen
@@ -77,8 +78,26 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 
 	@Transactional
 	public List<StaffInfoVO> callStore() {
-		return sqlToyLazyDao.executeStore("{call sp_showcase(?,?)}", new Object[] { 1,null }, null, StaffInfoVO.class)
+		return sqlToyLazyDao.executeStore("{call sp_showcase(?,?)}", new Object[] { 1, null }, null, StaffInfoVO.class)
 				.getRows();
 	}
 
+	/**
+	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录修改
+	 * @return
+	 */
+	@Transactional
+	public Long updateByQuery() {
+		return sqlToyLazyDao.updateByQuery(StaffInfoVO.class,
+				EntityUpdate.create().set("updateTime", LocalDateTime.now()).where("staffName like ?").values("张"));
+	}
+
+	/**
+	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录删除
+	 * @return
+	 */
+	@Transactional
+	public Long deleteByQuery() {
+		return sqlToyLazyDao.deleteByQuery(StaffInfoVO.class, EntityQuery.create().where("status=?").values(0));
+	}
 }

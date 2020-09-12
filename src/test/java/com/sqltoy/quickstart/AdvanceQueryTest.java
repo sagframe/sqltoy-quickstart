@@ -6,6 +6,7 @@ package com.sqltoy.quickstart;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
@@ -80,6 +81,19 @@ public class AdvanceQueryTest {
 		// 第二次调用:条件一致，不执行count查询
 		result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
 		System.err.println(JSON.toJSONString(result));
+	}
+
+	@Test
+	public void findPageByMap() {
+		PaginationModel pageModel = new PaginationModel();
+		String sql = "select t.*\r\n" + "			           from sqltoy_staff_info t\r\n"
+				+ "			           where t.STATUS=1 ";
+		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, sql, Maps.newHashMap("pageNo", 1),
+				StaffInfoVO.class);
+		result.getRows().forEach((staff) -> {
+			System.err.println(JSON.toJSONString(staff));
+		});
+
 	}
 
 	/**
