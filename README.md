@@ -3,12 +3,14 @@
 
 # 小提示
 * quickstart只演示了部分功能,核心是让大家快速上手，详细功能参见文档
-*    理论上来sqltoy可以解决您项目上全部数据库交互，我们的erp、数据平台、电商平台已经验证了这一点
+* 理论上来sqltoy可以解决您项目上全部数据库交互，我们的erp、数据平台、电商平台已经验证了这一点
 
 # 学习步骤
 ## 1. 配置pom引入sqltoy的依赖
 ## 2. 配置正确pom build避免sql文件无法编译到classes下面
-## 3. 配置application.yml
+## 3. 配置application.yml，最好sqltoy部分直接copy
+* 1、很多spring.sqltoy 开头写成了sqltoy
+* 2、很多classpath拼错了
 ## 4. 编写springboot 主程序,注意@ComponentScan配置
 ## 5. 初始化数据库
 ## 6. 利用quickvo生产VO(或POJO)
@@ -20,7 +22,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.15.0</version>
+	<version>4.15.7</version>
 </dependency>
 ```
 
@@ -81,6 +83,8 @@ spring:
         sqlResourcesDir: classpath:com/sqltoy/quickstart
         # 默认值为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
+		# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填Trim只开通单个函数模式
+        #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
         # 提供统一字段:createBy createTime updateBy updateTime 等字段补漏性(为空时)赋值(可选配置)
@@ -91,7 +95,7 @@ spring:
         #reservedWords: maxvalue,minvalue
 ```
 
-* 最简单配置
+* 最简单配置(注意:spring.sqltoy开头)
 
 ```
 #完整路径:spring.sqltoy
@@ -109,6 +113,8 @@ spring:
 spring.sqltoy.sqlResourcesDir=classpath:com/sqltoy/quickstart
 # 默认配置就是classpath:sqltoy-translate.xml,一致情况下无需配置
 spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
+# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填trim只开通单个函数模式
+#spring.sqltoy.functionConverts=default
 # 是否开启debug模式,在开发阶段建议为true,会打印sql
 spring.sqltoy.debug=true
 #项目中用到的数据库保留字定义,这里是举例，正常情况下不用定义
@@ -119,6 +125,7 @@ spring.sqltoy.unifyFieldsHandler=com.sqltoy.plugins.SqlToyUnifyFieldsHandler
 #spring.sqltoy.printSqlTimeoutMillis=200000
 ```
 ## 5. 编写项目主程序,参见:src/main/java 下面的SqlToyApplication
+
 ```java
 package com.sqltoy.quickstart;
 
@@ -193,6 +200,8 @@ jdbc.password=quickstart
 <property name="include.schema" value="false" />
 <!--set method 是否支持返回对象自身(默认是true),即: public VO setName(String name){this.name=name;return this;} -->
 <property name="field.support.linked.set" value="true" />
+<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为true,需要sqltoy4.15.4版本以上	-->
+<property name="generate.selectFields.class" value="true" />
 <!-- schema 对照关系:mysql 对应  db 名称; oracle 对应 用户名称;   -->
 <datasource name="quickstart" url="${db.url}"	driver="${db.driver_class}" schema="${db.schema}"
 <tasks dist="../../src/main/java" encoding="UTF-8">
