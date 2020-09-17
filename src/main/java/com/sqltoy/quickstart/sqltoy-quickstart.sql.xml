@@ -227,6 +227,6 @@
 		<translate cache="dictKeyName" columns="sexTypeName" cache-type="SEX_TYPE"/>
 		<translate cache="organIdName" columns="ORGAN_NAME"/>
 		<!-- 多个列合并,可以先翻译后合并 -->
-		<link sign="," column="STAFF_NAME,sexTypeName" id-column="ORGAN_ID"/>
+		<link id-column="ORGAN_ID" columns="STAFF_NAME,sexTypeName" sign="," />
 	</sql>
 </sqltoy>
