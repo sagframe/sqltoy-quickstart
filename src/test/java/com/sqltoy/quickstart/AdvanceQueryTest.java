@@ -84,6 +84,22 @@ public class AdvanceQueryTest {
 	}
 
 	@Test
+	public void findAllPage() {
+		PaginationModel pageModel = new PaginationModel();
+		pageModel.setPageNo(-1);
+		StaffInfoVO staffVO = new StaffInfoVO();
+		// 作为查询条件传参数
+		staffVO.setStaffName("陈");
+		// 使用了分页优化器
+		// 第一次调用:执行count 和 取记录两次查询
+		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
+		result.getRows().forEach((staff) -> {
+			System.err.println(JSON.toJSONString(staff));
+		});
+
+	}
+
+	@Test
 	public void findPageByMap() {
 		PaginationModel pageModel = new PaginationModel();
 		String sql = "select t.*\r\n" + "			           from sqltoy_staff_info t\r\n"
@@ -181,4 +197,14 @@ public class AdvanceQueryTest {
 			System.err.println(JSON.toJSONString(result.get(i)));
 		}
 	}
+	//
+
+	@Test
+	public void testLinkCase() throws InterruptedException {
+		List result = sqlToyLazyDao.findBySql("qstart_link_case", null);
+		for (int i = 0; i < result.size(); i++) {
+			System.err.println(JSON.toJSONString(result.get(i)));
+		}
+	}
+
 }

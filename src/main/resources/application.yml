@@ -43,5 +43,7 @@ spring:
         unifyFieldsHandler: com.sqltoy.plugins.SqlToyUnifyFieldsHandler
         # sql执行超过多长时间则进行日志输出,用于监控哪些慢sql(可选配置:默认30秒)
         printSqlTimeoutMillis: 300000
+        # 分页最大提取数据限制，默认10万
+        #pageFetchSizeLimit: 500000
         # 数据库保留字兼容处理(原则上不要使用数据库保留字,多个用逗号分隔)
         reservedWords: maxvalue,minvalue
