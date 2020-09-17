@@ -1,5 +1,6 @@
 package com.sqltoy.quickstart;
 
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,11 +109,26 @@ public class StaffInfoServiceTest {
 
 	@Test
 	public void testLoad() {
-		StaffInfoVO staff = sqlToyCRUDService.load(new StaffInfoVO("S2007"));
+		StaffInfoVO staffInfoVO = new StaffInfoVO() {
+			{
+				setStaffId("S2007");
+				setPost("S001");
+			}
+		};
+
+		System.err.println(JSON.toJSONString(Modifier.toString(staffInfoVO.getClass().getModifiers())));
+
+		System.err.println(JSON.toJSONString(Modifier.toString(new StaffInfoVO().getClass().getModifiers())));
+		System.err.println(JSON.toJSONString(Modifier.toString(2)));
+		System.err.println(JSON.toJSONString(Modifier.toString(3)));
+		System.err.println(JSON.toJSONString(Modifier.toString(4)));
+		// staffInfoVO.setStaffId("S2007").setPost("S001");
+		// StaffInfoVO staff = sqlToyCRUDService.load(staffInfoVO);
 	}
 
 	@Test
 	public void testLoadByIds() {
+
 		List<StaffInfoVO> staffInfos = sqlToyCRUDService.loadByIds(StaffInfoVO.class, "S2007", "S0001");
 	}
 

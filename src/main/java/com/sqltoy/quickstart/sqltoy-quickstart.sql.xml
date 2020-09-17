@@ -215,4 +215,19 @@
 			columns-to-rows="sale_count:销售量,sale_price:销售金额,total_amt:总销售额"
 			new-columns-labels="indexName,indexValue" />
 	</sql>
+	
+	<!-- 演示link操作,如果分页请用@fast() 取10条后再关联，最终会返回10条记录 -->
+	<sql id="qstart_link_case">
+		<value>
+			<![CDATA[
+				select t.ORGAN_ID ,t.ORGAN_ID ORGAN_NAME, t.STAFF_NAME , t.SEX_TYPE,t.SEX_TYPE sexTypeName from sqltoy_staff_info t
+				order by t.ORGAN_ID 
+			]]>
+		</value>
+		<!-- 多个列合并,可以先翻译后合并 -->
+		<link id-column="ORGAN_ID" columns="STAFF_NAME,sexTypeName" sign="," />
+		<translate cache="dictKeyName" columns="sexTypeName" cache-type="SEX_TYPE"/>
+		<translate cache="organIdName" columns="ORGAN_NAME"/>
+		
+	</sql>
 </sqltoy>
