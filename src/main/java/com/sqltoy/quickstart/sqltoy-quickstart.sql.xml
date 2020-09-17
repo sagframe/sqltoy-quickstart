@@ -216,7 +216,7 @@
 			new-columns-labels="indexName,indexValue" />
 	</sql>
 	
-	<!-- 演示link操作 -->
+	<!-- 演示link操作,如果分页请用@fast() 取10条后再关联，最终会返回10条记录 -->
 	<sql id="qstart_link_case">
 		<value>
 			<![CDATA[
