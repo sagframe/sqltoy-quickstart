@@ -206,5 +206,12 @@ public class AdvanceQueryTest {
 			System.err.println(JSON.toJSONString(result.get(i)));
 		}
 	}
-
+	
+	@Test
+	public void testLinkCaseSimple() throws InterruptedException {
+		List result = sqlToyLazyDao.findBySql("qstart_link_case_simple", null);
+		for (int i = 0; i < result.size(); i++) {
+			System.err.println(JSON.toJSONString(result.get(i)));
+		}
+	}
 }

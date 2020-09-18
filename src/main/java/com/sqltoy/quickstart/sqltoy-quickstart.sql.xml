@@ -229,4 +229,15 @@
 		<translate cache="dictKeyName" columns="sexTypeName" cache-type="SEX_TYPE"/>
 		<translate cache="organIdName" columns="ORGAN_NAME"/>
 	</sql>
+	
+	<sql id="qstart_link_case_simple">
+		<value>
+			<![CDATA[
+				select    concat('\'',t1.ORGAN_ID,' \'') organIds
+                from   sqltoy_ORGAN_info t1
+			]]>
+		</value>
+		<!-- 单列极端场景 -->
+		<link columns="organIds" sign="," />
+	</sql>
 </sqltoy>
