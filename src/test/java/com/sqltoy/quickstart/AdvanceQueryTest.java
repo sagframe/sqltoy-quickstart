@@ -226,9 +226,6 @@ public class AdvanceQueryTest {
 		paramValues = new Object[][] { { "BUYER", "SALER", "TRANS_DATE", "DELIVERY_TERM", "STAFF_ID" }, null,
 				{ "S0010", "S0009" }, { "2020-09-01", "2020-09-10", "2020-02-20" },
 				{ "2020-09-08", "2020-09-18", "2020-09-28" } };
-//		paramValues = new Object[][] { null, null,
-//				{ "S0010", "S0009" }, { "2020-09-01", "2020-09-10", "2020-02-20" },
-//				{ "2020-09-08", "2020-09-18", "2020-09-28" } };
 
 		List result = sqlToyLazyDao.findBySql("qstart_loop_sql", paramNames, paramValues);
 		for (int i = 0; i < result.size(); i++) {
