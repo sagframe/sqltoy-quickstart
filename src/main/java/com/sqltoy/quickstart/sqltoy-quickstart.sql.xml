@@ -272,7 +272,7 @@
 				from sqltoy_device_order t 
 				where #[t.ORDER_ID=:orderId]
 				  -- @blank(:param) 目的是迎合sqltoy #[] 中参数为null剔除的功能，当值不为null时@blank()被替代为空白字符串(当然也可以用@if来代替@blank)
-				  #[@blank(:staffIds) and (@loop(:staffIds," t.STAFF_ID=':staffIds[i]' "," or "))]
+				  #[@if(size(:staffIds)>0) and (@loop(:staffIds," t.STAFF_ID=':staffIds[i]' "," or ","1","100"))]
 				  #[@blank(:startDates) 
 				       and ( @loop(:startDates,
 				                     " t.TRANS_DATE between STR_TO_DATE(':startDates[i]','%Y-%m-%d') 
