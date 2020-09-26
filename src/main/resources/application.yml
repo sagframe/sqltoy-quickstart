@@ -27,14 +27,16 @@ spring:
          removeAbandoned: true
          removeAbandonedTimeout: 300
     sqltoy:
-        # 多个路径用逗号分隔
+        # 多个路径用逗号分隔(请务必看仔细)
         sqlResourcesDir: classpath:com/sqltoy/quickstart
         # 默认为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
-        # 打开注释即启用函数转换功能
+        # 跨数据库函数自适配功能,默认是关闭的
         #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
+        # 如果是单一类型数据库填写有利于减少一些判断(即排除类似于:mysql\oracle多种类型混用场景)
+        #dialect: mysql
         # 设置默认使用的datasource(可选配置)
         defaultDataSource: dataSource
         # 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultObtainDataSource是默认实现

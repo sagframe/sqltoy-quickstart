@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy http://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
+<sqltoy xmlns="https://www.sagframe.com/schema/sqltoy"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://www.sagframe.com/schema/sqltoy https://www.sagframe.com/schema/sqltoy/sqltoy.xsd">
 	<!-- -->
 	<!-- 演示分库 -->
 	<sql id="qstart_db_sharding_case">
@@ -176,6 +176,25 @@
 			reduce-one="true" relative-indexs="1,2" start-column="1"
 			format="#.00%" />
 	</sql>
+
+	<!-- 列与列高级环比演示 -->
+	<sql id="mysql_qstart_cols_relative_case">
+		<value>
+			<![CDATA[
+			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+			from sqltoy_fruit_order t
+			order by t.fruit_name ,t.order_month
+			]]>
+		</value>
+		<!-- 数据旋转,行转列,将order_month 按列显示，每个月份下面有三个指标 -->
+		<pivot start-column="sale_count" end-column="total_amt"
+			group-columns="fruit_name" category-columns="order_month" />
+		<!-- 列与列之间进行环比计算 -->
+		<cols-chain-relative group-size="3"
+			reduce-one="true" relative-indexs="1,2" start-column="1"
+			format="#.00%" />
+	</sql>
+
 	<!-- 行与行高级环比演示 -->
 	<sql id="qstart_rows_relative_case">
 		<value>
@@ -215,7 +234,7 @@
 			columns-to-rows="sale_count:销售量,sale_price:销售金额,total_amt:总销售额"
 			new-columns-labels="indexName,indexValue" />
 	</sql>
-	
+
 	<!-- 演示link操作,如果分页请用@fast() 取10条后再关联，最终会返回10条记录 -->
 	<sql id="qstart_link_case">
 		<value>
@@ -225,8 +244,41 @@
 			]]>
 		</value>
 		<!-- 多个列合并,可以先翻译后合并 -->
-		<link id-column="ORGAN_ID" columns="STAFF_NAME,sexTypeName" sign="," />
-		<translate cache="dictKeyName" columns="sexTypeName" cache-type="SEX_TYPE"/>
-		<translate cache="organIdName" columns="ORGAN_NAME"/>
+		<link id-column="ORGAN_ID" columns="STAFF_NAME,sexTypeName"
+			sign="," />
+		<translate cache="dictKeyName" columns="sexTypeName"
+			cache-type="SEX_TYPE" />
+		<translate cache="organIdName" columns="ORGAN_NAME" />
+	</sql>
+
+	<sql id="qstart_link_case_simple">
+		<value>
+			<![CDATA[
+				select    concat('\'',t1.ORGAN_ID,' \'') organIds
+                from   sqltoy_ORGAN_info t1
+			]]>
+		</value>
+		<!-- 单列极端场景 -->
+		<link columns="organIds" sign="," />
+	</sql>
+
+	<!-- 循环的格式分:@loop(:loopParam,loopContent) 和 @loop(:loopParam,loopContent,linkSign),为了确保loop内部切割准确，可以@loop(:loopParam," 
+		loopContent ","linkSign"),可以用双引号、单引号、花括号进行包裹 -->
+	<sql id="qstart_loop_sql">
+		<value>
+			<![CDATA[
+				select ORDER_ID
+				       @loop(:fields,",:fields[i]")
+				from sqltoy_device_order t 
+				where #[t.ORDER_ID=:orderId]
+				  -- @blank(:param) 目的是迎合sqltoy #[] 中参数为null剔除的功能，当值不为null时@blank()被替代为空白字符串(当然也可以用@if来代替@blank)
+				  #[@if(size(:staffIds)>0) and (@loop(:staffIds," t.STAFF_ID=':staffIds[i]' "," or ","1","100"))]
+				  #[@blank(:startDates) 
+				       and ( @loop(:startDates,
+				                     " t.TRANS_DATE between STR_TO_DATE(':startDates[i]','%Y-%m-%d') 
+				                       and STR_TO_DATE(':endDates[i]','%Y-%m-%d') " ,
+				                       " or "))]
+			]]>
+		</value>
 	</sql>
 </sqltoy>
