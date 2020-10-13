@@ -12,7 +12,7 @@ spring:
         # 如果是单一类型数据库填写有利于减少一些判断(即排除类似于:mysql\oracle多种类型混用场景)
         #dialect: mysql
         # 设置默认使用的datasource(可选配置)
-        defaultDataSource: dataSource
+        #defaultDataSource: dataSource
         # 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultObtainDataSource是默认实现
         #obtainDataSource: org.sagacity.sqltoy.plugins.datasource.impl.DefaultObtainDataSource
         # 提供统一字段:createBy createTime updateBy updateTime 等字段补漏性(为空时)赋值(可选配置)
