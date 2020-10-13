@@ -46,7 +46,7 @@ public class CascadeCaseTest {
 	public void testSaveCascade() {
 		// 主表记录
 		ComplexpkHeadVO head = new ComplexpkHeadVO();
-		head.setTransDate(LocalDate.parse("2020-08-06"));
+		head.setTransDate(LocalDate.parse("2020-09-07"));
 		head.setTransCode("S0001");
 		head.setTotalCnt(BigDecimal.valueOf(10));
 		head.setTotalAmt(BigDecimal.valueOf(10000));
@@ -94,11 +94,11 @@ public class CascadeCaseTest {
 
 		// 子表记录2
 		ComplexpkItemVO item2 = new ComplexpkItemVO();
-		item1.setId("S000103");
+		item2.setId("S000103");
 		item2.setProductId("P03");
 		item2.setPrice(BigDecimal.valueOf(1000));
 		item2.setAmt(BigDecimal.valueOf(5000));
-		item2.setQuantity(BigDecimal.valueOf(5));
+		item2.setQuantity(BigDecimal.valueOf(6));
 		head.getComplexpkItemVOs().add(item2);
 
 		sqlToyCRUDService.updateCascade(head);
