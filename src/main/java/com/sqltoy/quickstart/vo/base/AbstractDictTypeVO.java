@@ -11,7 +11,6 @@ import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import java.time.LocalDateTime;
-
 import org.sagacity.sqltoy.config.annotation.OneToMany;
 import com.sqltoy.quickstart.vo.DictDetailVO;
 
@@ -21,8 +20,7 @@ import com.sqltoy.quickstart.vo.DictDetailVO;
  * Table: sqltoy_dict_type,Remark:字典分类表  
  */
 @Entity(tableName="sqltoy_dict_type",pk_constraint="PRIMARY")
-public abstract class AbstractDictTypeVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractDictTypeVO implements Serializable {
 	
 	/**
 	 * 
@@ -110,32 +108,6 @@ public abstract class AbstractDictTypeVO implements Serializable,
 		this.dictType=dictType;
 	}
 
-	/** minimal constructor */
-	public AbstractDictTypeVO(String dictType,String dictTypeName,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictType=dictType;
-		this.dictTypeName=dictTypeName;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public AbstractDictTypeVO(String dictType,String dictTypeName,String comments,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictType=dictType;
-		this.dictTypeName=dictTypeName;
-		this.comments=comments;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
 	
 	/**
 	 *@param dictType the dictType to set

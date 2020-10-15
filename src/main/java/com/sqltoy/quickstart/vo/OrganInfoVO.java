@@ -33,40 +33,6 @@ public class OrganInfoVO extends AbstractOrganInfoVO {
 		this.organId=organId;
 	}
 
-	/** minimal constructor */
-	public OrganInfoVO(String organId,String organName,String organCode,String organPid,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.organId=organId;
-		this.organName=organName;
-		this.organCode=organCode;
-		this.organPid=organPid;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public OrganInfoVO(String organId,String organName,String organCode,String costNo,String organPid,String nodeRoute,Integer nodeLevel,Integer isLeaf,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.organId=organId;
-		this.organName=organName;
-		this.organCode=organCode;
-		this.costNo=costNo;
-		this.organPid=organPid;
-		this.nodeRoute=nodeRoute;
-		this.nodeLevel=nodeLevel;
-		this.isLeaf=isLeaf;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
 	/*---end-constructor-area---don't-update-this-area--*/
 	/**
      *@todo vo columns to String

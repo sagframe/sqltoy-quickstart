@@ -14,15 +14,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 
-
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
  * Table: sqltoy_trans_info_his,Remark:支付交易流水表  
  */
 @Entity(tableName="sqltoy_trans_info_his",pk_constraint="PRIMARY")
-public abstract class AbstractTransInfoHisVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractTransInfoHisVO implements Serializable {
 	
 	/**
 	 * 
@@ -111,34 +109,6 @@ public abstract class AbstractTransInfoHisVO implements Serializable,
 		this.transId=transId;
 	}
 
-	/** minimal constructor */
-	public AbstractTransInfoHisVO(String transId,String transCode,String transChannel,BigDecimal transAmt,Integer status,String resultCode,LocalDateTime transTime,LocalDate transDate,String userId)
-	{
-		this.transId=transId;
-		this.transCode=transCode;
-		this.transChannel=transChannel;
-		this.transAmt=transAmt;
-		this.status=status;
-		this.resultCode=resultCode;
-		this.transTime=transTime;
-		this.transDate=transDate;
-		this.userId=userId;
-	}
-
-	/** full constructor */
-	public AbstractTransInfoHisVO(String transId,String transCode,String transChannel,BigDecimal transAmt,Integer status,String resultCode,LocalDateTime transTime,LocalDate transDate,String userId,String cardNo)
-	{
-		this.transId=transId;
-		this.transCode=transCode;
-		this.transChannel=transChannel;
-		this.transAmt=transAmt;
-		this.status=status;
-		this.resultCode=resultCode;
-		this.transTime=transTime;
-		this.transDate=transDate;
-		this.userId=userId;
-		this.cardNo=cardNo;
-	}
 	
 	/**
 	 *@param transId the transId to set

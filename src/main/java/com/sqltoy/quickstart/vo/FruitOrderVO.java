@@ -34,17 +34,6 @@ public class FruitOrderVO extends AbstractFruitOrderVO {
 		this.orderMonth=orderMonth;
 	}
 
-
-	/** full constructor */
-	public FruitOrderVO(String fruitName,Integer orderMonth,BigDecimal saleCount,BigDecimal salePrice,BigDecimal totalAmt)
-	{
-		this.fruitName=fruitName;
-		this.orderMonth=orderMonth;
-		this.saleCount=saleCount;
-		this.salePrice=salePrice;
-		this.totalAmt=totalAmt;
-	}
-
 	/*---end-constructor-area---don't-update-this-area--*/
 	/**
      *@todo vo columns to String

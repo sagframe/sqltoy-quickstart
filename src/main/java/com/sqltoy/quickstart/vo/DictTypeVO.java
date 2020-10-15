@@ -34,34 +34,7 @@ public class DictTypeVO extends AbstractDictTypeVO {
 		this.dictType=dictType;
 	}
 
-	/** minimal constructor */
-	public DictTypeVO(String dictType,String dictTypeName,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictType=dictType;
-		this.dictTypeName=dictTypeName;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public DictTypeVO(String dictType,String dictTypeName,String comments,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictType=dictType;
-		this.dictTypeName=dictTypeName;
-		this.comments=comments;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/**
+    /**
 	 * mapping sqltoy_dict_detail data to sqltoy_dict_type oneToMany List
 	 */
 	public void mappingDictDetailVOs(List<DictTypeVO> mainSet,List<DictDetailVO> itemSet)
@@ -77,9 +50,9 @@ public class DictTypeVO extends AbstractDictTypeVO {
     		for(int j=0;j<itemSet.size();j++){
     			item=itemSet.get(j);
     			if(main.getDictType().equals(item.getDictType())){
-    			  main.dictDetailVOs.add(item);
-    			  itemSet.remove(j);
-    			  j--;
+    			   main.dictDetailVOs.add(item);
+    			   itemSet.remove(j);
+    			   j--;
     			}
     		}
     	}

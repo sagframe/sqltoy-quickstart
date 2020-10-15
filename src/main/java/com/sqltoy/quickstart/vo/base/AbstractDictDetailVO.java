@@ -12,15 +12,13 @@ import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import java.time.LocalDateTime;
 
-
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
  * Table: sqltoy_dict_detail,Remark:字典明细表  
  */
 @Entity(tableName="sqltoy_dict_detail",pk_constraint="PRIMARY")
-public abstract class AbstractDictDetailVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractDictDetailVO implements Serializable {
 	
 	/**
 	 * 
@@ -90,18 +88,6 @@ public abstract class AbstractDictDetailVO implements Serializable,
 		this.dictType=dictType;
 	}
 
-
-	/** full constructor */
-	public AbstractDictDetailVO(String dictKey,String dictType,String dictName,Integer showIndex,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictKey=dictKey;
-		this.dictType=dictType;
-		this.dictName=dictName;
-		this.showIndex=showIndex;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
 	
 	/**
 	 *@param dictKey the dictKey to set

@@ -34,19 +34,6 @@ public class DictDetailVO extends AbstractDictDetailVO {
 		this.dictType=dictType;
 	}
 
-
-	/** full constructor */
-	public DictDetailVO(String dictKey,String dictType,String dictName,Integer showIndex,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictKey=dictKey;
-		this.dictType=dictType;
-		this.dictName=dictName;
-		this.showIndex=showIndex;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
 	/*---end-constructor-area---don't-update-this-area--*/
 	/**
      *@todo vo columns to String

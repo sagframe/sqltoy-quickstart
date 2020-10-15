@@ -14,15 +14,13 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
  * Table: sqltoy_complexpk_item,Remark:复合主键级联操作子表  
  */
 @Entity(tableName="sqltoy_complexpk_item",pk_constraint="PRIMARY")
-public abstract class AbstractComplexpkItemVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractComplexpkItemVO implements Serializable {
 	
 	/**
 	 * 
@@ -97,29 +95,6 @@ public abstract class AbstractComplexpkItemVO implements Serializable,
 		this.id=id;
 	}
 
-	/** minimal constructor */
-	public AbstractComplexpkItemVO(String id,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
-	}
-
-	/** full constructor */
-	public AbstractComplexpkItemVO(String id,LocalDate transDate,String transId,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.transDate=transDate;
-		this.transId=transId;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
-	}
 	
 	/**
 	 *@param id the id to set

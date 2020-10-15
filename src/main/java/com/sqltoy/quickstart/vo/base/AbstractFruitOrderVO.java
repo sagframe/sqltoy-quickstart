@@ -12,15 +12,13 @@ import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import java.math.BigDecimal;
 
-
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
  * Table: sqltoy_fruit_order,Remark:查询汇总演示-水果订单表  
  */
 @Entity(tableName="sqltoy_fruit_order",pk_constraint="PRIMARY")
-public abstract class AbstractFruitOrderVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractFruitOrderVO implements Serializable {
 	
 	/**
 	 * 
@@ -76,16 +74,6 @@ public abstract class AbstractFruitOrderVO implements Serializable,
 		this.orderMonth=orderMonth;
 	}
 
-
-	/** full constructor */
-	public AbstractFruitOrderVO(String fruitName,Integer orderMonth,BigDecimal saleCount,BigDecimal salePrice,BigDecimal totalAmt)
-	{
-		this.fruitName=fruitName;
-		this.orderMonth=orderMonth;
-		this.saleCount=saleCount;
-		this.salePrice=salePrice;
-		this.totalAmt=totalAmt;
-	}
 	
 	/**
 	 *@param fruitName the fruitName to set
