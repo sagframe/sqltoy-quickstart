@@ -3,7 +3,6 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;

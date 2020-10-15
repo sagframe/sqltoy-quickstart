@@ -3,8 +3,6 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import java.time.LocalDateTime;
-
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 
 import com.sqltoy.quickstart.vo.base.AbstractOrganInfoVO;
