@@ -4,16 +4,15 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.time.LocalDate;
-import java.sql.Blob;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -21,8 +20,7 @@ import java.time.LocalDateTime;
  * Table: sqltoy_staff_info,Remark:员工信息表  
  */
 @Entity(tableName="sqltoy_staff_info",pk_constraint="PRIMARY")
-public abstract class AbstractStaffInfoVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractStaffInfoVO implements Serializable {
 	
 	/**
 	 * 
@@ -188,47 +186,6 @@ public abstract class AbstractStaffInfoVO implements Serializable,
 		this.staffId=staffId;
 	}
 
-	/** minimal constructor */
-	public AbstractStaffInfoVO(String staffId,String staffCode,String staffName,String organId,String sexType,LocalDate entryDate,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.staffId=staffId;
-		this.staffCode=staffCode;
-		this.staffName=staffName;
-		this.organId=organId;
-		this.sexType=sexType;
-		this.entryDate=entryDate;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public AbstractStaffInfoVO(String staffId,String staffCode,String staffName,String organId,String sexType,LocalDate birthday,LocalDate entryDate,LocalDate termDate,byte[] photo,String country,String censusRegister,String address,String email,String telNo,String post,String postGrade,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.staffId=staffId;
-		this.staffCode=staffCode;
-		this.staffName=staffName;
-		this.organId=organId;
-		this.sexType=sexType;
-		this.birthday=birthday;
-		this.entryDate=entryDate;
-		this.termDate=termDate;
-		this.photo=photo;
-		this.country=country;
-		this.censusRegister=censusRegister;
-		this.address=address;
-		this.email=email;
-		this.telNo=telNo;
-		this.post=post;
-		this.postGrade=postGrade;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
 	
 	/**
 	 *@param staffId the staffId to set

@@ -4,7 +4,6 @@
 package com.sqltoy.quickstart.vo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 
@@ -32,48 +31,6 @@ public class StaffInfoVO extends AbstractStaffInfoVO {
 	public StaffInfoVO(String staffId)
 	{
 		this.staffId=staffId;
-	}
-
-	/** minimal constructor */
-	public StaffInfoVO(String staffId,String staffCode,String staffName,String organId,String sexType,LocalDate entryDate,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.staffId=staffId;
-		this.staffCode=staffCode;
-		this.staffName=staffName;
-		this.organId=organId;
-		this.sexType=sexType;
-		this.entryDate=entryDate;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public StaffInfoVO(String staffId,String staffCode,String staffName,String organId,String sexType,LocalDate birthday,LocalDate entryDate,LocalDate termDate,byte[] photo,String country,String censusRegister,String address,String email,String telNo,String post,String postGrade,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.staffId=staffId;
-		this.staffCode=staffCode;
-		this.staffName=staffName;
-		this.organId=organId;
-		this.sexType=sexType;
-		this.birthday=birthday;
-		this.entryDate=entryDate;
-		this.termDate=termDate;
-		this.photo=photo;
-		this.country=country;
-		this.censusRegister=censusRegister;
-		this.address=address;
-		this.email=email;
-		this.telNo=telNo;
-		this.post=post;
-		this.postGrade=postGrade;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/

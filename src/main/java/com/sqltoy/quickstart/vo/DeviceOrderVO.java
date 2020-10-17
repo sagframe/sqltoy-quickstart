@@ -3,10 +3,6 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 
 import com.sqltoy.quickstart.vo.base.AbstractDeviceOrderVO;
@@ -33,41 +29,6 @@ public class DeviceOrderVO extends AbstractDeviceOrderVO {
 	public DeviceOrderVO(String orderId)
 	{
 		this.orderId=orderId;
-	}
-
-	/** minimal constructor */
-	public DeviceOrderVO(String orderId,String deviceType,String psType,LocalDate transDate,Integer status,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.orderId=orderId;
-		this.deviceType=deviceType;
-		this.psType=psType;
-		this.transDate=transDate;
-		this.status=status;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-	}
-
-	/** full constructor */
-	public DeviceOrderVO(String orderId,String deviceType,String psType,BigDecimal totalCnt,BigDecimal totalAmt,String buyer,String saler,LocalDate transDate,LocalDate deliveryTerm,String staffId,String organId,Integer status,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.orderId=orderId;
-		this.deviceType=deviceType;
-		this.psType=psType;
-		this.totalCnt=totalCnt;
-		this.totalAmt=totalAmt;
-		this.buyer=buyer;
-		this.saler=saler;
-		this.transDate=transDate;
-		this.deliveryTerm=deliveryTerm;
-		this.staffId=staffId;
-		this.organId=organId;
-		this.status=status;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/

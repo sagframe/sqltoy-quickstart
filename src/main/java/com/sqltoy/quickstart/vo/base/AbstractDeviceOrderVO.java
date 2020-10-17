@@ -4,16 +4,16 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
  * Table: sqltoy_device_order,Remark:硬件购销定单表(演示有规则单号)  
  */
 @Entity(tableName="sqltoy_device_order",pk_constraint="PRIMARY")
-public abstract class AbstractDeviceOrderVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractDeviceOrderVO implements Serializable {
 	
 	/**
 	 * 
@@ -153,40 +152,6 @@ public abstract class AbstractDeviceOrderVO implements Serializable,
 		this.orderId=orderId;
 	}
 
-	/** minimal constructor */
-	public AbstractDeviceOrderVO(String orderId,String deviceType,String psType,LocalDate transDate,Integer status,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.orderId=orderId;
-		this.deviceType=deviceType;
-		this.psType=psType;
-		this.transDate=transDate;
-		this.status=status;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-	}
-
-	/** full constructor */
-	public AbstractDeviceOrderVO(String orderId,String deviceType,String psType,BigDecimal totalCnt,BigDecimal totalAmt,String buyer,String saler,LocalDate transDate,LocalDate deliveryTerm,String staffId,String organId,Integer status,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.orderId=orderId;
-		this.deviceType=deviceType;
-		this.psType=psType;
-		this.totalCnt=totalCnt;
-		this.totalAmt=totalAmt;
-		this.buyer=buyer;
-		this.saler=saler;
-		this.transDate=transDate;
-		this.deliveryTerm=deliveryTerm;
-		this.staffId=staffId;
-		this.organId=organId;
-		this.status=status;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-	}
 	
 	/**
 	 *@param orderId the orderId to set

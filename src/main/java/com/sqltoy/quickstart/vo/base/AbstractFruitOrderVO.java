@@ -4,14 +4,14 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -19,8 +19,7 @@ import java.math.BigDecimal;
  * Table: sqltoy_fruit_order,Remark:查询汇总演示-水果订单表  
  */
 @Entity(tableName="sqltoy_fruit_order",pk_constraint="PRIMARY")
-public abstract class AbstractFruitOrderVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractFruitOrderVO implements Serializable {
 	
 	/**
 	 * 
@@ -76,16 +75,6 @@ public abstract class AbstractFruitOrderVO implements Serializable,
 		this.orderMonth=orderMonth;
 	}
 
-
-	/** full constructor */
-	public AbstractFruitOrderVO(String fruitName,Integer orderMonth,BigDecimal saleCount,BigDecimal salePrice,BigDecimal totalAmt)
-	{
-		this.fruitName=fruitName;
-		this.orderMonth=orderMonth;
-		this.saleCount=saleCount;
-		this.salePrice=salePrice;
-		this.totalAmt=totalAmt;
-	}
 	
 	/**
 	 *@param fruitName the fruitName to set

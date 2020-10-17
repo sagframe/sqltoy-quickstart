@@ -3,8 +3,6 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import java.math.BigDecimal;
-
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 
 import com.sqltoy.quickstart.vo.base.AbstractFruitOrderVO;
@@ -32,17 +30,6 @@ public class FruitOrderVO extends AbstractFruitOrderVO {
 	{
 		this.fruitName=fruitName;
 		this.orderMonth=orderMonth;
-	}
-
-
-	/** full constructor */
-	public FruitOrderVO(String fruitName,Integer orderMonth,BigDecimal saleCount,BigDecimal salePrice,BigDecimal totalAmt)
-	{
-		this.fruitName=fruitName;
-		this.orderMonth=orderMonth;
-		this.saleCount=saleCount;
-		this.salePrice=salePrice;
-		this.totalAmt=totalAmt;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/

@@ -4,14 +4,14 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
  * Table: sqltoy_organ_info,Remark:机构信息表  
  */
 @Entity(tableName="sqltoy_organ_info",pk_constraint="PRIMARY")
-public abstract class AbstractOrganInfoVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractOrganInfoVO implements Serializable {
 	
 	/**
 	 * 
@@ -137,39 +136,6 @@ public abstract class AbstractOrganInfoVO implements Serializable,
 		this.organId=organId;
 	}
 
-	/** minimal constructor */
-	public AbstractOrganInfoVO(String organId,String organName,String organCode,String organPid,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.organId=organId;
-		this.organName=organName;
-		this.organCode=organCode;
-		this.organPid=organPid;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
-
-	/** full constructor */
-	public AbstractOrganInfoVO(String organId,String organName,String organCode,String costNo,String organPid,String nodeRoute,Integer nodeLevel,Integer isLeaf,Integer showIndex,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.organId=organId;
-		this.organName=organName;
-		this.organCode=organCode;
-		this.costNo=costNo;
-		this.organPid=organPid;
-		this.nodeRoute=nodeRoute;
-		this.nodeLevel=nodeLevel;
-		this.isLeaf=isLeaf;
-		this.showIndex=showIndex;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
 	
 	/**
 	 *@param organId the organId to set

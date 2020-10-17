@@ -4,9 +4,7 @@
 package com.sqltoy.quickstart.vo;
 
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
-import java.time.LocalDate;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import com.sqltoy.quickstart.vo.base.AbstractComplexpkItemVO;
 
 /**
@@ -31,30 +29,6 @@ public class ComplexpkItemVO extends AbstractComplexpkItemVO {
 	public ComplexpkItemVO(String id)
 	{
 		this.id=id;
-	}
-
-	/** minimal constructor */
-	public ComplexpkItemVO(String id,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
-	}
-
-	/** full constructor */
-	public ComplexpkItemVO(String id,LocalDate transDate,String transId,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.transDate=transDate;
-		this.transId=transId;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/

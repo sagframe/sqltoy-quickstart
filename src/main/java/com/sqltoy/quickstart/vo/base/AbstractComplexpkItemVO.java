@@ -4,16 +4,16 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
  * Table: sqltoy_complexpk_item,Remark:复合主键级联操作子表  
  */
 @Entity(tableName="sqltoy_complexpk_item",pk_constraint="PRIMARY")
-public abstract class AbstractComplexpkItemVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractComplexpkItemVO implements Serializable {
 	
 	/**
 	 * 
@@ -97,29 +96,6 @@ public abstract class AbstractComplexpkItemVO implements Serializable,
 		this.id=id;
 	}
 
-	/** minimal constructor */
-	public AbstractComplexpkItemVO(String id,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
-	}
-
-	/** full constructor */
-	public AbstractComplexpkItemVO(String id,LocalDate transDate,String transId,String productId,BigDecimal quantity,BigDecimal price,BigDecimal amt,LocalDateTime createTime)
-	{
-		this.id=id;
-		this.transDate=transDate;
-		this.transId=transId;
-		this.productId=productId;
-		this.quantity=quantity;
-		this.price=price;
-		this.amt=amt;
-		this.createTime=createTime;
-	}
 	
 	/**
 	 *@param id the id to set

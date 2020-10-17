@@ -4,14 +4,14 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
  * Table: sqltoy_dict_detail,Remark:字典明细表  
  */
 @Entity(tableName="sqltoy_dict_detail",pk_constraint="PRIMARY")
-public abstract class AbstractDictDetailVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractDictDetailVO implements Serializable {
 	
 	/**
 	 * 
@@ -90,18 +89,6 @@ public abstract class AbstractDictDetailVO implements Serializable,
 		this.dictType=dictType;
 	}
 
-
-	/** full constructor */
-	public AbstractDictDetailVO(String dictKey,String dictType,String dictName,Integer showIndex,String updateBy,LocalDateTime updateTime,Integer status)
-	{
-		this.dictKey=dictKey;
-		this.dictType=dictType;
-		this.dictName=dictName;
-		this.showIndex=showIndex;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-		this.status=status;
-	}
 	
 	/**
 	 *@param dictKey the dictKey to set

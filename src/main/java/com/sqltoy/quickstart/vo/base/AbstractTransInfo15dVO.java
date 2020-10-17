@@ -4,16 +4,16 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 
 /**
  * @project sqltoy-quickstart
@@ -21,8 +21,7 @@ import java.time.LocalDate;
  * Table: sqltoy_trans_info_15d,Remark:支付交易流水表(15天表)  
  */
 @Entity(tableName="sqltoy_trans_info_15d",pk_constraint="PRIMARY")
-public abstract class AbstractTransInfo15dVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractTransInfo15dVO implements Serializable {
 	
 	/**
 	 * 
@@ -111,34 +110,6 @@ public abstract class AbstractTransInfo15dVO implements Serializable,
 		this.transId=transId;
 	}
 
-	/** minimal constructor */
-	public AbstractTransInfo15dVO(String transId,String transCode,String transChannel,BigDecimal transAmt,Integer status,String resultCode,LocalDateTime transTime,LocalDate transDate,String userId)
-	{
-		this.transId=transId;
-		this.transCode=transCode;
-		this.transChannel=transChannel;
-		this.transAmt=transAmt;
-		this.status=status;
-		this.resultCode=resultCode;
-		this.transTime=transTime;
-		this.transDate=transDate;
-		this.userId=userId;
-	}
-
-	/** full constructor */
-	public AbstractTransInfo15dVO(String transId,String transCode,String transChannel,BigDecimal transAmt,Integer status,String resultCode,LocalDateTime transTime,LocalDate transDate,String userId,String cardNo)
-	{
-		this.transId=transId;
-		this.transCode=transCode;
-		this.transChannel=transChannel;
-		this.transAmt=transAmt;
-		this.status=status;
-		this.resultCode=resultCode;
-		this.transTime=transTime;
-		this.transDate=transDate;
-		this.userId=userId;
-		this.cardNo=cardNo;
-	}
 	
 	/**
 	 *@param transId the transId to set

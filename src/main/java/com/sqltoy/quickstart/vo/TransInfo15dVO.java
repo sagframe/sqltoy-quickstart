@@ -3,10 +3,6 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.sagacity.sqltoy.config.annotation.Sharding;
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 import org.sagacity.sqltoy.config.annotation.Strategy;
@@ -33,37 +29,9 @@ public class TransInfo15dVO extends AbstractTransInfo15dVO {
 
 	/*---begin-constructor-area---don't-update-this-area--*/
 	/** pk constructor */
-	public TransInfo15dVO(String transId) {
-		this.transId = transId;
-	}
-
-	/** minimal constructor */
-	public TransInfo15dVO(String transId, String transCode, String transChannel, BigDecimal transAmt, Integer status,
-			String resultCode, LocalDateTime transTime, LocalDate transDate, String userId) {
-		this.transId = transId;
-		this.transCode = transCode;
-		this.transChannel = transChannel;
-		this.transAmt = transAmt;
-		this.status = status;
-		this.resultCode = resultCode;
-		this.transTime = transTime;
-		this.transDate = transDate;
-		this.userId = userId;
-	}
-
-	/** full constructor */
-	public TransInfo15dVO(String transId, String transCode, String transChannel, BigDecimal transAmt, Integer status,
-			String resultCode, LocalDateTime transTime, LocalDate transDate, String userId, String cardNo) {
-		this.transId = transId;
-		this.transCode = transCode;
-		this.transChannel = transChannel;
-		this.transAmt = transAmt;
-		this.status = status;
-		this.resultCode = resultCode;
-		this.transTime = transTime;
-		this.transDate = transDate;
-		this.userId = userId;
-		this.cardNo = cardNo;
+	public TransInfo15dVO(String transId)
+	{
+		this.transId=transId;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/

@@ -3,11 +3,11 @@
  */
 package com.sqltoy.quickstart.vo;
 
-import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
 import java.time.LocalDate;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
+
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+
 import com.sqltoy.quickstart.vo.base.AbstractComplexpkHeadVO;
 
 /**
@@ -35,21 +35,7 @@ public class ComplexpkHeadVO extends AbstractComplexpkHeadVO {
 		this.transCode=transCode;
 	}
 
-
-	/** full constructor */
-	public ComplexpkHeadVO(LocalDate transDate,String transCode,BigDecimal totalCnt,BigDecimal totalAmt,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.transDate=transDate;
-		this.transCode=transCode;
-		this.totalCnt=totalCnt;
-		this.totalAmt=totalAmt;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-	}
-
-	/**
+    /**
 	 * mapping sqltoy_complexpk_item data to sqltoy_complexpk_head oneToMany List
 	 */
 	public void mappingComplexpkItemVOs(List<ComplexpkHeadVO> mainSet,List<ComplexpkItemVO> itemSet)
@@ -65,9 +51,9 @@ public class ComplexpkHeadVO extends AbstractComplexpkHeadVO {
     		for(int j=0;j<itemSet.size();j++){
     			item=itemSet.get(j);
     			if(main.getTransDate().equals(item.getTransDate())&& main.getTransCode().equals(item.getTransId())){
-    			  main.complexpkItemVOs.add(item);
-    			  itemSet.remove(j);
-    			  j--;
+    			   main.complexpkItemVOs.add(item);
+    			   itemSet.remove(j);
+    			   j--;
     			}
     		}
     	}

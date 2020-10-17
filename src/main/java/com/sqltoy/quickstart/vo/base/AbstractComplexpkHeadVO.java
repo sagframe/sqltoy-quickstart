@@ -4,17 +4,18 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.sagacity.sqltoy.callback.SelectFields;
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.OneToMany;
+
 import com.sqltoy.quickstart.vo.ComplexpkItemVO;
 
 /**
@@ -23,8 +24,7 @@ import com.sqltoy.quickstart.vo.ComplexpkItemVO;
  * Table: sqltoy_complexpk_head,Remark:复合主键级联操作主表  
  */
 @Entity(tableName="sqltoy_complexpk_head",pk_constraint="PRIMARY")
-public abstract class AbstractComplexpkHeadVO implements Serializable,
-	java.lang.Cloneable {
+public abstract class AbstractComplexpkHeadVO implements Serializable {
 	
 	/**
 	 * 
@@ -107,19 +107,6 @@ public abstract class AbstractComplexpkHeadVO implements Serializable,
 		this.transCode=transCode;
 	}
 
-
-	/** full constructor */
-	public AbstractComplexpkHeadVO(LocalDate transDate,String transCode,BigDecimal totalCnt,BigDecimal totalAmt,String createBy,LocalDateTime createTime,String updateBy,LocalDateTime updateTime)
-	{
-		this.transDate=transDate;
-		this.transCode=transCode;
-		this.totalCnt=totalCnt;
-		this.totalAmt=totalAmt;
-		this.createBy=createBy;
-		this.createTime=createTime;
-		this.updateBy=updateBy;
-		this.updateTime=updateTime;
-	}
 	
 	/**
 	 *@param transDate the transDate to set
