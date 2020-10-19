@@ -30,6 +30,7 @@ public class OrganInfoServiceImpl implements OrganInfoService {
 		sqlToyLazyDao.save(organInfoVO);
 		// id字段根据vo找表的主键会自动匹配上,其它的NODE_ROUTE\NODE_LEVEL\IS_LEAF 为标准命名无需额外设置
 		// 需要告知pid对应的字段(vo属性会自动映射到表字段)
+		//sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).idField("organCode").pidField("organPid"));
 		sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).pidField("organPid"));
 	}
 

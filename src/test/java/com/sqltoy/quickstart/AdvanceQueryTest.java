@@ -232,4 +232,13 @@ public class AdvanceQueryTest {
 			System.err.println(JSON.toJSONString(result.get(i)));
 		}
 	}
+	
+	@Test
+	public void testFindAll()
+	{
+		List<StaffInfoVO> staffs=sqlToyLazyDao.findAll(StaffInfoVO.class);
+		for (int i = 0; i < staffs.size(); i++) {
+			System.err.println(JSON.toJSONString(staffs.get(i)));
+		}
+	}
 }
