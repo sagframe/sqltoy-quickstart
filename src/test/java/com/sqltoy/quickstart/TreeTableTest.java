@@ -39,10 +39,10 @@ public class TreeTableTest {
 	@Test
 	public void testWrapTreeTable() {
 		OrganInfoVO organ = new OrganInfoVO();
-		organ.setOrganId("100015");
-		organ.setOrganCode("100015");
-		organ.setOrganPid("100007");
-		organ.setOrganName("ERP开发部");
+		organ.setOrganId("100008");
+		organ.setOrganCode("S100008");
+		organ.setOrganPid("S100002");
+		organ.setOrganName("新动力研发中心");
 		organ.setStatus(1);
 		organInfoService.saveOrganInfo(organ);
 	}
