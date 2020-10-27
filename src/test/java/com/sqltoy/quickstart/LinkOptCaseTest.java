@@ -18,7 +18,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description 演示链式操作
  * @author zhong
  * @version v1.0, Date:2020-10-27
  * @modify 2020-10-27,修改说明
@@ -26,6 +26,8 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SqlToyApplication.class)
 public class LinkOptCaseTest {
+	// 链式操作包含:save、load、update、batch(批量更新)、execute(sql执行)、store(存储过程)等
+
 	@Autowired
 	SqlToyLazyDao sqlToyLazyDao;
 
@@ -54,7 +56,7 @@ public class LinkOptCaseTest {
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
-		//resultType可以额外指定结果类型
+		// resultType可以额外指定结果类型
 		List result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).resultType(StaffInfoVO.class).find();
 	}
 
@@ -68,4 +70,5 @@ public class LinkOptCaseTest {
 		// 查询可以链式操作
 		// sqlToyLazyDao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staffVO).findPage(pageModel);
 	}
+
 }
