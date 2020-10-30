@@ -197,7 +197,7 @@ jdbc.password=quickstart
 <datasource name="quickstart" url="${db.url}" driver="${db.driver_class}" 
 		schema="${db.schema}" catalog="${db.schema}" username="${db.username}" password="${db.password}" />
 <tasks dist="../../src/main/java" encoding="UTF-8">
-	<!-- include 是正则表达式匹配 -->
+	<!-- include 是表名匹配的正则表达式  -->
 	<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
 		<!-- substr 表示截取表名的前缀部分(一般表会按模块增加前缀),如不截取则substr="" name="#{subName}VO" subName是约定词,VO这两个字符可以随意改变  -->
 		<vo package="${project.package}.quickvo.vo" substr="Sqltoy" name="#{subName}VO" />
