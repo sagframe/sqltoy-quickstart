@@ -41,7 +41,7 @@
 		<!--<table name="sys_staff_info" strategy="generator" generator="snowflake"/> -->
 	</primary-key>
 
-	<!-- 基于redis产生有规则的业务主键 -->
+	<!-- 基于redis产生有规则的业务主键，常规情况下可以忽视  -->
 	<business-primary-key>
 		<!-- 1位购销标志_2位设备分类代码_6位日期_3位流水 (如果当天超过3位会自动扩展到4位) -->
 		<!-- 业务主键可以充当实际的主键，如果字段是主键会覆盖原来的主键策略 -->
