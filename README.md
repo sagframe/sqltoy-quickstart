@@ -4,16 +4,6 @@
 
 # 学习步骤
 ## 1. 配置pom引入sqltoy的依赖
-## 2. 配置正确pom build避免sql文件无法编译到classes下面
-## 3. 配置application.yml，最好sqltoy部分直接copy
-* 1、很多spring.sqltoy 开头写成了sqltoy
-* 2、很多classpath拼错了
-## 4. 编写springboot 主程序,注意@ComponentScan配置
-## 5. 初始化数据库
-## 6. 利用quickvo生产VO(或POJO)
-* 在出问题时关注dataSource中的schema配置,其他问题请参见quickvo.xml中的注释
-
-## 1. 请参见pom.xml 引入sqltoy,注意版本号使用最新版本
 
 ```xml
 <dependency>
@@ -23,7 +13,7 @@
 </dependency>
 ```
 
-## 2. 注意pom中build的配置,否则导致 *.sql.xml文件无法编译到classes下面去
+## 2. 配置正确pom build避免sql文件无法编译到classes下面
 * 核心配置:src/main/java 下面的<include>**/*.xml</include>
 
 ```xml
@@ -69,7 +59,10 @@
 </testResources>
 ```
 
-##  3. application.yml配置
+## 3. 配置application.yml，最好sqltoy部分直接copy
+
+* 1、很多spring.sqltoy 开头写成了sqltoy
+* 2、很多classpath拼错了
 * 常规配置，核心要点:sqlResourcesDir 是路径名,多个路径用逗号分隔,不要填错
 
 ```
@@ -101,9 +94,7 @@ spring:
         # 多个路径用逗号分隔(注意这里填路径、路径!会自动相信寻找)
         sqlResourcesDir: classpath:com/sqltoy/quickstart
 ```
-
-## 4. application.properties 模式配置
-* 注意:要以spring.sqltoy.前缀开头,具体配置可以参照:docs/application.properties
+* properties 模式
 
 ```
 # sqltoy config
@@ -121,7 +112,9 @@ spring.sqltoy.debug=true
 spring.sqltoy.unifyFieldsHandler=com.sqltoy.plugins.SqlToyUnifyFieldsHandler
 #spring.sqltoy.printSqlTimeoutMillis=200000
 ```
-## 5. 编写项目主程序,参见:src/main/java 下面的SqlToyApplication
+
+## 4. 编写springboot 主程序,注意@ComponentScan配置
+* 参见:src/main/java 下面的SqlToyApplication
 
 ```java
 package com.sqltoy.quickstart;
@@ -152,7 +145,8 @@ public class SqlToyApplication {
 
 ```
 
-## 6. 参见src/test/java 下面的InitDataBaseTest,生成数据库表结构和初始化数据
+## 5. 初始化数据库
+* 参见src/test/java 下面的InitDataBaseTest,生成数据库表结构和初始化数据
 
 ```java
 @ExtendWith(SpringExtension.class)
@@ -171,7 +165,8 @@ public class InitDataBaseTest {
 }
 ```
 
-## 7. 通过quickvo连数据库自动生成POJO
+## 6. 利用quickvo生产VO(或POJO)
+* 在出问题时关注dataSource中的schema、catalog配置,其他问题请参见quickvo.xml中的注释
 * 将数据库驱动类放于tools/quickvo/libs下面
 * 配置tools/quickvo/db.properties 文件
 
