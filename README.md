@@ -193,7 +193,9 @@ jdbc.password=quickstart
 <!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为true,需要sqltoy4.15.4版本以上	-->
 <property name="generate.selectFields.class" value="true" />
 <!-- schema 对照关系:mysql 对应  db 名称; oracle 对应 用户名称;   -->
-<datasource name="quickstart" url="${db.url}"	driver="${db.driver_class}" schema="${db.schema}"
+<!-- 注意:当在多schema或tablespace场景下，会出现一个表中出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离   -->
+<datasource name="quickstart" url="${db.url}" driver="${db.driver_class}" 
+		schema="${db.schema}" catalog="${db.schema}" username="${db.username}" password="${db.password}" />
 <tasks dist="../../src/main/java" encoding="UTF-8">
 	<!-- include 是正则表达式匹配 -->
 	<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
