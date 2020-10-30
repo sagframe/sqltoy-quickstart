@@ -250,3 +250,13 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 
 ## 为什么quickvo任务不是一个，而是按模块分多个任务
 * sqltoy强调项目模块化，便于开发提炼出相对产品化的功能模块，逐步减少每次项目重复性工作，让不通过业务代码集中于一个模块下便于模块成熟后的抽离
+
+## 如何分VO和POJO
+* 请参见sqltoy-strict项目 https://github.com/sagframe/sqltoy-strict
+
+## 如何分库分表
+* 在本项目里面已经演示了分表
+* 分库分表含事务型的范例: https://github.com/sagframe/sqltoy-showcase/tree/master/trunk/sqltoy-sharding
+
+## 还有??
+* 请阅读sqltoy下面的word文档说明
