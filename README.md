@@ -190,7 +190,7 @@ jdbc.password=quickstart
 <property name="include.schema" value="false" />
 <!--set method 是否支持返回对象自身(默认是true),即: public VO setName(String name){this.name=name;return this;} -->
 <property name="field.support.linked.set" value="true" />
-<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为true,需要sqltoy4.15.4版本以上	-->
+<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为true  	-->
 <property name="generate.selectFields.class" value="true" />
 <!-- schema 对照关系:mysql 对应  db 名称; oracle 对应 用户名称;   -->
 <!-- 注意:当在多schema或tablespace场景下，会出现一个表中出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离   -->
