@@ -71,7 +71,7 @@ spring:
         sqlResourcesDir: classpath:com/sqltoy/quickstart
         # 默认值为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
-		# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填Trim只开通单个函数模式
+		# 默认开启跨数据库函数自动适配(如oracle的nvl,当数据库切到mysql时会自动替换成ifnull)
         #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
