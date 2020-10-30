@@ -59,7 +59,7 @@
 </testResources>
 ```
 
-## 3. 配置application.yml，最好sqltoy部分直接copy
+## 3. 配置application.yml，注意阅读配置上的备注
 *  注意要点:sqlResourcesDir 是路径名,多个路径用逗号分隔,不要填错
 * spring.sqltoy千万不要写成sqltoy漏掉spring开头
 
