@@ -256,6 +256,26 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 ## 为什么dao不采用mybatis plus的接口模式？
 * mybatis dao采用接口模式，是其向jpa方向靠拢的一种模式，而sqltoy本身就是jpa+查询模式，也就是说jpa向查询方向加强，正好相反！
 * 什么接口?能够用接口来完成就是意味着可以用一个通用方法来代替！因此接口式dao的存在必要性就值得商榷！
+
+```java
+@Service("organInfoService")
+public class OrganInfoServiceImpl implements OrganInfoService {
+    //sqltoyLazyDao 就可以代替接口式的dao
+	@Autowired
+	SqlToyLazyDao sqlToyLazyDao;
+
+	@Transactional
+	public void saveOrganInfo(OrganInfoVO organInfoVO) {
+		// 先保存机构
+		sqlToyLazyDao.saveOrUpdate(organInfoVO);
+		// 设置树形表的节点路径等字段值,便于统一树形查询
+		// id字段根据vo找表的主键会自动匹配上,其它的NODE_ROUTE\NODE_LEVEL\IS_LEAF 为标准命名无需额外设置
+		//idField 如果是主键则无需设置
+		sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).pidField("organPid"));
+	}
+}
+
+```
 * 考虑一些场景下dao仍然要做一些数据的封装处理(简化service层，将service尽量体现业务逻辑，减少一些dao的数据组装干扰)，sqltoy仍然可以写dao，但dao时实体类！
 
 如下：实体类又有何不妥呢！清晰又可以针对一些特殊情况自己完善一些小处理，mybatis那种接口通过aop方式谈不上什么酷和高技术，不要被带到沟里去了，清晰、可维护、好拓展才是正道!
