@@ -258,7 +258,7 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 * 什么接口?能够用接口来完成就是意味着可以用一个通用方法来代替！因此接口式dao的存在必要性就值得商榷！
 * 考虑一些场景下dao仍然要做一些数据的封装处理(简化service层，将service尽量体现业务逻辑，减少一些dao的数据组装干扰)，sqltoy仍然可以写dao，但dao时实体类！
 
-如下：实体类又有何不妥呢！清晰又可以针对一些特殊情况自己完善一些小处理，mybatis那种接口通过aop方式谈不上什么酷和高技术，实用才是正道!
+如下：实体类又有何不妥呢！清晰又可以针对一些特殊情况自己完善一些小处理，mybatis那种接口通过aop方式谈不上什么酷和高技术，不要被带到沟里去了，清晰、可维护、好拓展才是正道!
 
 ```java
 @Repository("staffInfoDao")
