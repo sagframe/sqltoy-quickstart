@@ -251,5 +251,35 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 * 在本项目里面已经演示了分表
 * 分库分表含事务型的范例: https://github.com/sagframe/sqltoy-showcase/tree/master/trunk/sqltoy-sharding
 
+## 为什么dao不采用mybatis plus的接口模式？
+* mybatis dao采用接口模式，是其向jpa方向靠拢的一种模式，而sqltoy本身就是jpa+查询模式，也就是说jpa向查询方向加强，正好相反！
+* 什么接口?能够用接口来完成就是意味着可以用一个通用方法来代替！因此接口式dao的存在必要性就值得商榷！
+* 考虑一些场景下dao仍然要做一些数据的封装处理(简化service层，将service尽量体现业务逻辑，减少一些dao的数据组装干扰)，sqltoy仍然可以写dao，但dao时实体类！
+
+如下：实体类又有何不妥呢！清晰又可以针对一些特殊情况自己完善一些小处理，mybatis那种接口通过aop方式谈不上什么酷和高技术，实用才是正道!
+
+```java
+@Repository("staffInfoDao")
+public class StaffInfoDao extends SqlToyDaoSupport {
+	/**
+	 * @TODO 提供一个分页并动态设置缓存翻译的演示
+	 * @param pageModel
+	 * @param staffInfoVO
+	 * @return
+	 */
+	public PaginationModel<StaffInfoVO> findStaff(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
+		// sql可以直接在代码中编写,复杂sql建议在xml中定义
+		// 单表entity查询场景下sql字段可以写成java类的属性名称
+		// 单表查询一般适用于接口内部查询
+		String sql = "#[staffName like :staffName]#[and createTime>=:beginDate]#[and createTime<=:endDate]";
+		return findEntity(StaffInfoVO.class, pageModel, EntityQuery.create().where(sql).values(staffInfoVO)
+				// 字典缓存必须要设置cacheType
+				// 单表对象查询需设置keyColumn构成select keyColumn as column模式
+				.translates(new Translate("dictKeyName").setColumn("sexTypeName").setCacheType("SEX_TYPE")
+						.setKeyColumn("sexType"))
+				.translates(new Translate("organIdName").setColumn("organName").setKeyColumn("organId")));
+	}
+```
+
 ## 还有??
 * 请阅读sqltoy下面的word文档说明
