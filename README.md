@@ -303,5 +303,72 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 	}
 ```
 
+## 多数据源怎么弄?
+* 通过多个lazyDao模式
+
+```java
+	 @Bean(name = "sqlToySkylineDao")
+    public SqlToyLazyDao sqlToySkylineDao(@Qualifier("dataSourceSkyline") DataSource dataSource){
+        SqlToyLazyDaoImpl dao = new SqlToyLazyDaoImpl();
+        dao.setDataSource(dataSource);
+        return dao;
+    }
+
+    @Bean(name = "sqlToyLazyDao")
+    public SqlToyLazyDao sqlToyLazyDao(@Qualifier("dataSource") DataSource dataSource) {
+        SqlToyLazyDaoImpl dao = new SqlToyLazyDaoImpl();
+        dao.setDataSource(dataSource);
+        return dao;
+    }
+```
+
+* 通过lazyDao里面调用时指定dataSource,save、update、load等都有链式操作
+
+```java
+sqlToyLazyDao.save().dataSource(dataSource).saveMode(SaveMode.IGNORE).many(entities);
+sqlToyLazyDao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staffVO).findPage(pageModel);
+```
+
+## 我想通过包路径来实现不同数据库访问
+* 请扩展实现org.sagacity.sqltoy.plugins.datasource.ObtainDataSource 接口
+* 当前默认实现(你可以通过aop+ThreadLocal来修改实现)
+
+```java
+public class DefaultObtainDataSource implements ObtainDataSource {
+	/**
+	 * 定义日志
+	 */
+	protected final Logger logger = LoggerFactory.getLogger(DefaultObtainDataSource.class);
+
+	private DataSource dataSource;
+
+	@Override
+	public DataSource getDataSource(ApplicationContext applicationContext, DataSource defaultDataSource) {
+		// 避免每次去查找(适用于固定数据源场景)
+		if (this.dataSource != null) {
+			return this.dataSource;
+		}
+		Map<String, DataSource> result = applicationContext.getBeansOfType(DataSource.class);
+		// 只有一个dataSource,直接使用
+		if (result.size() == 1) {
+			this.dataSource = result.values().iterator().next();
+		}
+		// 非单一数据源,通过sqltoyContext中定义的默认dataSource来获取
+		if (this.dataSource == null) {
+			this.dataSource = defaultDataSource;
+		}
+		// 理论上应该先获取primary的数据源,目前不知道如何获取
+		// 多数据源情况下没有指定默认dataSource则返回名称为dataSource的数据源
+		if (this.dataSource == null && applicationContext.containsBean("dataSource")) {
+			this.dataSource = (DataSource) applicationContext.getBean("dataSource");
+		}
+		if (this.dataSource == null) {
+			logger.error("在多数据源场景下,请为dao正确指定dataSource,或配置spring.sqltoy.defaultDataSource=默认数据源名称!");
+		}
+		return this.dataSource;
+	}
+}
+```
+
 ## 还有??
 * 请阅读sqltoy下面的word文档说明
