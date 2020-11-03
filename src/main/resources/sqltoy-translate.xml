@@ -46,7 +46,8 @@
 	</cache-translates>
 
 	<!-- 缓存刷新检测,可以提供多个基于sql、service、rest服务检测 -->
-	<cache-update-checkers>
+	<!-- cluster-time-deviation 集群各个节点的时间容差,默认为1秒 -->
+	<cache-update-checkers cluster-time-deviation="1">
 		<!-- 基于sql的缓存更新检测 -->
 		<sql-increment-checker cache="organIdName"
 			check-frequency="60" datasource="dataSource">
