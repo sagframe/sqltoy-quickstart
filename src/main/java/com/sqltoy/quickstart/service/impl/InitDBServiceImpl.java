@@ -51,6 +51,8 @@ public class InitDBServiceImpl implements InitDBService {
 					public void doConnection(Connection conn, Integer dbType, String dialect) throws Exception {
 						// executeBatchSql可以根据数据库类型将大的sql字符进行分割循环执行
 						SqlUtil.executeBatchSql(conn, sqlContent, 100, true);
+						// 返回结果
+						// this.setResult(result);
 					}
 				});
 
