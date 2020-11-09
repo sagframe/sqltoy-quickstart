@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sqltoy-starter.version>4.16.10</sqltoy-starter.version>
-		<fastjson.version>1.2.74</fastjson.version>
+		<fastjson.version>1.2.75</fastjson.version>
 		<druid.version>1.2.3</druid.version>
 		<junit-jupiter.version>5.7.0</junit-jupiter.version>
 		<junit-platform.version>1.7.0</junit-platform.version>
