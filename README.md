@@ -245,3 +245,18 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 ## 为什么要将*.sql.xml 放在java路径下?
 * sqltoy推荐大家项目按照业务划分先分模块(消息中心、系统管理、订单管理等)后分层(web层、service)，sql文件放于模块中便于模块整体迁移和产品化，同时有利于开发过程，让开发者不需要不断的切换目录
 * 当然这个是sqltoy推荐做法，开发者则可以根据自身实际情况而定,并非强制!
+
+## sqltoy是否sql只能写在xml中?
+* sqltoy强调复杂sql写在xml中，如果你喜欢写在代码中也可以
+* sqltoy中全部场景传sql参数都是sqlOrSqlId(直接sql或对应xml中sql的ID)
+
+```java
+   /**
+	 * @todo 通过对象传参数,简化paramName[],paramValue[] 模式传参
+	 * @param <T>
+	 * @param sqlOrNamedSql 可以是具体sql也可以是对应xml中的sqlId
+	 * @param entity        通过对象传参数,并按对象类型返回结果
+	 * @return
+	 */
+	public <T extends Serializable> List<T> findBySql(final String sqlOrNamedSql, final T entity);
+```
