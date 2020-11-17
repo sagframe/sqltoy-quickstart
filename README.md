@@ -369,6 +369,54 @@ public class DefaultObtainDataSource implements ObtainDataSource {
 	}
 }
 ```
+## sqltoy传参支持map吗？
+* sqltoy传参可以三种
+
+```java
+    /**
+	 * @todo 通过对象传参数,简化paramName[],paramValue[] 模式传参
+	 * @param <T>
+	 * @param sqlOrNamedSql 可以是具体sql也可以是对应xml中的sqlId
+	 * @param entity        通过对象传参数,并按对象类型返回结果
+	 * @return
+	 */
+	public <T extends Serializable> List<T> findBySql(final String sqlOrNamedSql, final T entity);
+	
+	/**
+	 * @todo 通过给定sql、sql中的参数名、参数的数值以及返回结果的对象类型进行条件查询
+	 */
+	public <T> List<T> findBySql(final String sqlOrSqlId, final String[] paramsNamed, final Object[] paramsValue,
+			final Class<T> voClass);
+	/**
+	 * @todo 通过map传参
+	 */
+    public <T> List<T> findBySql(final String sqlOrSqlId, final Map<String, Object> paramsMap, final Class<T> voClass);
+```
+
+## sqltoy必须返回VO吗?
+* sqltoy返回结果可以是VO、map、二维List，List<Object[]>
+
+```java
+    /**
+	 * @todo 通过给定sql、sql中的参数、参数的数值以及返回结果的对象类型进行条件查询
+	 * @param sqlOrSqlId
+	 * @param paramsNamed 如果sql是select * from table where xxx=?
+	 *                    问号传参模式，paramNamed设置为null
+	 * @param paramsValue 对应Named参数的值
+	 * @param voClass     返回结果List中的对象类型(可以是VO、null:表示返回List<List>;HashMap.class,Array.class 返回List<Object[])
+	 * @return
+	 */
+	public <T> List<T> findBySql(final String sqlOrSqlId, final String[] paramsNamed, final Object[] paramsValue,
+			final Class<T> voClass);
+```
+
+## sqltoy 的sql必须写在xml中吗？
+* sqltoy强调复杂sql放于xml中，但不限制您,如下面的代码第一个参数是sql或者sqlId，你可以直接传sql语句
+
+```java
+public <T> List<T> findBySql(final String sqlOrSqlId, final String[] paramsNamed, final Object[] paramsValue,
+			final Class<T> voClass);
+```
 
 ## 还有??
 * 请阅读sqltoy下面的word文档说明
