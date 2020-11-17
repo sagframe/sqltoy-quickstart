@@ -18,7 +18,9 @@
 		schema="${db.schema}" catalog="${db.schema}" username="${db.username}" password="${db.password}" />
 	
 	<tasks dist="../../src/main/java" encoding="UTF-8">
+		<!-- 请注意include属性,是正则表达式用来匹配表名的 -->
 		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
+			<!-- substr 用来切除掉表名前缀部分,如不切除可以填substr="",name="#{subName}" subName是固定参数  -->
 			<vo package="${project.package}.quickstart.vo" substr="Sqltoy" name="#{subName}VO" />
 		</task>
 	</tasks>
