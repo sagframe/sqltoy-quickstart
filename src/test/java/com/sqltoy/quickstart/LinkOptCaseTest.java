@@ -52,7 +52,6 @@ public class LinkOptCaseTest {
 
 	@Test
 	public void testQuery() {
-		PaginationModel pageModel = new PaginationModel();
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
@@ -68,7 +67,7 @@ public class LinkOptCaseTest {
 		staffVO.setStaffName("陈");
 		PaginationModel result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
 		// 查询可以链式操作
-		// sqlToyLazyDao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staffVO).findPage(pageModel);
+		//sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
 	}
 
 }
