@@ -37,7 +37,8 @@ public class EntityOptsCaseTest {
 	@Autowired
 	StaffInfoService staffInfoService;
 	
-	//通过POJO的查询where和select 部分可以直接写字段名称和也可以写POJO字段的属性名称
+	//通过POJO的查询where和select 部分可以直接写字段名称和也可以写POJO字段的属性名称,也可以混合
+	//原理就是sqltoy会将字段属性名替换成对应的数据库字段名称
 	
 	/**
 	 * @TODO 演示单表查询功能，其包含缓存翻译
