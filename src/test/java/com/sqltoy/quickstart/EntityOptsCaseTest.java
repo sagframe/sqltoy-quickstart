@@ -75,6 +75,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
+	//演示一下map传参模式
 	@Test
 	public void testEntityQueryMap() {
 		String[] authedOrgans = { "100004", "100007" };
