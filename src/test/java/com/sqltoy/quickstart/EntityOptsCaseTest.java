@@ -53,7 +53,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
-	//演示带缓存翻译等场景的POJO类型模式，其他功能请通过EntityQuery进行展开，可以基本代替xml中的功能
+	// 演示带缓存翻译等场景的POJO类型模式，其他功能请通过EntityQuery进行展开，可以基本代替xml中的功能
 	@Test
 	public void testEntityQueryHasTranslate() {
 		String sql = "#[staffName like :staffName]#[and createTime>=:beginDate]#[and createTime<=:endDate]";
@@ -73,7 +73,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
-	//取top记录
+	// 取top记录
 	@Test
 	public void testEntityQueryTop() {
 		String[] authedOrgans = { "100004", "100007" };
@@ -87,7 +87,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
-	//取随机记录
+	// 取随机记录
 	@Test
 	public void testEntityQueryRandom() {
 		String[] authedOrgans = { "100004", "100007" };
@@ -101,7 +101,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
-	//简单分页
+	// 简单分页
 	@Test
 	public void testEntityQueryPage() {
 		String[] authedOrgans = { "100004", "100007" };
@@ -116,7 +116,23 @@ public class EntityOptsCaseTest {
 		});
 	}
 
-	//演示取count记录
+	//演示可以指定字段
+	@Test
+	public void testEntityQueryFields() {
+		String[] authedOrgans = { "100004", "100007" };
+		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
+		PaginationModel<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+				new PaginationModel(10, 1L),
+				//select 指定查询字段
+				EntityQuery.create().select(DeviceOrderVO.select().orderId().organId().deviceType()).where(where)
+						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
+						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
+		result.getRows().forEach((vo) -> {
+			System.err.println(JSON.toJSONString(vo));
+		});
+	}
+
+	// 演示取count记录
 	@Test
 	public void testEntityQueryCount() {
 		String[] authedOrgans = { "100004", "100007" };
