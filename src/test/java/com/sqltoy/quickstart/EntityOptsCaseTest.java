@@ -120,7 +120,7 @@ public class EntityOptsCaseTest {
 	@Test
 	public void testEntityQueryCount() {
 		String[] authedOrgans = { "100004", "100007" };
-		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
 		Long result = sqlToyLazyDao.getCount(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
