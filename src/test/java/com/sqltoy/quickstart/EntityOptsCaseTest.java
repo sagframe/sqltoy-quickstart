@@ -49,10 +49,27 @@ public class EntityOptsCaseTest {
 	public void testEntityQuery() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		// sqltoy中参数为null可以无需传参
 		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
+		result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+				EntityQuery.create().where(where).names("authedOrganIds", "staffName", "beginDate").values(authedOrgans,
+						"陈", LocalDate.parse("2018-09-01")));
+		result.forEach((vo) -> {
+			System.err.println(JSON.toJSONString(vo));
+		});
+	}
+	
+	// sqltoy中参数为null可以无需传参
+	@Test
+	public void testEntityQuerySkipNull() {
+		String[] authedOrgans = { "100004", "100007" };
+		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+				EntityQuery.create().where(where).names("authedOrganIds", "staffName", "beginDate").values(authedOrgans,
+						"陈", LocalDate.parse("2018-09-01")).top(10));
 		result.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
@@ -62,6 +79,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryMap() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		// sqltoy中参数为null可以无需传参
 		Map params = new HashMap() {
 			{
 				put("authedOrganIds", authedOrgans);
@@ -70,7 +88,7 @@ public class EntityOptsCaseTest {
 			}
 		};
 		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				EntityQuery.create().where(where).paramsMap(params));
+				EntityQuery.create().where(where).paramsMap(params).top(20));
 		result.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
