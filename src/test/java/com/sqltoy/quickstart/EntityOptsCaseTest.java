@@ -92,6 +92,7 @@ public class EntityOptsCaseTest {
 		});
 	}
 
+	// 演示一下对象传参
 	// 演示带缓存翻译等场景的POJO类型模式，其他功能请通过EntityQuery进行展开，可以基本代替xml中的功能
 	@Test
 	public void testEntityQueryHasTranslate() {
