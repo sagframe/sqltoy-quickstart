@@ -4,16 +4,14 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Column;
+import java.util.ArrayList;
 import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
+import org.sagacity.sqltoy.config.annotation.Column;
+import java.time.LocalDateTime;
 import org.sagacity.sqltoy.config.annotation.OneToMany;
-
 import com.sqltoy.quickstart.vo.DictDetailVO;
 
 /**
@@ -33,7 +31,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典类型代码
 	 */
-	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.DefaultIdGenerator")
+	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictType;
 	
@@ -97,7 +95,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 * 主键关联子表信息
 	 */
-	@OneToMany(fields={"dictType"},mappedTable="sqltoy_dict_detail",mappedColumns={"DICT_TYPE"},mappedFields={"dictType"})
+	@OneToMany(fields = { "dictType" }, mappedTable = "sqltoy_dict_detail", mappedColumns = {
+			"DICT_TYPE" }, mappedFields = { "dictType" }, orderBy = "showIndex desc")
 	protected List<DictDetailVO> dictDetailVOs=new ArrayList<DictDetailVO>();
 
 	/** default constructor */

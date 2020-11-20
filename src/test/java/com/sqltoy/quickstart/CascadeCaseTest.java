@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.alibaba.fastjson.JSON;
 import com.sqltoy.quickstart.vo.ComplexpkHeadVO;
 import com.sqltoy.quickstart.vo.ComplexpkItemVO;
+import com.sqltoy.quickstart.vo.DictTypeVO;
 
 /**
  * @project sqltoy-quickstart
@@ -115,5 +116,12 @@ public class CascadeCaseTest {
 		for (ComplexpkItemVO item : head.getComplexpkItemVOs()) {
 			System.err.println(JSON.toJSONString(item));
 		}
+	}
+
+	@Test
+	public void testLoadCascadeOrderBy() {
+		DictTypeVO head = sqlToyCRUDService.loadCascade(new DictTypeVO("DEVICE_TYPE"));
+		// 打印级联加载的字表数据
+		System.err.println(JSON.toJSONString(head.getDictDetailVOs()));
 	}
 }

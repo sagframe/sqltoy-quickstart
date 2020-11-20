@@ -4,15 +4,15 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Column;
+import java.util.ArrayList;
 import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
+import org.sagacity.sqltoy.config.annotation.Column;
+import java.time.LocalDate;
+import java.sql.Blob;
+import java.time.LocalDateTime;
 
 /**
  * @project sqltoy-quickstart
@@ -31,7 +31,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 员工ID
 	 */
-	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.DefaultIdGenerator")
+	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="STAFF_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String staffId;
 	
