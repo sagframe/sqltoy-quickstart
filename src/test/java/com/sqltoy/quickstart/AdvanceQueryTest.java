@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -137,9 +138,10 @@ public class AdvanceQueryTest {
 		String[] paramNames = { "orderId", "authedOrganIds", "staffName", "beginDate", "endDate" };
 		Object[] paramValues = { null, authedOrgans, "陈", "2018-09-01", null };
 		double topSize = 20;
-		List<DeviceOrderVO> result = sqlToyLazyDao.findTopByQuery(new QueryExecutor("qstart_order_search")
-				.names(paramNames).values(paramValues).resultType(DeviceOrderVO.class), topSize).getRows();
-		result.forEach((vo) -> {
+		QueryResult result = sqlToyLazyDao.findTopByQuery(new QueryExecutor("qstart_order_search").names(paramNames)
+				.values(paramValues).resultType(DeviceOrderVO.class), topSize);
+		System.err.println(result.getExecuteTime());
+		result.getRows().forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
 	}
@@ -232,11 +234,10 @@ public class AdvanceQueryTest {
 			System.err.println(JSON.toJSONString(result.get(i)));
 		}
 	}
-	
+
 	@Test
-	public void testFindAll()
-	{
-		List<StaffInfoVO> staffs=sqlToyLazyDao.findAll(StaffInfoVO.class);
+	public void testFindAll() {
+		List<StaffInfoVO> staffs = sqlToyLazyDao.findAll(StaffInfoVO.class);
 		for (int i = 0; i < staffs.size(); i++) {
 			System.err.println(JSON.toJSONString(staffs.get(i)));
 		}

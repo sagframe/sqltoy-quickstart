@@ -89,7 +89,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	@Transactional
 	public Long updateByQuery() {
 		return sqlToyLazyDao.updateByQuery(StaffInfoVO.class,
-				EntityUpdate.create().set("updateTime", LocalDateTime.now()).where("staffName like ?").values("张"));
+				EntityUpdate.create().set("createBy", "chenrenfei").where("staffName like ?").values("张"));
 	}
 
 	/**
