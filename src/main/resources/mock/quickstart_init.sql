@@ -211,7 +211,21 @@ alter table SQLTOY_COMPLEXPK_ITEM add constraint FK_COMPLEXH_REF_ITEM foreign ke
 
 alter table SQLTOY_DICT_DETAIL add constraint FK_DICT_TYPE_REF_ITEM foreign key (DICT_TYPE)
       references SQLTOY_DICT_TYPE (DICT_TYPE) on delete restrict on update restrict;
-      
+
+/*==============================================================*/
+/* Table: SQLTOY_JSONTYPE_SHOWCAE                               */
+/*==============================================================*/
+create table SQLTOY_JSONTYPE_SHOWCAE
+(
+   ID                   varchar(32) not null  comment '主键ID',
+   STAFF_SET            json not null  comment '员工信息集合',
+   CREATE_TIME          datetime not null  comment '创建日期',
+   UPDATE_TIME          datetime not null  comment '修改时间',
+   primary key (ID)
+);
+
+alter table SQLTOY_JSONTYPE_SHOWCAE comment 'JSON等特殊类型处理演示';
+
 INSERT INTO SQLTOY_DICT_TYPE 
 (`DICT_TYPE`, `DICT_TYPE_NAME`, `COMMENTS`, `SHOW_INDEX`, `CREATE_BY`, `CREATE_TIME`, `UPDATE_BY`, `UPDATE_TIME`, `STATUS`)
 VALUES('DEVICE_TYPE', '设备类型', '设备类型', 1, 'S0001', '2019-08-01 16:47:01.000', 'S0001', '2019-08-01 16:47:01.000', 1);
