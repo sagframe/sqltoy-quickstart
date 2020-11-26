@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.16.12</version>
+	<version>4.17.0.RC2</version>
 </dependency>
 ```
 
@@ -233,6 +233,7 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 * DTOConvertPOJOTest 演示在严格分层场景下DTO和POJO互转的范例
 * LinkOptCaseTest 演示链式操作
 * EntityOptsCaseTest 基于POJO类型的单表操作演示
+* JsonTypeCaseTest 演示json等特殊类型的支持
 
 # 疑问解答
 ## 为什么要将*.sql.xml 放在java路径下?
