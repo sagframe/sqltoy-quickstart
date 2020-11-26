@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSONObject;
  * @modify 2020-11-25,修改说明
  */
 public class JsonTypeHandler extends TypeHandler {
-
 	/**
 	 * <li>返回true表示类型匹配上，并完成了setValue赋值</li>
 	 * <li>返回false 表示常规类型,交回框架自行处理</li>
@@ -32,18 +31,6 @@ public class JsonTypeHandler extends TypeHandler {
 			pst.setString(paramIndex, JSONObject.toJSONString(value));
 			return true;
 		}
-		// postgresql 针对json和jsonb 的做法
-//		if (jdbcType == 1021 || jdbcType == 1022) {
-//			PGobject jsonObject = new PGobject();
-//			if (jdbcType == 1021) {
-//				jsonObject.setType("json");
-//			} else {
-//				jsonObject.setType("jsonb");
-//			}
-//			jsonObject.setValue(JSONObject.toJSONString(value));
-//			pst.setObject(paramIndex, jsonObject);
-//			return true;
-//		}
 		return false;
 	}
 
@@ -65,38 +52,11 @@ public class JsonTypeHandler extends TypeHandler {
 		} else if (javaTypeName.toLowerCase().contains("jsonarray")) {
 			return JSONArray.parseArray(jdbcValue.toString());
 		}
-
 		// List<VO>形式
 		if (javaTypeName.equalsIgnoreCase("java.util.List") && genericType != null) {
 			return JSONArray.parseArray(jdbcValue.toString(), genericType);
 		}
-
 		// 其他场景表示非json返回null交框架自行处理
 		return null;
 	}
-
-	// postgresql json数据取出来的类型是PGobject类型,通过 ((PGobject) jdbcValue).getType()判断实际类型;
-//	public Object toJavaType(String javaTypeName, Class genericType, Object jdbcValue) throws Exception {
-//		PGobject jsonValue;
-//		String jdbcType;
-//		// json
-//		if (jdbcValue instanceof PGobject) {
-//			jsonValue = (PGobject) jdbcValue;
-//			jdbcType = jsonValue.getType().toLowerCase();
-//			if (jdbcType.equals("json") || jdbcType.equals("jsonb")) {
-//				if (javaTypeName.equalsIgnoreCase("java.util.List") && genericType != null) {
-//					return JSONArray.parseArray(jsonValue.getValue(), genericType);
-//				}
-//				if (javaTypeName.toLowerCase().contains("jsonobject")) {
-//					return JSON.parse(jsonValue.getValue());
-//				} else if (javaTypeName.toLowerCase().contains("jsonarray")) {
-//					return JSONArray.parseArray(jsonValue.getValue());
-//				} else if (genericType != null) {
-//					return JSON.parseObject(jsonValue.getValue(), Class.forName(javaTypeName));
-//				}
-//			}
-//		}
-//		return null;
-//	}
-
 }
