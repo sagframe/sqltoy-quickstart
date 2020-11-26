@@ -58,8 +58,10 @@
 		<!-- <table name="SQLTOY_DICT_DETAIL" update-cascade="delete" load="STATUS=1" orderBy=""/> -->
 	</cascade>
 
-	<!-- 数据类型对应关系 native-types表示特定数据库返回的字段类型; jdbc-type：表示对应jdbc标准的类型(见:java.sql.Types), 
-		主要用于vo @Column注解中，设置其类型,方便操作数据库插入或修改时设置类型;java-type:表示对应java对象的属性类型(非java.lang的需要将包名写完整便于import) 
+	<!-- 数据类型对应关系 
+	    native-types表示特定数据库返回的字段类型; 
+	    jdbc-type：表示对应jdbc标准的类型(见:java.sql.Types),主要用于vo @Column注解中，设置其类型,方便操作数据库插入或修改时设置类型;
+		java-type:表示对应java对象的属性类型(非java.lang的需要将包名写完整便于import) 
 		import-types: 可以自行定义需要引入的类型，多个用逗号分隔
 		-->
 	<type-mapping>
