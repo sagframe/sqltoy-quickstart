@@ -75,7 +75,7 @@
 		<sql-type native-types="_int8" jdbc-type="ARRAY"
 			java-type="Long[]" />-->
 			
-		<!-- 泛型注意xml转义符号，jdbc-type 可以直接填数字，这里java-type=List<StaffInfoVO> -->
+		<!-- 泛型注意xml转义符号，jdbc-type 可以直接填数字，这里java-type="List<StaffInfoVO>" -->
 		<sql-type native-types="json" jdbc-type="1021"
 			java-type="List&lt;StaffInfoVO&gt;" import-types="com.sqltoy.quickstart.vo.StaffInfoVO"/>
 	</type-mapping>
