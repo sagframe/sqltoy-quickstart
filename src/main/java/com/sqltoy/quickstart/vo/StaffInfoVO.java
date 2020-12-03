@@ -12,51 +12,52 @@ import com.sqltoy.quickstart.vo.base.AbstractStaffInfoVO;
 /**
  * @project sqltoy-showcase
  * @author zhongxuchen
- * @version 1.0.0
- * Table: sqltoy_staff_info,Remark:员工信息表 	
+ * @version 1.0.0 Table: sqltoy_staff_info,Remark:员工信息表
  */
 @SqlToyEntity
-public class StaffInfoVO extends AbstractStaffInfoVO {	
+public class StaffInfoVO extends AbstractStaffInfoVO {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8872936239782687517L;
-	
+
 	/** default constructor */
 	public StaffInfoVO() {
 		super();
 	}
+
 	/*---begin-constructor-area---don't-update-this-area--*/
 	/** pk constructor */
-	public StaffInfoVO(String staffId)
-	{
-		this.staffId=staffId;
+	public StaffInfoVO(String staffId) {
+		this.staffId = staffId;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/
-	
+
 	private LocalDate beginDate;
-	
+
 	private LocalDate endDate;
-	
+
 	/**
 	 * 机构名称
 	 */
 	private String organName;
-	
+
 	/**
 	 * 性别名称
 	 */
 	private String sexTypeName;
-	
+
+	private DateRange dateRange;
+
 	/**
-     *@todo vo columns to String
-     */
-    @Override
+	 * @todo vo columns to String
+	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -71,29 +72,51 @@ public class StaffInfoVO extends AbstractStaffInfoVO {
 		}
 		return null;
 	}
+
 	public String getOrganName() {
 		return organName;
 	}
+
 	public void setOrganName(String organName) {
 		this.organName = organName;
 	}
+
 	public String getSexTypeName() {
 		return sexTypeName;
 	}
+
 	public void setSexTypeName(String sexTypeName) {
 		this.sexTypeName = sexTypeName;
 	}
+
 	public LocalDate getBeginDate() {
 		return beginDate;
 	}
+
 	public void setBeginDate(LocalDate beginDate) {
 		this.beginDate = beginDate;
 	}
+
 	public LocalDate getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
-	
+
+	/**
+	 * @return the dateRange
+	 */
+	public DateRange getDateRange() {
+		return dateRange;
+	}
+
+	/**
+	 * @param dateRange the dateRange to set
+	 */
+	public void setDateRange(DateRange dateRange) {
+		this.dateRange = dateRange;
+	}
+
 }
