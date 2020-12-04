@@ -14,6 +14,7 @@ import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.EntityUpdate;
+import org.sagacity.sqltoy.model.LockMode;
 import org.sagacity.sqltoy.model.PaginationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 
 	@Transactional
 	public void updateLockStaff(String id, String address) {
-		StaffInfoVO staffInfo = sqlToyLazyDao.load(new StaffInfoVO(id));
+		StaffInfoVO staffInfo = sqlToyLazyDao.load(new StaffInfoVO(id), LockMode.UPGRADE);
 		staffInfo.setAddress(address);
 		sqlToyLazyDao.update(staffInfo);
 	}
