@@ -75,4 +75,15 @@ public class ShardingSearchTest {
 		});
 
 	}
+	
+	@Test
+	public void testShardingTableSearch1() {
+		List<TransInfo15dVO> trans = sqlToyLazyDao.findBySql("qstart_sharding_table_case",
+				Arrays.array("beginDate", "endDate"), Arrays.array(LocalDate.now().plusDays(-10), null),
+				TransInfo15dVO.class);
+		trans.forEach((vo) -> {
+			System.err.println(JSON.toJSONString(vo));
+		});
+
+	}
 }
