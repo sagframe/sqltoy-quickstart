@@ -13,6 +13,8 @@ import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.executor.QueryExecutor;
+import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +77,27 @@ public class ShardingSearchTest {
 		});
 
 	}
-	
+
 	@Test
 	public void testShardingTableSearch1() {
-		List<TransInfo15dVO> trans = sqlToyLazyDao.findBySql("qstart_sharding_table_case",
-				Arrays.array("beginDate", "endDate"), Arrays.array(LocalDate.now().plusDays(-10), null),
-				TransInfo15dVO.class);
+		String sql = "select * from sqltoy_trans_info_15d t " + " where t.trans_date>=:beginDate "
+				+ "#[and t.trans_date<=:endDate]";
+		QueryExecutor query = new QueryExecutor(sql);
+		query.tableSharding("realHisTable", new String[] { "sqltoy_trans_info_15d" }, "beginDate");
+		query.names("beginDate", "endDate").values(LocalDate.now().plusDays(-30), null)
+				.resultType(TransInfo15dVO.class);
+		List trans = sqlToyLazyDao.findByQuery(query).getRows();
+		trans.forEach((vo) -> {
+			System.err.println(JSON.toJSONString(vo));
+		});
+
+	}
+
+	@Test
+	public void testShardingTableSearch2() {
+		List trans = sqlToyLazyDao.findEntity(TransInfo15dVO.class,
+				EntityQuery.create().where("trans_date>=:transDate #[and trans_date<=:endDate]")
+						.names("transDate", "endDate").values(LocalDate.now().plusDays(-30), null));
 		trans.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
