@@ -27,7 +27,7 @@
 		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
 			<!-- substr 是 因为表以某些字符开头，比如sys_xxxx,生成VO时希望不要包含sys,如果不想截取则可以填substr=""   -->
 			<!-- name属性#{subName}属于固定格式，会将表名截取掉substr后按骆驼命名替换#{subName},所以是否VO结尾可以自行调整  -->
-			<!-- extends 属性可以指定抽象类继承的父类 ---->
+			<!-- extends 属性可以指定抽象类继承的父类 -->
 			<vo package="${project.package}.quickstart.vo" substr="Sqltoy" name="#{subName}VO" />
 		</task>
 	</tasks>
