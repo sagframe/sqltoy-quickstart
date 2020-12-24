@@ -23,8 +23,9 @@
 	<!-- dist 定义生成的java代码存放路径   -->
 	<tasks dist="../../src/main/java" encoding="UTF-8">
 		<!-- active 表示任务开关,include是表名匹配的表达式, exclude 表示在include基础上排除哪些表(也是表达式)
-		  datasource 指定上面的数据库定义名称(即方便),  swagger-model 表示会生成swagger的注解      -->
-		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
+		  datasource 指定上面的数据库定义名称(即方便),  swagger-model 表示会生成swagger的注解  
+		  fields-rid-prefix 字段中统一的前缀剔除    -->
+		<task fields-rid-prefix="F_" active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
 			<!-- substr 是 因为表以某些字符开头，比如sys_xxxx,生成VO时希望不要包含sys,如果不想截取则可以填substr=""   -->
 			<!-- name属性#{subName}属于固定格式，会将表名截取掉substr后按骆驼命名替换#{subName},所以是否VO结尾可以自行调整  -->
 			<!-- extends 属性可以指定抽象类继承的父类 -->
