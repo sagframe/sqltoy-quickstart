@@ -33,7 +33,7 @@ spring:
        password: quickstart
        defaultAutoCommit: false
        # 注意characterEncoding=utf-8 参数,在mysql6~7 版本下不设置like 中文时会无法匹配
-       url: jdbc:mysql://localhost:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+       url: jdbc:mysql://39.98.65.125:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
        druid:
          initial-size: 5
          min-idle: 5
