@@ -30,7 +30,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * 字典KEY
 	 */
 	@Id
-	@Column(name="F_DICT_KEY",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="DICT_KEY",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictKey;
 	
 	/**
@@ -38,21 +38,21 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * 字典类型代码
 	 */
 	@Id
-	@Column(name="F_DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictType;
 	
 	/**
 	 * jdbcType:VARCHAR
 	 * 字典值
 	 */
-	@Column(name="F_DICT_NAME",length=200L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="DICT_NAME",length=200L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictName;
 	
 	/**
 	 * jdbcType:DECIMAL
 	 * 显示顺序
 	 */
-	@Column(name="F_SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
+	@Column(name="SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer showIndex;
 	
 	/**
@@ -73,7 +73,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 状态
 	 */
-	@Column(name="F_STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
+	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	
 
