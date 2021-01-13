@@ -29,10 +29,10 @@ public class UpdateFetchThread extends Thread {
 	@Override
 	public void run() {
 		int meter = 0;
-		int count = 100;
+		int count = 50;
 		for (int i = 0; i < count; i++) {
 			try {
-				Thread.sleep(NumberUtil.getRandomNum(7, 15));
+				Thread.sleep(NumberUtil.getRandomNum(3, 15));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

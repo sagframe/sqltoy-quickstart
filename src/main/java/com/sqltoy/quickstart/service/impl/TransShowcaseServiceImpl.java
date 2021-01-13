@@ -11,6 +11,7 @@ import java.util.List;
 import org.sagacity.sqltoy.callback.UpdateRowHandler;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.executor.QueryExecutor;
+import org.sagacity.sqltoy.model.LockMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +41,8 @@ public class TransShowcaseServiceImpl implements TransShowcaseService {
 		transVO.setUpdateTime(LocalDateTime.now());
 		// sqlToyLazyDao.saveOrUpdate(transVO);
 		String sql = "select * from sqltoy_trans_showcase t where t.order_id=?";
-		List<TransShowcaseVO> result = (List<TransShowcaseVO>) sqlToyLazyDao.updateFetch(
-				new QueryExecutor(sql).values(transVO.getOrderId()).resultType(TransShowcaseVO.class),
+		List<TransShowcaseVO> result = (List<TransShowcaseVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
+				.values(transVO.getOrderId()).resultType(TransShowcaseVO.class).lock(LockMode.UPGRADE),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
 						int quantity = rs.getInt("QUANTITY");

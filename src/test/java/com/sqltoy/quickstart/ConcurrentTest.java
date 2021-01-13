@@ -41,10 +41,11 @@ public class ConcurrentTest {
 		transVO.setCreateBy("system");
 		transVO.setCreateTime(LocalDateTime.now());
 		transVO.setUpdateBy("system");
-		transVO.setQuantity(1);
-		transVO.setAmt(BigDecimal.ONE);
+		transVO.setQuantity(0);
+		transVO.setAmt(BigDecimal.ZERO);
 		transVO.setUpdateTime(LocalDateTime.now());
 		sqlToyCrudService.saveOrUpdate(transVO);
+		// 200个并行度，每个并行下面循环100个(间隔3~15毫秒)，每执行一次+1,最终结果应该200000
 		for (int i = 0; i < 200; i++) {
 			UpdateFetchThread thread = new UpdateFetchThread(i + 1, "S00001", transShowcaseService);
 			thread.start();
