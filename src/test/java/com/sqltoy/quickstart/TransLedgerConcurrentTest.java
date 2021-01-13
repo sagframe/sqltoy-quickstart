@@ -15,8 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.sqltoy.plugins.UpdateFetchThread;
-import com.sqltoy.quickstart.service.TransShowcaseService;
-import com.sqltoy.quickstart.vo.TransShowcaseVO;
+import com.sqltoy.quickstart.service.TransLedgerService;
+import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
@@ -27,16 +27,16 @@ import com.sqltoy.quickstart.vo.TransShowcaseVO;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SqlToyApplication.class)
-public class ConcurrentTest {
+public class TransLedgerConcurrentTest {
 	@Autowired
-	TransShowcaseService transShowcaseService;
+	TransLedgerService transShowcaseService;
 
 	@Autowired
 	SqlToyCRUDService sqlToyCrudService;
 
 	@Test
 	public void testConcurrent() {
-		TransShowcaseVO transVO = new TransShowcaseVO();
+		TransLedgerVO transVO = new TransLedgerVO();
 		transVO.setOrderId("S00001");
 		transVO.setCreateBy("system");
 		transVO.setCreateTime(LocalDateTime.now());

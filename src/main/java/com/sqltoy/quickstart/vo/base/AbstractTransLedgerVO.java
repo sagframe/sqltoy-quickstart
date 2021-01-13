@@ -16,15 +16,15 @@ import java.time.LocalDateTime;
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
- * Table: sqltoy_trans_showcase,Remark:事务演示表  
+ * Table: sqltoy_trans_ledger,Remark:交易台账并发演示表  
  */
-@Entity(tableName="sqltoy_trans_showcase",pk_constraint="PRIMARY")
-public abstract class AbstractTransShowcaseVO implements Serializable {
+@Entity(tableName="sqltoy_trans_ledger",pk_constraint="PRIMARY")
+public abstract class AbstractTransLedgerVO implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5815042127480095831L;
+	private static final long serialVersionUID = 4597959959620655989L;
 	
 	/**
 	 * jdbcType:VARCHAR
@@ -38,7 +38,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 订单ID
 	 */
-	@Column(name="ORDER_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=true)
+	@Column(name="ORDER_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String orderId;
 	
 	/**
@@ -85,11 +85,11 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	
 
 	/** default constructor */
-	public AbstractTransShowcaseVO() {
+	public AbstractTransLedgerVO() {
 	}
 	
 	/** pk constructor */
-	public AbstractTransShowcaseVO(String id)
+	public AbstractTransLedgerVO(String id)
 	{
 		this.id=id;
 	}
@@ -98,7 +98,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param id the id to set
 	 */
-	public AbstractTransShowcaseVO setId(String id) {
+	public AbstractTransLedgerVO setId(String id) {
 		this.id=id;
 		return this;
 	}
@@ -113,7 +113,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param orderId the orderId to set
 	 */
-	public AbstractTransShowcaseVO setOrderId(String orderId) {
+	public AbstractTransLedgerVO setOrderId(String orderId) {
 		this.orderId=orderId;
 		return this;
 	}
@@ -128,7 +128,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param quantity the quantity to set
 	 */
-	public AbstractTransShowcaseVO setQuantity(Integer quantity) {
+	public AbstractTransLedgerVO setQuantity(Integer quantity) {
 		this.quantity=quantity;
 		return this;
 	}
@@ -143,7 +143,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param amt the amt to set
 	 */
-	public AbstractTransShowcaseVO setAmt(BigDecimal amt) {
+	public AbstractTransLedgerVO setAmt(BigDecimal amt) {
 		this.amt=amt;
 		return this;
 	}
@@ -158,7 +158,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractTransShowcaseVO setCreateBy(String createBy) {
+	public AbstractTransLedgerVO setCreateBy(String createBy) {
 		this.createBy=createBy;
 		return this;
 	}
@@ -173,7 +173,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractTransShowcaseVO setCreateTime(LocalDateTime createTime) {
+	public AbstractTransLedgerVO setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
 		return this;
 	}
@@ -188,7 +188,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractTransShowcaseVO setUpdateBy(String updateBy) {
+	public AbstractTransLedgerVO setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
 		return this;
 	}
@@ -203,7 +203,7 @@ public abstract class AbstractTransShowcaseVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractTransShowcaseVO setUpdateTime(LocalDateTime updateTime) {
+	public AbstractTransLedgerVO setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
 		return this;
 	}

@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sqltoy.quickstart.service.TransShowcaseService;
-import com.sqltoy.quickstart.vo.TransShowcaseVO;
+import com.sqltoy.quickstart.service.TransLedgerService;
+import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
@@ -26,13 +26,13 @@ import com.sqltoy.quickstart.vo.TransShowcaseVO;
  * @version v1.0, Date:2021-1-13
  * @modify 2021-1-13,修改说明
  */
-@Service("transShowcaseService")
-public class TransShowcaseServiceImpl implements TransShowcaseService {
+@Service("transLedgerService")
+public class TransLedgerServiceImpl implements TransLedgerService {
 	@Autowired
 	SqlToyLazyDao sqlToyLazyDao;
 
 	@Transactional
-	public TransShowcaseVO updateTrans(TransShowcaseVO transVO) {
+	public TransLedgerVO updateTrans(TransLedgerVO transVO) {
 		transVO.setCreateBy("system");
 		transVO.setCreateTime(LocalDateTime.now());
 		transVO.setUpdateBy("system");
@@ -41,8 +41,8 @@ public class TransShowcaseServiceImpl implements TransShowcaseService {
 		transVO.setUpdateTime(LocalDateTime.now());
 		// sqlToyLazyDao.saveOrUpdate(transVO);
 		String sql = "select * from sqltoy_trans_showcase t where t.order_id=?";
-		List<TransShowcaseVO> result = (List<TransShowcaseVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
-				.values(transVO.getOrderId()).resultType(TransShowcaseVO.class).lock(LockMode.UPGRADE),
+		List<TransLedgerVO> result = (List<TransLedgerVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
+				.values(transVO.getOrderId()).resultType(TransLedgerVO.class).lock(LockMode.UPGRADE),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
 						int quantity = rs.getInt("QUANTITY");

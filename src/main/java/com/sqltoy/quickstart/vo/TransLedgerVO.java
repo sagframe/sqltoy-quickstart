@@ -4,30 +4,31 @@
 package com.sqltoy.quickstart.vo;
 
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
-
-import com.sqltoy.quickstart.vo.base.AbstractTransShowcaseVO;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import com.sqltoy.quickstart.vo.base.AbstractTransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0
- * Table: sqltoy_trans_showcase,Remark:事务演示表 	
+ * Table: sqltoy_trans_ledger,Remark:交易台账并发演示表 	
  */
 @SqlToyEntity
-public class TransShowcaseVO extends AbstractTransShowcaseVO {	
+public class TransLedgerVO extends AbstractTransLedgerVO {	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6766542920890563658L;
+	private static final long serialVersionUID = 8988887096147387594L;
 	
 	/** default constructor */
-	public TransShowcaseVO() {
+	public TransLedgerVO() {
 		super();
 	}
 	
 	/*---begin-constructor-area---don't-update-this-area--*/
 	/** pk constructor */
-	public TransShowcaseVO(String id)
+	public TransLedgerVO(String id)
 	{
 		this.id=id;
 	}
@@ -48,9 +49,9 @@ public class TransShowcaseVO extends AbstractTransShowcaseVO {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public TransShowcaseVO clone() {
+	public TransLedgerVO clone() {
 		try {
-			return (TransShowcaseVO) super.clone();
+			return (TransLedgerVO) super.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

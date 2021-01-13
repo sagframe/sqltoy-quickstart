@@ -5,8 +5,8 @@ package com.sqltoy.plugins;
 
 import org.sagacity.sqltoy.utils.NumberUtil;
 
-import com.sqltoy.quickstart.service.TransShowcaseService;
-import com.sqltoy.quickstart.vo.TransShowcaseVO;
+import com.sqltoy.quickstart.service.TransLedgerService;
+import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
@@ -16,14 +16,14 @@ import com.sqltoy.quickstart.vo.TransShowcaseVO;
  * @modify 2021-1-13,修改说明
  */
 public class UpdateFetchThread extends Thread {
-	private TransShowcaseService transShowcaseService;
+	private TransLedgerService transLedgerService;
 	private String orderId;
 	private int groupId;
 
-	public UpdateFetchThread(int groupId, String orderId, TransShowcaseService transShowcaseService) {
+	public UpdateFetchThread(int groupId, String orderId, TransLedgerService transLedgerService) {
 		this.groupId = groupId;
 		this.orderId = orderId;
-		this.transShowcaseService = transShowcaseService;
+		this.transLedgerService = transLedgerService;
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class UpdateFetchThread extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			TransShowcaseVO transVO = new TransShowcaseVO();
+			TransLedgerVO transVO = new TransLedgerVO();
 			transVO.setOrderId(orderId);
-			TransShowcaseVO result = transShowcaseService.updateTrans(transVO);
+			TransLedgerVO result = transLedgerService.updateTrans(transVO);
 			if (result == null) {
 				meter++;
 			}

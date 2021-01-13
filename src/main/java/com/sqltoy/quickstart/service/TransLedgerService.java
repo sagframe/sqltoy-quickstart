@@ -3,7 +3,7 @@
  */
 package com.sqltoy.quickstart.service;
 
-import com.sqltoy.quickstart.vo.TransShowcaseVO;
+import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
@@ -12,6 +12,6 @@ import com.sqltoy.quickstart.vo.TransShowcaseVO;
  * @version v1.0, Date:2021-1-13
  * @modify 2021-1-13,修改说明
  */
-public interface TransShowcaseService {
-	public TransShowcaseVO updateTrans(TransShowcaseVO transVO);
+public interface TransLedgerService {
+	public TransLedgerVO updateTrans(TransLedgerVO transVO);
 }
