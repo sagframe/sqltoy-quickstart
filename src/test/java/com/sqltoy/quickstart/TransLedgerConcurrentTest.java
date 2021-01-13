@@ -37,6 +37,7 @@ public class TransLedgerConcurrentTest {
 	@Test
 	public void testConcurrent() {
 		TransLedgerVO transVO = new TransLedgerVO();
+		transVO.setId("S00001");
 		transVO.setOrderId("S00001");
 		transVO.setCreateBy("system");
 		transVO.setCreateTime(LocalDateTime.now());

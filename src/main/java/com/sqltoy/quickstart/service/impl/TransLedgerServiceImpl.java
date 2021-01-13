@@ -33,13 +33,9 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 
 	@Transactional
 	public TransLedgerVO updateTrans(TransLedgerVO transVO) {
-		transVO.setCreateBy("system");
-		transVO.setCreateTime(LocalDateTime.now());
-		transVO.setUpdateBy("system");
 		transVO.setQuantity(1);
 		transVO.setAmt(BigDecimal.ONE);
-		transVO.setUpdateTime(LocalDateTime.now());
-		// sqlToyLazyDao.saveOrUpdate(transVO);
+		// 如果lockMode不符合要求，可以在sql语句中直接写 for update xxx ,sqltoy则优先以你的优先
 		String sql = "select * from SQLTOY_TRANS_LEDGER t where t.order_id=?";
 		List<TransLedgerVO> result = (List<TransLedgerVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
 				.values(transVO.getOrderId()).resultType(TransLedgerVO.class).lock(LockMode.UPGRADE),
