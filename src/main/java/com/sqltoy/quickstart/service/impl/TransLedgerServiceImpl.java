@@ -40,7 +40,7 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 		transVO.setAmt(BigDecimal.ONE);
 		transVO.setUpdateTime(LocalDateTime.now());
 		// sqlToyLazyDao.saveOrUpdate(transVO);
-		String sql = "select * from sqltoy_trans_showcase t where t.order_id=?";
+		String sql = "select * from SQLTOY_TRANS_LEDGER t where t.order_id=?";
 		List<TransLedgerVO> result = (List<TransLedgerVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
 				.values(transVO.getOrderId()).resultType(TransLedgerVO.class).lock(LockMode.UPGRADE),
 				new UpdateRowHandler() {
