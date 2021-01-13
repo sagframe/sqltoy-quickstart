@@ -36,7 +36,7 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 		transVO.setQuantity(1);
 		transVO.setAmt(BigDecimal.ONE);
 		//lockMode.upgrade 对应for update 会等待前面的事务完成
-		//lockMode.upgrade_nowait 则不等待前面事务完成跳过相关事务
+		//lockMode.upgrade_skiplock 则不等待前面事务完成跳过相关事务
 		// 如果lockMode不符合要求，可以在sql语句中直接写 for update xxx ,sqltoy则优先以你的优先
 		String sql = "select * from SQLTOY_TRANS_LEDGER t where t.order_id=?";
 		List<TransLedgerVO> result = (List<TransLedgerVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
