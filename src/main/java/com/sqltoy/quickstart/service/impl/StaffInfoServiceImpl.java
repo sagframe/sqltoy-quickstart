@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.sagacity.sqltoy.callback.UpdateRowHandler;
-import org.sagacity.sqltoy.config.model.Translate;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.EntityQuery;
@@ -51,23 +50,31 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 */
 	@Transactional
 	public List<StaffInfoVO> updateFetch() {
+		StaffInfoVO staffInfo = new StaffInfoVO();
+		staffInfo.setStaffId("S2029");
+		staffInfo.setStaffCode("S2029");
+		staffInfo.setStaffName("陈2029");
+		staffInfo.setOrganId("100007");
+		staffInfo.setSexType("M");
+		staffInfo.setEmail("test8@139.com");
+		staffInfo.setEntryDate(LocalDate.now());
+		staffInfo.setStatus(1);
+
+	//	sqlToyLazyDao.save(staffInfo);
 		String sql = "select t.STAFF_ID,t.STAFF_NAME,t.ADDRESS,t.ENTRY_DATE,t.ORGAN_ID,t.ORGAN_ID ORGAN_NAME,t.UPDATE_TIME"
-				+ " from sqltoy_staff_info t " + " where #[t.CREATE_TIME >=?] #[and t.CREATE_TIME<=?]";
-		return sqlToyLazyDao
-				.updateFetch(
-						new QueryExecutor(sql).values(LocalDate.parse("2019-01-01"), null).resultType(StaffInfoVO.class)
-								.translates(new Translate("organIdName").setColumn("ORGAN_NAME")),
-						new UpdateRowHandler() {
-							@Override
-							public void updateRow(ResultSet rs, int index) throws Exception {
-								String staffName = rs.getString("STAFF_NAME");
-								// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
-								if (staffName.contains("陈")) {
-									rs.updateString("ADDRESS", rs.getString("ADDRESS") + "更新!");
-								}
-								rs.updateObject("UPDATE_TIME", LocalDateTime.now());
-							}
-						});
+				+ " from sqltoy_staff_info t where staff_id=?";
+		return sqlToyLazyDao.updateFetch(
+				new QueryExecutor(sql).values("S2029").resultType(StaffInfoVO.class),
+				new UpdateRowHandler() {
+					public void updateRow(ResultSet rs, int index) throws Exception {
+						String staffName = rs.getString("STAFF_NAME");
+						// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
+						if (staffName.contains("陈")) {
+							rs.updateString("ADDRESS", rs.getString("ADDRESS") + "更新!");
+						}
+						rs.updateObject("UPDATE_TIME", LocalDateTime.now());
+					}
+				});
 	}
 
 	@Transactional

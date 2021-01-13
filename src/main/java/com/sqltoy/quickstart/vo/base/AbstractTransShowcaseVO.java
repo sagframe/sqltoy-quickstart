@@ -10,51 +10,50 @@ import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import org.sagacity.sqltoy.config.annotation.OneToMany;
-import com.sqltoy.quickstart.vo.DictDetailVO;
 
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
- * Table: sqltoy_dict_type,Remark:字典分类表  
+ * Table: sqltoy_trans_showcase,Remark:事务演示表  
  */
-@Entity(tableName="sqltoy_dict_type",pk_constraint="PRIMARY")
-public abstract class AbstractDictTypeVO implements Serializable {
+@Entity(tableName="sqltoy_trans_showcase",pk_constraint="PRIMARY")
+public abstract class AbstractTransShowcaseVO implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4214731613767317059L;
+	private static final long serialVersionUID = 5815042127480095831L;
 	
 	/**
 	 * jdbcType:VARCHAR
-	 * 字典类型代码
+	 * ID
 	 */
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
-	protected String dictType;
+	@Column(name="ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	protected String id;
 	
 	/**
 	 * jdbcType:VARCHAR
-	 * 字典类型名称
+	 * 订单ID
 	 */
-	@Column(name="DICT_TYPE_NAME",length=100L,type=java.sql.Types.VARCHAR,nullable=false)
-	protected String dictTypeName;
+	@Column(name="ORDER_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=true)
+	protected String orderId;
 	
 	/**
-	 * jdbcType:VARCHAR
-	 * 说明
+	 * jdbcType:INT
+	 * 数量
 	 */
-	@Column(name="COMMENTS",length=500L,type=java.sql.Types.VARCHAR,nullable=true)
-	protected String comments;
+	@Column(name="QUANTITY",length=10L,type=java.sql.Types.INTEGER,nullable=false)
+	protected Integer quantity;
 	
 	/**
 	 * jdbcType:DECIMAL
-	 * 显示顺序
+	 * 金额
 	 */
-	@Column(name="SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
-	protected Integer showIndex;
+	@Column(name="AMT",length=12L,type=java.sql.Types.DECIMAL,nullable=false)
+	protected BigDecimal amt;
 	
 	/**
 	 * jdbcType:VARCHAR
@@ -84,95 +83,82 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
-	/**
-	 * jdbcType:DECIMAL
-	 * 状态
-	 */
-	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
-	protected Integer status;
-	
-
-	/**
-	 * 主键关联子表信息
-	 */
-	@OneToMany(fields={"dictType"},mappedTable="sqltoy_dict_detail",mappedColumns={"DICT_TYPE"},mappedFields={"dictType"},orderBy="showIndex desc")
-	protected List<DictDetailVO> dictDetailVOs=new ArrayList<DictDetailVO>();
 
 	/** default constructor */
-	public AbstractDictTypeVO() {
+	public AbstractTransShowcaseVO() {
 	}
 	
 	/** pk constructor */
-	public AbstractDictTypeVO(String dictType)
+	public AbstractTransShowcaseVO(String id)
 	{
-		this.dictType=dictType;
+		this.id=id;
 	}
 
 	
 	/**
-	 *@param dictType the dictType to set
+	 *@param id the id to set
 	 */
-	public AbstractDictTypeVO setDictType(String dictType) {
-		this.dictType=dictType;
+	public AbstractTransShowcaseVO setId(String id) {
+		this.id=id;
 		return this;
 	}
 		
 	/**
-	 *@return the DictType
+	 *@return the Id
 	 */
-	public String getDictType() {
-	    return this.dictType;
+	public String getId() {
+	    return this.id;
 	}
 	
 	/**
-	 *@param dictTypeName the dictTypeName to set
+	 *@param orderId the orderId to set
 	 */
-	public AbstractDictTypeVO setDictTypeName(String dictTypeName) {
-		this.dictTypeName=dictTypeName;
+	public AbstractTransShowcaseVO setOrderId(String orderId) {
+		this.orderId=orderId;
 		return this;
 	}
 		
 	/**
-	 *@return the DictTypeName
+	 *@return the OrderId
 	 */
-	public String getDictTypeName() {
-	    return this.dictTypeName;
+	public String getOrderId() {
+	    return this.orderId;
 	}
 	
 	/**
-	 *@param comments the comments to set
+	 *@param quantity the quantity to set
 	 */
-	public AbstractDictTypeVO setComments(String comments) {
-		this.comments=comments;
+	public AbstractTransShowcaseVO setQuantity(Integer quantity) {
+		this.quantity=quantity;
 		return this;
 	}
 		
 	/**
-	 *@return the Comments
+	 *@return the Quantity
 	 */
-	public String getComments() {
-	    return this.comments;
+	public Integer getQuantity() {
+	    return this.quantity;
 	}
 	
 	/**
-	 *@param showIndex the showIndex to set
+	 *@param amt the amt to set
 	 */
-	public AbstractDictTypeVO setShowIndex(Integer showIndex) {
-		this.showIndex=showIndex;
+	public AbstractTransShowcaseVO setAmt(BigDecimal amt) {
+		this.amt=amt;
 		return this;
 	}
 		
 	/**
-	 *@return the ShowIndex
+	 *@return the Amt
 	 */
-	public Integer getShowIndex() {
-	    return this.showIndex;
+	public BigDecimal getAmt() {
+	    return this.amt;
 	}
 	
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractDictTypeVO setCreateBy(String createBy) {
+	public AbstractTransShowcaseVO setCreateBy(String createBy) {
 		this.createBy=createBy;
 		return this;
 	}
@@ -187,7 +173,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractDictTypeVO setCreateTime(LocalDateTime createTime) {
+	public AbstractTransShowcaseVO setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
 		return this;
 	}
@@ -202,7 +188,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractDictTypeVO setUpdateBy(String updateBy) {
+	public AbstractTransShowcaseVO setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
 		return this;
 	}
@@ -217,7 +203,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractDictTypeVO setUpdateTime(LocalDateTime updateTime) {
+	public AbstractTransShowcaseVO setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
 		return this;
 	}
@@ -228,33 +214,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	public LocalDateTime getUpdateTime() {
 	    return this.updateTime;
 	}
-	
-	/**
-	 *@param status the status to set
-	 */
-	public AbstractDictTypeVO setStatus(Integer status) {
-		this.status=status;
-		return this;
-	}
-		
-	/**
-	 *@return the Status
-	 */
-	public Integer getStatus() {
-	    return this.status;
-	}
 
 
-	/**
-	 * @return the dictDetailVOs
-	 */
-	public List<DictDetailVO> getDictDetailVOs() {
-		return this.dictDetailVOs;
-	}
-	
-	public void setDictDetailVOs(List<DictDetailVO> dictDetailVOs)	{
-		this.dictDetailVOs=dictDetailVOs;
-	}
 
 	/**
      * @todo vo columns to String
@@ -262,15 +223,14 @@ public abstract class AbstractDictTypeVO implements Serializable {
     @Override
 	public String toString() {
 		StringBuilder columnsBuffer=new StringBuilder();
-		columnsBuffer.append("dictType=").append(getDictType()).append("\n");
-		columnsBuffer.append("dictTypeName=").append(getDictTypeName()).append("\n");
-		columnsBuffer.append("comments=").append(getComments()).append("\n");
-		columnsBuffer.append("showIndex=").append(getShowIndex()).append("\n");
+		columnsBuffer.append("id=").append(getId()).append("\n");
+		columnsBuffer.append("orderId=").append(getOrderId()).append("\n");
+		columnsBuffer.append("quantity=").append(getQuantity()).append("\n");
+		columnsBuffer.append("amt=").append(getAmt()).append("\n");
 		columnsBuffer.append("createBy=").append(getCreateBy()).append("\n");
 		columnsBuffer.append("createTime=").append(getCreateTime()).append("\n");
 		columnsBuffer.append("updateBy=").append(getUpdateBy()).append("\n");
 		columnsBuffer.append("updateTime=").append(getUpdateTime()).append("\n");
-		columnsBuffer.append("status=").append(getStatus()).append("\n");
 		return columnsBuffer.toString();
 	}
 	
@@ -291,30 +251,30 @@ public abstract class AbstractDictTypeVO implements Serializable {
 			return result;
 		}
 		
-	    public SelectFieldsImpl dictType() {
-	    	if (!fields.contains("dictType")) {
-				fields.add("dictType");
+	    public SelectFieldsImpl id() {
+	    	if (!fields.contains("id")) {
+				fields.add("id");
 			}
 	    	return this;
 	    }
     
-	    public SelectFieldsImpl dictTypeName() {
-	    	if (!fields.contains("dictTypeName")) {
-				fields.add("dictTypeName");
+	    public SelectFieldsImpl orderId() {
+	    	if (!fields.contains("orderId")) {
+				fields.add("orderId");
 			}
 	    	return this;
 	    }
     
-	    public SelectFieldsImpl comments() {
-	    	if (!fields.contains("comments")) {
-				fields.add("comments");
+	    public SelectFieldsImpl quantity() {
+	    	if (!fields.contains("quantity")) {
+				fields.add("quantity");
 			}
 	    	return this;
 	    }
     
-	    public SelectFieldsImpl showIndex() {
-	    	if (!fields.contains("showIndex")) {
-				fields.add("showIndex");
+	    public SelectFieldsImpl amt() {
+	    	if (!fields.contains("amt")) {
+				fields.add("amt");
 			}
 	    	return this;
 	    }
@@ -343,13 +303,6 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	    public SelectFieldsImpl updateTime() {
 	    	if (!fields.contains("updateTime")) {
 				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
 			}
 	    	return this;
 	    }
