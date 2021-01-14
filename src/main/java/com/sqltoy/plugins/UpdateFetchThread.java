@@ -38,12 +38,17 @@ public class UpdateFetchThread extends Thread {
 			}
 			TransLedgerVO transVO = new TransLedgerVO();
 			transVO.setOrderId(orderId);
-			TransLedgerVO result = transLedgerService.updateTrans(transVO);
-			if (result == null) {
+			TransLedgerVO result = null;
+			try {
+				result = transLedgerService.updateTrans(transVO);
+				if (result == null) {
+					meter++;
+				}
+			} catch (Exception e) {
 				meter++;
 			}
 		}
-		System.err.println("groupId=" + groupId + ";完成量=" + (count - meter));
+		System.err.println("groupId=" + groupId + ";执行次数=" + count + ";完成量=" + (count - meter));
 	}
 
 }
