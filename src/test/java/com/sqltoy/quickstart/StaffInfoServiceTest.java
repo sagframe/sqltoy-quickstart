@@ -128,7 +128,6 @@ public class StaffInfoServiceTest {
 
 	@Test
 	public void testLoadByIds() {
-
 		List<StaffInfoVO> staffInfos = sqlToyCRUDService.loadByIds(StaffInfoVO.class, "S2007", "S0001");
 	}
 

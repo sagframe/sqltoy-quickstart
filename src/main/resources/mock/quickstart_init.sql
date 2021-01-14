@@ -226,6 +226,22 @@ create table SQLTOY_JSONTYPE_SHOWCAE
 
 alter table SQLTOY_JSONTYPE_SHOWCAE comment 'JSON等特殊类型处理演示';
 
+create table SQLTOY_TRANS_LEDGER
+(
+   ID                   varchar(32) not null  comment 'ID',
+   ORDER_ID             varchar(32) not null  comment '订单ID',
+   QUANTITY             integer not null  comment '数量',
+   AMT                  decimal(12,2) not null  comment '金额',
+   CREATE_BY            varchar(22) not null  comment '创建人',
+   CREATE_TIME          datetime not null  comment '创建时间',
+   UPDATE_BY            varchar(22) not null  comment '最后修改人',
+   UPDATE_TIME          datetime not null  comment '最后修改时间',
+   primary key (ID)
+);
+
+alter table SQLTOY_TRANS_LEDGER comment '交易台账并发演示表';
+
+
 INSERT INTO SQLTOY_DICT_TYPE 
 (`DICT_TYPE`, `DICT_TYPE_NAME`, `COMMENTS`, `SHOW_INDEX`, `CREATE_BY`, `CREATE_TIME`, `UPDATE_BY`, `UPDATE_TIME`, `STATUS`)
 VALUES('DEVICE_TYPE', '设备类型', '设备类型', 1, 'S0001', '2019-08-01 16:47:01.000', 'S0001', '2019-08-01 16:47:01.000', 1);
