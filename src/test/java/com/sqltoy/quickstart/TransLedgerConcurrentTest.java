@@ -29,7 +29,7 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
 @SpringBootTest(classes = SqlToyApplication.class)
 public class TransLedgerConcurrentTest {
 	@Autowired
-	TransLedgerService transShowcaseService;
+	TransLedgerService transLedgerService;
 
 	@Autowired
 	SqlToyCRUDService sqlToyCrudService;
@@ -45,13 +45,14 @@ public class TransLedgerConcurrentTest {
 		transVO.setQuantity(0);
 		transVO.setAmt(BigDecimal.ZERO);
 		transVO.setUpdateTime(LocalDateTime.now());
-		//先创建记录
+		// 先创建记录
 		sqlToyCrudService.saveOrUpdate(transVO);
-		
-		//开始并发演示
+
+		// 开始并发演示
 		// 200个并行度，每个并行下面循环50个(间隔3~15毫秒)，每执行一次+1,最终结果应该10000
+		// transLedgerService 锁默认为UPGRADE，当变成UPGRADE_SKIPLOCK时结果是错误的
 		for (int i = 0; i < 200; i++) {
-			UpdateFetchThread thread = new UpdateFetchThread(i + 1, "S00001", transShowcaseService);
+			UpdateFetchThread thread = new UpdateFetchThread(i + 1, "S00001", transLedgerService);
 			thread.start();
 		}
 		// 保持线程
