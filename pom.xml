@@ -12,12 +12,12 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>4.17.10</sqltoy-starter.version>
+		<sqltoy-starter.version>4.17.11</sqltoy-starter.version>
 		<fastjson.version>1.2.75</fastjson.version>
 		<druid.version>1.2.4</druid.version>
 		<junit-jupiter.version>5.7.0</junit-jupiter.version>
 		<junit-platform.version>1.7.0</junit-platform.version>
-		<spring.version>5.3.2</spring.version>
+		<spring.version>5.3.3</spring.version>
 		<aspectjweaver.version>1.9.6</aspectjweaver.version>
 		<mysql.version>8.0.22</mysql.version>
 	</properties>
