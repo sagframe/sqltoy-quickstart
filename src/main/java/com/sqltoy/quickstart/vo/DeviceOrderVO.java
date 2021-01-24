@@ -10,36 +10,98 @@ import com.sqltoy.quickstart.vo.base.AbstractDeviceOrderVO;
 /**
  * @project sqltoy-showcase
  * @author zhongxuchen
- * @version 1.0.0
- * Table: sqltoy_device_order,Remark:硬件购销定单表(演示有规则单号) 	
+ * @version 1.0.0 Table: sqltoy_device_order,Remark:硬件购销定单表(演示有规则单号)
  */
 @SqlToyEntity
-public class DeviceOrderVO extends AbstractDeviceOrderVO {	
+public class DeviceOrderVO extends AbstractDeviceOrderVO {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5720676300522791730L;
-	
+
 	/** default constructor */
 	public DeviceOrderVO() {
 		super();
 	}
+
 	/*---begin-constructor-area---don't-update-this-area--*/
 	/** pk constructor */
-	public DeviceOrderVO(String orderId)
-	{
-		this.orderId=orderId;
+	public DeviceOrderVO(String orderId) {
+		this.orderId = orderId;
 	}
 
 	/*---end-constructor-area---don't-update-this-area--*/
+
+	private String deviceTypeName;
+
+	private String psTypeName;
+
+	private String staffName;
+
+	private String organName;
+
+	private String createName;
+
+	private String statusName;
+	
+	
+
+	public String getDeviceTypeName() {
+		return deviceTypeName;
+	}
+
+	public void setDeviceTypeName(String deviceTypeName) {
+		this.deviceTypeName = deviceTypeName;
+	}
+
+	public String getPsTypeName() {
+		return psTypeName;
+	}
+
+	public void setPsTypeName(String psTypeName) {
+		this.psTypeName = psTypeName;
+	}
+
+	public String getStaffName() {
+		return staffName;
+	}
+
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
+	}
+
+	public String getOrganName() {
+		return organName;
+	}
+
+	public void setOrganName(String organName) {
+		this.organName = organName;
+	}
+
+	public String getCreateName() {
+		return createName;
+	}
+
+	public void setCreateName(String createName) {
+		this.createName = createName;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
 	/**
-     *@todo vo columns to String
-     */
-    @Override
+	 * @todo vo columns to String
+	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -54,5 +116,5 @@ public class DeviceOrderVO extends AbstractDeviceOrderVO {
 		}
 		return null;
 	}
-	
+
 }
