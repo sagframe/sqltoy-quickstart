@@ -25,7 +25,7 @@ spring:
         #pageFetchSizeLimit: 500000
         # 数据库保留字兼容处理(原则上不要使用数据库保留字,多个用逗号分隔)
         reservedWords: maxvalue,minvalue
-        cacheType: caffeine
+        #cacheType: caffeine
     datasource:
        name: dataSource
        type: com.alibaba.druid.pool.DruidDataSource
