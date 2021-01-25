@@ -19,7 +19,7 @@
 		<junit-platform.version>1.7.0</junit-platform.version>
 		<spring.version>5.3.3</spring.version>
 		<aspectjweaver.version>1.9.6</aspectjweaver.version>
-		<mysql.version>8.0.22</mysql.version>
+		<mysql.version>8.0.23</mysql.version>
 		<caffeine.version>2.8.8</caffeine.version>
 	</properties>
 	<dependencies>
