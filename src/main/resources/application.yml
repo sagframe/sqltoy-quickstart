@@ -25,6 +25,7 @@ spring:
         #pageFetchSizeLimit: 500000
         # 数据库保留字兼容处理(原则上不要使用数据库保留字,多个用逗号分隔)
         reservedWords: maxvalue,minvalue
+        # 切换缓存类型，默认为ehcache(在sqltoy中缓存存放cache[cacheName,HashMap<key,Object[]]结构,所以缓存框架并不影响性能)
         #cacheType: caffeine
     datasource:
        name: dataSource
