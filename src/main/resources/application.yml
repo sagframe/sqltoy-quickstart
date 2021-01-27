@@ -27,6 +27,8 @@ spring:
         reservedWords: maxvalue,minvalue
         # 切换缓存类型，默认为ehcache(在sqltoy中缓存存放cache[cacheName,HashMap<key,Object[]]结构,所以缓存框架并不影响性能)
         #cacheType: caffeine
+        #自定义缓存框架设定
+        #translateCacheManager: com.xxxx.xxxCacheImpl
     datasource:
        name: dataSource
        type: com.alibaba.druid.pool.DruidDataSource
