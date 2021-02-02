@@ -20,6 +20,12 @@ import com.alibaba.fastjson.JSONObject;
  * @modify 2020-11-25,修改说明
  */
 public class JsonTypeHandler extends TypeHandler {
+	//根据情况对null进行设置,postgresql这个环节是必须要的
+	@Override
+	public boolean setNull(PreparedStatement pst, int paramIndex, int jdbcType) throws SQLException {
+		return false;
+	}
+
 	/**
 	 * <li>返回true表示类型匹配上，并完成了setValue赋值</li>
 	 * <li>返回false 表示常规类型,交回框架自行处理</li>
