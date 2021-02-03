@@ -16,7 +16,7 @@
 	<property name="generate.selectFields.class" value="true" />
 
 	<!-- schema 对照关系:mysql 对应 db 名称; oracle 对应 用户名称，如出现字段重复等情况，请结合schema和catalog进行配置过滤 -->
-	<!-- 注意:当在多schema或tablespace场景下，会出现一个表中出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离 -->
+	<!-- 注意:当在多schema或tablespace场景下,在POJO中会出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离 -->
 	<datasource name="quickstart" url="${db.url}" driver="${db.driver_class}" schema="${db.schema}"
 		catalog="${db.schema}" username="${db.username}" password="${db.password}" />
 
