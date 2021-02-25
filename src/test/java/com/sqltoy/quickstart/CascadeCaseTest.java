@@ -37,7 +37,7 @@ public class CascadeCaseTest {
 	@Test
 	public void testDeleteCascade() {
 		// 删除
-		sqlToyCRUDService.delete(new ComplexpkHeadVO(LocalDate.parse("2020-08-06"), "S0001"));
+		sqlToyCRUDService.delete(new ComplexpkHeadVO(LocalDate.parse("2020-09-08"), "S0001"));
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class CascadeCaseTest {
 	public void testSaveCascade() {
 		// 主表记录
 		ComplexpkHeadVO head = new ComplexpkHeadVO();
-		head.setTransDate(LocalDate.parse("2020-09-07"));
+		head.setTransDate(LocalDate.parse("2020-09-08"));
 		head.setTransCode("S0001");
 		head.setTotalCnt(BigDecimal.valueOf(10));
 		head.setTotalAmt(BigDecimal.valueOf(10000));
@@ -78,7 +78,7 @@ public class CascadeCaseTest {
 	public void testUpdateCascade() {
 		// 主表记录
 		ComplexpkHeadVO head = new ComplexpkHeadVO();
-		head.setTransDate(LocalDate.parse("2020-08-06"));
+		head.setTransDate(LocalDate.parse("2020-09-08"));
 		head.setTransCode("S0001");
 		head.setTotalCnt(BigDecimal.valueOf(11));
 		head.setTotalAmt(BigDecimal.valueOf(10000));
@@ -111,7 +111,7 @@ public class CascadeCaseTest {
 	@Test
 	public void testLoadCascade() {
 		ComplexpkHeadVO head = sqlToyCRUDService
-				.loadCascade(new ComplexpkHeadVO(LocalDate.parse("2020-08-06"), "S0001"));
+				.loadCascade(new ComplexpkHeadVO(LocalDate.parse("2020-09-08"), "S0001"));
 		// 打印级联加载的字表数据
 		for (ComplexpkItemVO item : head.getComplexpkItemVOs()) {
 			System.err.println(JSON.toJSONString(item));

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_trans_ledger,Remark:交易台账并发演示表  
  */
+@Schema(name="TransLedgerVO",description="交易台账并发演示表")
 @Entity(tableName="sqltoy_trans_ledger",pk_constraint="PRIMARY")
 public abstract class AbstractTransLedgerVO implements Serializable {
 	
@@ -30,6 +32,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * ID
 	 */
+	@Schema(name="ID",description="ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String id;
@@ -38,6 +41,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 订单ID
 	 */
+	@Schema(name="ORDER_ID",description="订单ID",nullable=false)
 	@Column(name="ORDER_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String orderId;
 	
@@ -45,6 +49,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:INT
 	 * 数量
 	 */
+	@Schema(name="QUANTITY",description="数量",nullable=false)
 	@Column(name="QUANTITY",length=10L,type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer quantity;
 	
@@ -52,6 +57,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 金额
 	 */
+	@Schema(name="AMT",description="金额",nullable=false)
 	@Column(name="AMT",length=12L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal amt;
 	
@@ -59,6 +65,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -66,6 +73,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -73,6 +81,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -80,6 +89,7 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	

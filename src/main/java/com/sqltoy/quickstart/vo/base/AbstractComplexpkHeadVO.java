@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ import com.sqltoy.quickstart.vo.ComplexpkItemVO;
  * @version 1.0.0
  * Table: sqltoy_complexpk_head,Remark:复合主键级联操作主表  
  */
+@Schema(name="ComplexpkHeadVO",description="复合主键级联操作主表")
 @Entity(tableName="sqltoy_complexpk_head",pk_constraint="PRIMARY")
 public abstract class AbstractComplexpkHeadVO implements Serializable {
 	
@@ -33,6 +35,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:DATE
 	 * 交易日期
 	 */
+	@Schema(name="TRANS_DATE",description="交易日期",nullable=false)
 	@Id
 	@Column(name="TRANS_DATE",length=10L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDate transDate;
@@ -41,6 +44,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 业务代码
 	 */
+	@Schema(name="TRANS_CODE",description="业务代码",nullable=false)
 	@Id
 	@Column(name="TRANS_CODE",length=30L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String transCode;
@@ -49,6 +53,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 总数量
 	 */
+	@Schema(name="TOTAL_CNT",description="总数量",nullable=false)
 	@Column(name="TOTAL_CNT",length=12L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal totalCnt;
 	
@@ -56,6 +61,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 总金额
 	 */
+	@Schema(name="TOTAL_AMT",description="总金额",nullable=false)
 	@Column(name="TOTAL_AMT",length=12L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal totalAmt;
 	
@@ -63,6 +69,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -70,6 +77,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -77,6 +85,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -84,6 +93,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
@@ -91,7 +101,7 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 * 主键关联子表信息
 	 */
-	@OneToMany(fields={"transDate","transCode"},mappedTable="sqltoy_complexpk_item",mappedColumns={"TRANS_DATE","TRANS_ID"},mappedFields={"transDate","transId"})
+	@OneToMany(fields={"transDate","transCode"},mappedFields={"transDate","transId"},delete=true)
 	protected List<ComplexpkItemVO> complexpkItemVOs=new ArrayList<ComplexpkItemVO>();
 
 	/** default constructor */

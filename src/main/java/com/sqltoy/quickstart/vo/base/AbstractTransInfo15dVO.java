@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
  * @version 1.0.0
  * Table: sqltoy_trans_info_15d,Remark:支付交易流水表(15天表)  
  */
+@Schema(name="TransInfo15dVO",description="支付交易流水表(15天表)")
 @Entity(tableName="sqltoy_trans_info_15d",pk_constraint="PRIMARY")
 public abstract class AbstractTransInfo15dVO implements Serializable {
 	
@@ -31,6 +33,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 交易ID
 	 */
+	@Schema(name="TRANS_ID",description="交易ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="TRANS_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String transId;
@@ -39,6 +42,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 交易代码
 	 */
+	@Schema(name="TRANS_CODE",description="交易代码",nullable=false)
 	@Column(name="TRANS_CODE",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String transCode;
 	
@@ -46,6 +50,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 交易渠道
 	 */
+	@Schema(name="TRANS_CHANNEL",description="交易渠道",nullable=false)
 	@Column(name="TRANS_CHANNEL",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String transChannel;
 	
@@ -53,6 +58,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 交易金额
 	 */
+	@Schema(name="TRANS_AMT",description="交易金额",nullable=false)
 	@Column(name="TRANS_AMT",length=14L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal transAmt;
 	
@@ -60,6 +66,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 交易状态
 	 */
+	@Schema(name="STATUS",description="交易状态",nullable=false)
 	@Column(name="STATUS",length=1L,type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	
@@ -67,6 +74,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 交易返回码
 	 */
+	@Schema(name="RESULT_CODE",description="交易返回码",nullable=false)
 	@Column(name="RESULT_CODE",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String resultCode;
 	
@@ -74,6 +82,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 交易时间
 	 */
+	@Schema(name="TRANS_TIME",description="交易时间",nullable=false)
 	@Column(name="TRANS_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime transTime;
 	
@@ -81,6 +90,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:DATE
 	 * 交易日期
 	 */
+	@Schema(name="TRANS_DATE",description="交易日期",nullable=false)
 	@Column(name="TRANS_DATE",length=10L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDate transDate;
 	
@@ -88,6 +98,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 用户ID
 	 */
+	@Schema(name="USER_ID",description="用户ID",nullable=false)
 	@Column(name="USER_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String userId;
 	
@@ -95,6 +106,7 @@ public abstract class AbstractTransInfo15dVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 交易卡号
 	 */
+	@Schema(name="CARD_NO",description="交易卡号",nullable=true)
 	@Column(name="CARD_NO",length=32L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String cardNo;
 	

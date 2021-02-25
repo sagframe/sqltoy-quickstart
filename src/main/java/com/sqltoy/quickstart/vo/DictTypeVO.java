@@ -32,30 +32,6 @@ public class DictTypeVO extends AbstractDictTypeVO {
 	{
 		this.dictType=dictType;
 	}
-
-    /**
-	 * mapping sqltoy_dict_detail data to sqltoy_dict_type oneToMany List
-	 */
-	public void mappingDictDetailVOs(List<DictTypeVO> mainSet,List<DictDetailVO> itemSet)
-    {
-    	if(mainSet==null || mainSet.isEmpty() || itemSet==null||itemSet.isEmpty())
-    		return;
-    	DictTypeVO main;
-    	DictDetailVO item;
-    	for(int i=0;i<mainSet.size();i++){
-    		main=mainSet.get(i);
-    		if(itemSet.size()==0)
-    			break;
-    		for(int j=0;j<itemSet.size();j++){
-    			item=itemSet.get(j);
-    			if(main.getDictType().equals(item.getDictType())){
-    			   main.dictDetailVOs.add(item);
-    			   itemSet.remove(j);
-    			   j--;
-    			}
-    		}
-    	}
-    }
 	/*---end-constructor-area---don't-update-this-area--*/
 	/**
      *@todo vo columns to String

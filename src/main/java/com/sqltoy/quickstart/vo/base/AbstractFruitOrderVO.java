@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 /**
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
  * @version 1.0.0
  * Table: sqltoy_fruit_order,Remark:查询汇总演示-水果订单表  
  */
+@Schema(name="FruitOrderVO",description="查询汇总演示-水果订单表")
 @Entity(tableName="sqltoy_fruit_order",pk_constraint="PRIMARY")
 public abstract class AbstractFruitOrderVO implements Serializable {
 	
@@ -29,6 +31,7 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 水果名称
 	 */
+	@Schema(name="FRUIT_NAME",description="水果名称",nullable=false)
 	@Id
 	@Column(name="FRUIT_NAME",length=100L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String fruitName;
@@ -37,6 +40,7 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	 * jdbcType:INT
 	 * 订单月份
 	 */
+	@Schema(name="ORDER_MONTH",description="订单月份",nullable=false)
 	@Id
 	@Column(name="ORDER_MONTH",length=10L,type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer orderMonth;
@@ -45,6 +49,7 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 销售数量
 	 */
+	@Schema(name="SALE_COUNT",description="销售数量",nullable=false)
 	@Column(name="SALE_COUNT",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal saleCount;
 	
@@ -52,6 +57,7 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 销售单价
 	 */
+	@Schema(name="SALE_PRICE",description="销售单价",nullable=false)
 	@Column(name="SALE_PRICE",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal salePrice;
 	
@@ -59,6 +65,7 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 总金额
 	 */
+	@Schema(name="TOTAL_AMT",description="总金额",nullable=false)
 	@Column(name="TOTAL_AMT",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal totalAmt;
 	

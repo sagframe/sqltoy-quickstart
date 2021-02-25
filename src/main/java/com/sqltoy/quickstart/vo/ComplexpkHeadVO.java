@@ -34,30 +34,6 @@ public class ComplexpkHeadVO extends AbstractComplexpkHeadVO {
 		this.transDate=transDate;
 		this.transCode=transCode;
 	}
-
-    /**
-	 * mapping sqltoy_complexpk_item data to sqltoy_complexpk_head oneToMany List
-	 */
-	public void mappingComplexpkItemVOs(List<ComplexpkHeadVO> mainSet,List<ComplexpkItemVO> itemSet)
-    {
-    	if(mainSet==null || mainSet.isEmpty() || itemSet==null||itemSet.isEmpty())
-    		return;
-    	ComplexpkHeadVO main;
-    	ComplexpkItemVO item;
-    	for(int i=0;i<mainSet.size();i++){
-    		main=mainSet.get(i);
-    		if(itemSet.size()==0)
-    			break;
-    		for(int j=0;j<itemSet.size();j++){
-    			item=itemSet.get(j);
-    			if(main.getTransDate().equals(item.getTransDate())&& main.getTransCode().equals(item.getTransId())){
-    			   main.complexpkItemVOs.add(item);
-    			   itemSet.remove(j);
-    			   j--;
-    			}
-    		}
-    	}
-    }
 	/*---end-constructor-area---don't-update-this-area--*/
 	/**
      * @todo vo columns to String

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.sql.Blob;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_staff_info,Remark:员工信息表  
  */
+@Schema(name="StaffInfoVO",description="员工信息表")
 @Entity(tableName="sqltoy_staff_info",pk_constraint="PRIMARY")
 public abstract class AbstractStaffInfoVO implements Serializable {
 	
@@ -31,6 +33,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 员工ID
 	 */
+	@Schema(name="STAFF_ID",description="员工ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="STAFF_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String staffId;
@@ -39,6 +42,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 工号
 	 */
+	@Schema(name="STAFF_CODE",description="工号",nullable=false)
 	@Column(name="STAFF_CODE",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String staffCode;
 	
@@ -46,6 +50,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 姓名
 	 */
+	@Schema(name="STAFF_NAME",description="姓名",nullable=false)
 	@Column(name="STAFF_NAME",length=30L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String staffName;
 	
@@ -53,6 +58,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 部门
 	 */
+	@Schema(name="ORGAN_ID",description="部门",nullable=false)
 	@Column(name="ORGAN_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String organId;
 	
@@ -60,6 +66,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:CHAR
 	 * 性别
 	 */
+	@Schema(name="SEX_TYPE",description="性别",nullable=false)
 	@Column(name="SEX_TYPE",length=1L,type=java.sql.Types.CHAR,nullable=false)
 	protected String sexType;
 	
@@ -67,6 +74,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DATE
 	 * 出生日期
 	 */
+	@Schema(name="BIRTHDAY",description="出生日期",nullable=true)
 	@Column(name="BIRTHDAY",length=10L,type=java.sql.Types.DATE,nullable=true)
 	protected LocalDate birthday;
 	
@@ -74,6 +82,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DATE
 	 * 入职日期
 	 */
+	@Schema(name="ENTRY_DATE",description="入职日期",nullable=false)
 	@Column(name="ENTRY_DATE",length=10L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDate entryDate;
 	
@@ -81,6 +90,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DATE
 	 * 离职日期
 	 */
+	@Schema(name="TERM_DATE",description="离职日期",nullable=true)
 	@Column(name="TERM_DATE",length=10L,type=java.sql.Types.DATE,nullable=true)
 	protected LocalDate termDate;
 	
@@ -88,6 +98,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:LONGBLOB
 	 * 照片
 	 */
+	@Schema(name="PHOTO",description="照片",nullable=true)
 	@Column(name="PHOTO",length=2147483647L,type=java.sql.Types.BLOB,nullable=true)
 	protected byte[] photo;
 	
@@ -95,6 +106,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 国家
 	 */
+	@Schema(name="COUNTRY",description="国家",nullable=true)
 	@Column(name="COUNTRY",length=10L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String country;
 	
@@ -102,6 +114,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 籍贯
 	 */
+	@Schema(name="CENSUS_REGISTER",description="籍贯",nullable=true)
 	@Column(name="CENSUS_REGISTER",length=150L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String censusRegister;
 	
@@ -109,6 +122,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 家庭地址
 	 */
+	@Schema(name="ADDRESS",description="家庭地址",nullable=true)
 	@Column(name="ADDRESS",length=250L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String address;
 	
@@ -116,6 +130,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 邮箱
 	 */
+	@Schema(name="EMAIL",description="邮箱",nullable=true)
 	@Column(name="EMAIL",length=100L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String email;
 	
@@ -123,6 +138,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 移动电话
 	 */
+	@Schema(name="TEL_NO",description="移动电话",nullable=true)
 	@Column(name="TEL_NO",length=20L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String telNo;
 	
@@ -130,6 +146,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 岗位
 	 */
+	@Schema(name="POST",description="岗位",nullable=true)
 	@Column(name="POST",length=20L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String post;
 	
@@ -137,6 +154,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 职位级别
 	 */
+	@Schema(name="POST_GRADE",description="职位级别",nullable=true)
 	@Column(name="POST_GRADE",length=20L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String postGrade;
 	
@@ -144,6 +162,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -151,6 +170,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -158,6 +178,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -165,6 +186,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
@@ -172,6 +194,7 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 状态
 	 */
+	@Schema(name="STATUS",description="状态",nullable=false)
 	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	

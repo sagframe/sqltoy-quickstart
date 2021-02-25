@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 /**
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_dict_detail,Remark:字典明细表  
  */
+@Schema(name="DictDetailVO",description="字典明细表")
 @Entity(tableName="sqltoy_dict_detail",pk_constraint="PRIMARY")
 public abstract class AbstractDictDetailVO implements Serializable {
 	
@@ -29,6 +31,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典KEY
 	 */
+	@Schema(name="DICT_KEY",description="字典KEY",nullable=false)
 	@Id
 	@Column(name="DICT_KEY",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictKey;
@@ -37,6 +40,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典类型代码
 	 */
+	@Schema(name="DICT_TYPE",description="字典类型代码",nullable=false)
 	@Id
 	@Column(name="DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictType;
@@ -45,6 +49,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典值
 	 */
+	@Schema(name="DICT_NAME",description="字典值",nullable=false)
 	@Column(name="DICT_NAME",length=200L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictName;
 	
@@ -52,6 +57,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 显示顺序
 	 */
+	@Schema(name="SHOW_INDEX",description="显示顺序",nullable=false)
 	@Column(name="SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer showIndex;
 	
@@ -59,6 +65,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -66,6 +73,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
@@ -73,6 +81,7 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 状态
 	 */
+	@Schema(name="STATUS",description="状态",nullable=false)
 	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	

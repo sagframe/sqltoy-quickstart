@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_complexpk_item,Remark:复合主键级联操作子表  
  */
+@Schema(name="ComplexpkItemVO",description="复合主键级联操作子表")
 @Entity(tableName="sqltoy_complexpk_item",pk_constraint="PRIMARY")
 public abstract class AbstractComplexpkItemVO implements Serializable {
 	
@@ -31,6 +33,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * ID
 	 */
+	@Schema(name="ID",description="ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String id;
@@ -39,6 +42,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:DATE
 	 * 交易日期
 	 */
+	@Schema(name="TRANS_DATE",description="交易日期",nullable=true)
 	@Column(name="TRANS_DATE",length=10L,type=java.sql.Types.DATE,nullable=true)
 	protected LocalDate transDate;
 	
@@ -46,6 +50,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 业务代码
 	 */
+	@Schema(name="TRANS_ID",description="业务代码",nullable=true)
 	@Column(name="TRANS_ID",length=30L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String transId;
 	
@@ -53,6 +58,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 商品编码
 	 */
+	@Schema(name="PRODUCT_ID",description="商品编码",nullable=false)
 	@Column(name="PRODUCT_ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String productId;
 	
@@ -60,6 +66,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 数量
 	 */
+	@Schema(name="QUANTITY",description="数量",nullable=false)
 	@Column(name="QUANTITY",length=8L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal quantity;
 	
@@ -67,6 +74,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 价格
 	 */
+	@Schema(name="PRICE",description="价格",nullable=false)
 	@Column(name="PRICE",length=8L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal price;
 	
@@ -74,6 +82,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 总金额
 	 */
+	@Schema(name="AMT",description="总金额",nullable=false)
 	@Column(name="AMT",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
 	protected BigDecimal amt;
 	
@@ -81,6 +90,7 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	

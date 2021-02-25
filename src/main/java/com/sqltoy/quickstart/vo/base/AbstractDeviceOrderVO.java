@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_device_order,Remark:硬件购销定单表(演示有规则单号)  
  */
+@Schema(name="DeviceOrderVO",description="硬件购销定单表(演示有规则单号)")
 @Entity(tableName="sqltoy_device_order",pk_constraint="PRIMARY")
 public abstract class AbstractDeviceOrderVO implements Serializable {
 	
@@ -31,6 +33,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 订单ID
 	 */
+	@Schema(name="ORDER_ID",description="订单ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="ORDER_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String orderId;
@@ -39,6 +42,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 设备类型
 	 */
+	@Schema(name="DEVICE_TYPE",description="设备类型",nullable=false)
 	@Column(name="DEVICE_TYPE",length=10L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String deviceType;
 	
@@ -46,6 +50,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 购销标志
 	 */
+	@Schema(name="PS_TYPE",description="购销标志",nullable=false)
 	@Column(name="PS_TYPE",length=10L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String psType;
 	
@@ -53,6 +58,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 商品总量
 	 */
+	@Schema(name="TOTAL_CNT",description="商品总量",nullable=true)
 	@Column(name="TOTAL_CNT",length=12L,type=java.sql.Types.DECIMAL,nullable=true)
 	protected BigDecimal totalCnt;
 	
@@ -60,6 +66,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 总金额
 	 */
+	@Schema(name="TOTAL_AMT",description="总金额",nullable=true)
 	@Column(name="TOTAL_AMT",length=12L,type=java.sql.Types.DECIMAL,nullable=true)
 	protected BigDecimal totalAmt;
 	
@@ -67,6 +74,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 购买方
 	 */
+	@Schema(name="BUYER",description="购买方",nullable=true)
 	@Column(name="BUYER",length=22L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String buyer;
 	
@@ -74,6 +82,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 销售方
 	 */
+	@Schema(name="SALER",description="销售方",nullable=true)
 	@Column(name="SALER",length=22L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String saler;
 	
@@ -81,6 +90,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DATE
 	 * 成交日期
 	 */
+	@Schema(name="TRANS_DATE",description="成交日期",nullable=false)
 	@Column(name="TRANS_DATE",length=10L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDate transDate;
 	
@@ -88,6 +98,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DATE
 	 * 交货期限
 	 */
+	@Schema(name="DELIVERY_TERM",description="交货期限",nullable=true)
 	@Column(name="DELIVERY_TERM",length=10L,type=java.sql.Types.DATE,nullable=true)
 	protected LocalDate deliveryTerm;
 	
@@ -95,6 +106,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 业务员
 	 */
+	@Schema(name="STAFF_ID",description="业务员",nullable=true)
 	@Column(name="STAFF_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String staffId;
 	
@@ -102,6 +114,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 业务机构
 	 */
+	@Schema(name="ORGAN_ID",description="业务机构",nullable=true)
 	@Column(name="ORGAN_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String organId;
 	
@@ -109,6 +122,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:INT
 	 * 状态
 	 */
+	@Schema(name="STATUS",description="状态",nullable=false)
 	@Column(name="STATUS",length=10L,type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	
@@ -116,6 +130,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -123,6 +138,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -130,6 +146,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -137,6 +154,7 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import org.sagacity.sqltoy.config.annotation.OneToMany;
 import com.sqltoy.quickstart.vo.DictDetailVO;
@@ -19,6 +20,7 @@ import com.sqltoy.quickstart.vo.DictDetailVO;
  * @version 1.0.0
  * Table: sqltoy_dict_type,Remark:字典分类表  
  */
+@Schema(name="DictTypeVO",description="字典分类表")
 @Entity(tableName="sqltoy_dict_type",pk_constraint="PRIMARY")
 public abstract class AbstractDictTypeVO implements Serializable {
 	
@@ -31,6 +33,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典类型代码
 	 */
+	@Schema(name="DICT_TYPE",description="字典类型代码",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="DICT_TYPE",length=50L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictType;
@@ -39,6 +42,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 字典类型名称
 	 */
+	@Schema(name="DICT_TYPE_NAME",description="字典类型名称",nullable=false)
 	@Column(name="DICT_TYPE_NAME",length=100L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String dictTypeName;
 	
@@ -46,6 +50,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 说明
 	 */
+	@Schema(name="COMMENTS",description="说明",nullable=true)
 	@Column(name="COMMENTS",length=500L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String comments;
 	
@@ -53,6 +58,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 显示顺序
 	 */
+	@Schema(name="SHOW_INDEX",description="显示顺序",nullable=false)
 	@Column(name="SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer showIndex;
 	
@@ -60,6 +66,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -67,6 +74,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -74,6 +82,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -81,6 +90,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
@@ -88,6 +98,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 状态
 	 */
+	@Schema(name="STATUS",description="状态",nullable=false)
 	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	
@@ -95,7 +106,7 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 * 主键关联子表信息
 	 */
-	@OneToMany(fields={"dictType"},mappedTable="sqltoy_dict_detail",mappedColumns={"DICT_TYPE"},mappedFields={"dictType"},orderBy="showIndex desc")
+	@OneToMany(fields={"dictType"},mappedFields={"dictType"},delete=true,orderBy="showIndex desc")
 	protected List<DictDetailVO> dictDetailVOs=new ArrayList<DictDetailVO>();
 
 	/** default constructor */

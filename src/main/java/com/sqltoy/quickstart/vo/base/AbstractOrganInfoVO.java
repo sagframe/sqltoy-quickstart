@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 /**
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * Table: sqltoy_organ_info,Remark:机构信息表  
  */
+@Schema(name="OrganInfoVO",description="机构信息表")
 @Entity(tableName="sqltoy_organ_info",pk_constraint="PRIMARY")
 public abstract class AbstractOrganInfoVO implements Serializable {
 	
@@ -29,6 +31,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 机构ID
 	 */
+	@Schema(name="ORGAN_ID",description="机构ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="ORGAN_ID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String organId;
@@ -37,6 +40,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 机构名称
 	 */
+	@Schema(name="ORGAN_NAME",description="机构名称",nullable=false)
 	@Column(name="ORGAN_NAME",length=100L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String organName;
 	
@@ -44,6 +48,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 机构代码
 	 */
+	@Schema(name="ORGAN_CODE",description="机构代码",nullable=false)
 	@Column(name="ORGAN_CODE",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String organCode;
 	
@@ -51,6 +56,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 成本中心代码
 	 */
+	@Schema(name="COST_NO",description="成本中心代码",nullable=true)
 	@Column(name="COST_NO",length=20L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String costNo;
 	
@@ -58,6 +64,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 父机构ID
 	 */
+	@Schema(name="ORGAN_PID",description="父机构ID",nullable=false)
 	@Column(name="ORGAN_PID",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String organPid;
 	
@@ -65,6 +72,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 节点路径
 	 */
+	@Schema(name="NODE_ROUTE",description="节点路径",nullable=true)
 	@Column(name="NODE_ROUTE",length=200L,type=java.sql.Types.VARCHAR,nullable=true)
 	protected String nodeRoute;
 	
@@ -72,6 +80,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 节点等级
 	 */
+	@Schema(name="NODE_LEVEL",description="节点等级",nullable=true)
 	@Column(name="NODE_LEVEL",length=1L,type=java.sql.Types.INTEGER,nullable=true)
 	protected Integer nodeLevel;
 	
@@ -79,6 +88,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 是否叶子节点
 	 */
+	@Schema(name="IS_LEAF",description="是否叶子节点",nullable=true)
 	@Column(name="IS_LEAF",length=1L,type=java.sql.Types.INTEGER,nullable=true)
 	protected Integer isLeaf;
 	
@@ -86,6 +96,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 显示顺序
 	 */
+	@Schema(name="SHOW_INDEX",description="显示顺序",nullable=false)
 	@Column(name="SHOW_INDEX",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer showIndex;
 	
@@ -93,6 +104,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 创建人
 	 */
+	@Schema(name="CREATE_BY",description="创建人",nullable=false)
 	@Column(name="CREATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String createBy;
 	
@@ -100,6 +112,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建时间
 	 */
+	@Schema(name="CREATE_TIME",description="创建时间",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -107,6 +120,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 最后修改人
 	 */
+	@Schema(name="UPDATE_BY",description="最后修改人",nullable=false)
 	@Column(name="UPDATE_BY",length=22L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String updateBy;
 	
@@ -114,6 +128,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 最后修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="最后修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
@@ -121,6 +136,7 @@ public abstract class AbstractOrganInfoVO implements Serializable {
 	 * jdbcType:DECIMAL
 	 * 状态
 	 */
+	@Schema(name="STATUS",description="状态",nullable=false)
 	@Column(name="STATUS",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nullable=false)
 	protected Integer status;
 	

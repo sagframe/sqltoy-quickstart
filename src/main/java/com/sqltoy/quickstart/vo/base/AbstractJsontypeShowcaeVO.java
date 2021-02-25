@@ -4,22 +4,23 @@
 package com.sqltoy.quickstart.vo.base;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.sagacity.sqltoy.callback.SelectFields;
-import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
+import java.util.ArrayList;
+import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
-
+import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
+import java.time.LocalDateTime;
 
 /**
  * @project sqltoy-quickstart
  * @version 1.0.0
  * Table: sqltoy_jsontype_showcae,Remark:JSON等特殊类型处理演示  
  */
+@Schema(name="JsontypeShowcaeVO",description="JSON等特殊类型处理演示")
 @Entity(tableName="sqltoy_jsontype_showcae",pk_constraint="PRIMARY")
 public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	
@@ -32,6 +33,7 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	 * jdbcType:VARCHAR
 	 * 主键ID
 	 */
+	@Schema(name="ID",description="主键ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name="ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
 	protected String id;
@@ -40,6 +42,7 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	 * jdbcType:JSON
 	 * 员工信息集合
 	 */
+	@Schema(name="STAFF_SET",description="员工信息集合",nullable=false)
 	@Column(name="STAFF_SET",length=1073741824L,type=1021,nullable=false)
 	protected List<StaffInfoVO> staffSet;
 	
@@ -47,6 +50,7 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 创建日期
 	 */
+	@Schema(name="CREATE_TIME",description="创建日期",nullable=false)
 	@Column(name="CREATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime createTime;
 	
@@ -54,6 +58,7 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	 * jdbcType:DATETIME
 	 * 修改时间
 	 */
+	@Schema(name="UPDATE_TIME",description="修改时间",nullable=false)
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	

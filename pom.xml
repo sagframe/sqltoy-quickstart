@@ -12,7 +12,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>4.18.2</sqltoy-starter.version>
+		<sqltoy-starter.version>4.18.3.RC1</sqltoy-starter.version>
 		<fastjson.version>1.2.75</fastjson.version>
 		<druid.version>1.2.5</druid.version>
 		<junit-jupiter.version>5.7.1</junit-jupiter.version>
@@ -21,6 +21,7 @@
 		<aspectjweaver.version>1.9.6</aspectjweaver.version>
 		<mysql.version>8.0.23</mysql.version>
 		<caffeine.version>2.9.0</caffeine.version>
+		<swagger-annotations.version>2.1.7</swagger-annotations.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -162,6 +163,13 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-annotations.version}</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<resources>
