@@ -5,6 +5,8 @@ package com.sqltoy.quickstart;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +49,7 @@ public class CascadeCaseTest {
 	public void testSaveCascade() {
 		// 主表记录
 		ComplexpkHeadVO head = new ComplexpkHeadVO();
-		head.setTransDate(LocalDate.parse("2020-09-08"));
+		head.setTransDate(LocalDate.parse("2020-09-09"));
 		head.setTransCode("S0001");
 		head.setTotalCnt(BigDecimal.valueOf(10));
 		head.setTotalAmt(BigDecimal.valueOf(10000));
@@ -55,7 +57,7 @@ public class CascadeCaseTest {
 		// 子表记录1
 		ComplexpkItemVO item1 = new ComplexpkItemVO();
 		// 这里id是为了便于演示手工指定
-		item1.setId("S000101");
+		item1.setId("S000104");
 		item1.setProductId("P01");
 		item1.setPrice(BigDecimal.valueOf(1000));
 		item1.setAmt(BigDecimal.valueOf(5000));
@@ -64,7 +66,7 @@ public class CascadeCaseTest {
 
 		// 子表记录2
 		ComplexpkItemVO item2 = new ComplexpkItemVO();
-		item2.setId("S000102");
+		item2.setId("S000105");
 		item2.setProductId("P02");
 		item2.setPrice(BigDecimal.valueOf(1000));
 		item2.setAmt(BigDecimal.valueOf(5000));
@@ -118,10 +120,26 @@ public class CascadeCaseTest {
 		}
 	}
 
+	/**
+	 * 演示级联加载
+	 */
+	@Test
+	public void testLoadAllCascade() {
+		List entites = new ArrayList();
+		entites.add(new ComplexpkHeadVO(LocalDate.parse("2020-09-08"), "S0001"));
+		entites.add(new ComplexpkHeadVO(LocalDate.parse("2020-09-09"), "S0001"));
+		List<ComplexpkHeadVO> heads = sqlToyCRUDService.loadAllCascade(entites);
+		// 打印级联加载的字表数据
+		for (ComplexpkHeadVO item : heads) {
+			System.err.println(JSON.toJSONString(item));
+		}
+	}
+
 	@Test
 	public void testLoadCascadeOrderBy() {
 		DictTypeVO head = sqlToyCRUDService.loadCascade(new DictTypeVO("DEVICE_TYPE"));
 		// 打印级联加载的字表数据
 		System.err.println(JSON.toJSONString(head.getDictDetailVOs()));
 	}
+
 }
