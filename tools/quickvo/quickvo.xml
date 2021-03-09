@@ -39,6 +39,7 @@
 		三种策略： sequence 需要指定数据库对应的sequence名称。 assign 为手工赋值 generator为指定具体产生策略,目前分:default:22位长度的主键\nanotime:26位纳秒形式\snowflake雪花算法\uuid\redis -->
 	<primary-key>
 		<table name="SQLTOY_\w+|SYS_\w+" strategy="generator" generator="default" />
+		<!-- sequence可以写成:SEQ_${tableName} 跟表名有关联，quickvo-4.18.6版本  -->
 		<!--<table name="xxxTABLE" strategy="sequence" sequence="SEQ_XXXX"/> -->
 		<!--<table name="sys_staff_info" strategy="generator" generator="snowflake"/> -->
 	</primary-key>
