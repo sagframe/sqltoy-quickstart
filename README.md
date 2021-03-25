@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.17.11</version>
+	<version>4.18.8</version>
 </dependency>
 ```
 
@@ -99,7 +99,7 @@ spring:
 spring.sqltoy.sqlResourcesDir=classpath:com/sqltoy/quickstart
 # 默认配置就是classpath:sqltoy-translate.xml,一致情况下无需配置
 spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
-# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填trim只开通单个函数模式
+# 默认开启函数自动替换功能
 #spring.sqltoy.functionConverts=default
 # 是否开启debug模式,在开发阶段建议为true,会打印sql
 spring.sqltoy.debug=true
