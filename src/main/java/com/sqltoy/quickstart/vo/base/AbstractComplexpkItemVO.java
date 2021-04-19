@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -109,9 +107,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param id the id to set
 	 */
-	public AbstractComplexpkItemVO setId(String id) {
+	public void setId(String id) {
 		this.id=id;
-		return this;
 	}
 		
 	/**
@@ -124,9 +121,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param transDate the transDate to set
 	 */
-	public AbstractComplexpkItemVO setTransDate(LocalDate transDate) {
+	public void setTransDate(LocalDate transDate) {
 		this.transDate=transDate;
-		return this;
 	}
 		
 	/**
@@ -139,9 +135,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param transId the transId to set
 	 */
-	public AbstractComplexpkItemVO setTransId(String transId) {
+	public void setTransId(String transId) {
 		this.transId=transId;
-		return this;
 	}
 		
 	/**
@@ -154,9 +149,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param productId the productId to set
 	 */
-	public AbstractComplexpkItemVO setProductId(String productId) {
+	public void setProductId(String productId) {
 		this.productId=productId;
-		return this;
 	}
 		
 	/**
@@ -169,9 +163,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param quantity the quantity to set
 	 */
-	public AbstractComplexpkItemVO setQuantity(BigDecimal quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity=quantity;
-		return this;
 	}
 		
 	/**
@@ -184,9 +177,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param price the price to set
 	 */
-	public AbstractComplexpkItemVO setPrice(BigDecimal price) {
+	public void setPrice(BigDecimal price) {
 		this.price=price;
-		return this;
 	}
 		
 	/**
@@ -199,9 +191,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param amt the amt to set
 	 */
-	public AbstractComplexpkItemVO setAmt(BigDecimal amt) {
+	public void setAmt(BigDecimal amt) {
 		this.amt=amt;
-		return this;
 	}
 		
 	/**
@@ -214,9 +205,8 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractComplexpkItemVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -245,78 +235,4 @@ public abstract class AbstractComplexpkItemVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl id() {
-	    	if (!fields.contains("id")) {
-				fields.add("id");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transDate() {
-	    	if (!fields.contains("transDate")) {
-				fields.add("transDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transId() {
-	    	if (!fields.contains("transId")) {
-				fields.add("transId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl productId() {
-	    	if (!fields.contains("productId")) {
-				fields.add("productId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl quantity() {
-	    	if (!fields.contains("quantity")) {
-				fields.add("quantity");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl price() {
-	    	if (!fields.contains("price")) {
-				fields.add("price");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl amt() {
-	    	if (!fields.contains("amt")) {
-				fields.add("amt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	}
 }

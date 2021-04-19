@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -77,9 +75,8 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	/**
 	 *@param id the id to set
 	 */
-	public AbstractJsontypeShowcaeVO setId(String id) {
+	public void setId(String id) {
 		this.id=id;
-		return this;
 	}
 		
 	/**
@@ -92,9 +89,8 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	/**
 	 *@param staffSet the staffSet to set
 	 */
-	public AbstractJsontypeShowcaeVO setStaffSet(List<StaffInfoVO> staffSet) {
+	public void setStaffSet(List<StaffInfoVO> staffSet) {
 		this.staffSet=staffSet;
-		return this;
 	}
 		
 	/**
@@ -107,9 +103,8 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractJsontypeShowcaeVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -122,9 +117,8 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractJsontypeShowcaeVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -149,50 +143,4 @@ public abstract class AbstractJsontypeShowcaeVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl id() {
-	    	if (!fields.contains("id")) {
-				fields.add("id");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl staffSet() {
-	    	if (!fields.contains("staffSet")) {
-				fields.add("staffSet");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	}
 }

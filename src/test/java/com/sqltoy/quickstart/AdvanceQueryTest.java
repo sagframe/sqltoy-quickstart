@@ -4,7 +4,6 @@
 package com.sqltoy.quickstart;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.assertj.core.util.Maps;
@@ -188,15 +187,6 @@ public class AdvanceQueryTest {
 	@Test
 	public void testPivotList() throws InterruptedException {
 		List result = sqlToyLazyDao.findBySql("qstart_pivot_case", null);
-		for (int i = 0; i < result.size(); i++) {
-			System.err.println(JSON.toJSONString(result.get(i)));
-		}
-	}
-	
-	//演示列转行，可以将结果映射到对象上，这里用Map演示(注意可以是VO/POJO)
-	@Test
-	public void testUnPivotList() throws InterruptedException {
-		List result = sqlToyLazyDao.findBySql("qstart_unpivot_case",null, LinkedHashMap.class);
 		for (int i = 0; i < result.size(); i++) {
 			System.err.println(JSON.toJSONString(result.get(i)));
 		}

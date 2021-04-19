@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -173,9 +171,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param orderId the orderId to set
 	 */
-	public AbstractDeviceOrderVO setOrderId(String orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId=orderId;
-		return this;
 	}
 		
 	/**
@@ -188,9 +185,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param deviceType the deviceType to set
 	 */
-	public AbstractDeviceOrderVO setDeviceType(String deviceType) {
+	public void setDeviceType(String deviceType) {
 		this.deviceType=deviceType;
-		return this;
 	}
 		
 	/**
@@ -203,9 +199,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param psType the psType to set
 	 */
-	public AbstractDeviceOrderVO setPsType(String psType) {
+	public void setPsType(String psType) {
 		this.psType=psType;
-		return this;
 	}
 		
 	/**
@@ -218,9 +213,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param totalCnt the totalCnt to set
 	 */
-	public AbstractDeviceOrderVO setTotalCnt(BigDecimal totalCnt) {
+	public void setTotalCnt(BigDecimal totalCnt) {
 		this.totalCnt=totalCnt;
-		return this;
 	}
 		
 	/**
@@ -233,9 +227,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param totalAmt the totalAmt to set
 	 */
-	public AbstractDeviceOrderVO setTotalAmt(BigDecimal totalAmt) {
+	public void setTotalAmt(BigDecimal totalAmt) {
 		this.totalAmt=totalAmt;
-		return this;
 	}
 		
 	/**
@@ -248,9 +241,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param buyer the buyer to set
 	 */
-	public AbstractDeviceOrderVO setBuyer(String buyer) {
+	public void setBuyer(String buyer) {
 		this.buyer=buyer;
-		return this;
 	}
 		
 	/**
@@ -263,9 +255,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param saler the saler to set
 	 */
-	public AbstractDeviceOrderVO setSaler(String saler) {
+	public void setSaler(String saler) {
 		this.saler=saler;
-		return this;
 	}
 		
 	/**
@@ -278,9 +269,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param transDate the transDate to set
 	 */
-	public AbstractDeviceOrderVO setTransDate(LocalDate transDate) {
+	public void setTransDate(LocalDate transDate) {
 		this.transDate=transDate;
-		return this;
 	}
 		
 	/**
@@ -293,9 +283,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param deliveryTerm the deliveryTerm to set
 	 */
-	public AbstractDeviceOrderVO setDeliveryTerm(LocalDate deliveryTerm) {
+	public void setDeliveryTerm(LocalDate deliveryTerm) {
 		this.deliveryTerm=deliveryTerm;
-		return this;
 	}
 		
 	/**
@@ -308,9 +297,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param staffId the staffId to set
 	 */
-	public AbstractDeviceOrderVO setStaffId(String staffId) {
+	public void setStaffId(String staffId) {
 		this.staffId=staffId;
-		return this;
 	}
 		
 	/**
@@ -323,9 +311,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param organId the organId to set
 	 */
-	public AbstractDeviceOrderVO setOrganId(String organId) {
+	public void setOrganId(String organId) {
 		this.organId=organId;
-		return this;
 	}
 		
 	/**
@@ -338,9 +325,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param status the status to set
 	 */
-	public AbstractDeviceOrderVO setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status=status;
-		return this;
 	}
 		
 	/**
@@ -353,9 +339,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractDeviceOrderVO setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy=createBy;
-		return this;
 	}
 		
 	/**
@@ -368,9 +353,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractDeviceOrderVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -383,9 +367,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractDeviceOrderVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -398,9 +381,8 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractDeviceOrderVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -437,134 +419,4 @@ public abstract class AbstractDeviceOrderVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl orderId() {
-	    	if (!fields.contains("orderId")) {
-				fields.add("orderId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl deviceType() {
-	    	if (!fields.contains("deviceType")) {
-				fields.add("deviceType");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl psType() {
-	    	if (!fields.contains("psType")) {
-				fields.add("psType");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl totalCnt() {
-	    	if (!fields.contains("totalCnt")) {
-				fields.add("totalCnt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl totalAmt() {
-	    	if (!fields.contains("totalAmt")) {
-				fields.add("totalAmt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl buyer() {
-	    	if (!fields.contains("buyer")) {
-				fields.add("buyer");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl saler() {
-	    	if (!fields.contains("saler")) {
-				fields.add("saler");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transDate() {
-	    	if (!fields.contains("transDate")) {
-				fields.add("transDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl deliveryTerm() {
-	    	if (!fields.contains("deliveryTerm")) {
-				fields.add("deliveryTerm");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl staffId() {
-	    	if (!fields.contains("staffId")) {
-				fields.add("staffId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl organId() {
-	    	if (!fields.contains("organId")) {
-				fields.add("organId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createBy() {
-	    	if (!fields.contains("createBy")) {
-				fields.add("createBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	}
 }

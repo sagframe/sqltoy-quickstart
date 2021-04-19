@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +13,7 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.sagacity.sqltoy.config.annotation.OneToMany;
+import java.util.ArrayList;
 import com.sqltoy.quickstart.vo.ComplexpkItemVO;
 
 /**
@@ -119,9 +118,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param transDate the transDate to set
 	 */
-	public AbstractComplexpkHeadVO setTransDate(LocalDate transDate) {
+	public void setTransDate(LocalDate transDate) {
 		this.transDate=transDate;
-		return this;
 	}
 		
 	/**
@@ -134,9 +132,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param transCode the transCode to set
 	 */
-	public AbstractComplexpkHeadVO setTransCode(String transCode) {
+	public void setTransCode(String transCode) {
 		this.transCode=transCode;
-		return this;
 	}
 		
 	/**
@@ -149,9 +146,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param totalCnt the totalCnt to set
 	 */
-	public AbstractComplexpkHeadVO setTotalCnt(BigDecimal totalCnt) {
+	public void setTotalCnt(BigDecimal totalCnt) {
 		this.totalCnt=totalCnt;
-		return this;
 	}
 		
 	/**
@@ -164,9 +160,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param totalAmt the totalAmt to set
 	 */
-	public AbstractComplexpkHeadVO setTotalAmt(BigDecimal totalAmt) {
+	public void setTotalAmt(BigDecimal totalAmt) {
 		this.totalAmt=totalAmt;
-		return this;
 	}
 		
 	/**
@@ -179,9 +174,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractComplexpkHeadVO setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy=createBy;
-		return this;
 	}
 		
 	/**
@@ -194,9 +188,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractComplexpkHeadVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -209,9 +202,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractComplexpkHeadVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -224,9 +216,8 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractComplexpkHeadVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -265,78 +256,4 @@ public abstract class AbstractComplexpkHeadVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl transDate() {
-	    	if (!fields.contains("transDate")) {
-				fields.add("transDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transCode() {
-	    	if (!fields.contains("transCode")) {
-				fields.add("transCode");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl totalCnt() {
-	    	if (!fields.contains("totalCnt")) {
-				fields.add("totalCnt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl totalAmt() {
-	    	if (!fields.contains("totalAmt")) {
-				fields.add("totalAmt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createBy() {
-	    	if (!fields.contains("createBy")) {
-				fields.add("createBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	}
 }

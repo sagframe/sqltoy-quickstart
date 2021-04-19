@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -213,9 +211,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param staffId the staffId to set
 	 */
-	public AbstractStaffInfoVO setStaffId(String staffId) {
+	public void setStaffId(String staffId) {
 		this.staffId=staffId;
-		return this;
 	}
 		
 	/**
@@ -228,9 +225,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param staffCode the staffCode to set
 	 */
-	public AbstractStaffInfoVO setStaffCode(String staffCode) {
+	public void setStaffCode(String staffCode) {
 		this.staffCode=staffCode;
-		return this;
 	}
 		
 	/**
@@ -243,9 +239,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param staffName the staffName to set
 	 */
-	public AbstractStaffInfoVO setStaffName(String staffName) {
+	public void setStaffName(String staffName) {
 		this.staffName=staffName;
-		return this;
 	}
 		
 	/**
@@ -258,9 +253,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param organId the organId to set
 	 */
-	public AbstractStaffInfoVO setOrganId(String organId) {
+	public void setOrganId(String organId) {
 		this.organId=organId;
-		return this;
 	}
 		
 	/**
@@ -273,9 +267,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param sexType the sexType to set
 	 */
-	public AbstractStaffInfoVO setSexType(String sexType) {
+	public void setSexType(String sexType) {
 		this.sexType=sexType;
-		return this;
 	}
 		
 	/**
@@ -288,9 +281,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param birthday the birthday to set
 	 */
-	public AbstractStaffInfoVO setBirthday(LocalDate birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday=birthday;
-		return this;
 	}
 		
 	/**
@@ -303,9 +295,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param entryDate the entryDate to set
 	 */
-	public AbstractStaffInfoVO setEntryDate(LocalDate entryDate) {
+	public void setEntryDate(LocalDate entryDate) {
 		this.entryDate=entryDate;
-		return this;
 	}
 		
 	/**
@@ -318,9 +309,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param termDate the termDate to set
 	 */
-	public AbstractStaffInfoVO setTermDate(LocalDate termDate) {
+	public void setTermDate(LocalDate termDate) {
 		this.termDate=termDate;
-		return this;
 	}
 		
 	/**
@@ -333,9 +323,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param photo the photo to set
 	 */
-	public AbstractStaffInfoVO setPhoto(byte[] photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo=photo;
-		return this;
 	}
 		
 	/**
@@ -348,9 +337,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param country the country to set
 	 */
-	public AbstractStaffInfoVO setCountry(String country) {
+	public void setCountry(String country) {
 		this.country=country;
-		return this;
 	}
 		
 	/**
@@ -363,9 +351,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param censusRegister the censusRegister to set
 	 */
-	public AbstractStaffInfoVO setCensusRegister(String censusRegister) {
+	public void setCensusRegister(String censusRegister) {
 		this.censusRegister=censusRegister;
-		return this;
 	}
 		
 	/**
@@ -378,9 +365,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param address the address to set
 	 */
-	public AbstractStaffInfoVO setAddress(String address) {
+	public void setAddress(String address) {
 		this.address=address;
-		return this;
 	}
 		
 	/**
@@ -393,9 +379,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param email the email to set
 	 */
-	public AbstractStaffInfoVO setEmail(String email) {
+	public void setEmail(String email) {
 		this.email=email;
-		return this;
 	}
 		
 	/**
@@ -408,9 +393,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param telNo the telNo to set
 	 */
-	public AbstractStaffInfoVO setTelNo(String telNo) {
+	public void setTelNo(String telNo) {
 		this.telNo=telNo;
-		return this;
 	}
 		
 	/**
@@ -423,9 +407,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param post the post to set
 	 */
-	public AbstractStaffInfoVO setPost(String post) {
+	public void setPost(String post) {
 		this.post=post;
-		return this;
 	}
 		
 	/**
@@ -438,9 +421,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param postGrade the postGrade to set
 	 */
-	public AbstractStaffInfoVO setPostGrade(String postGrade) {
+	public void setPostGrade(String postGrade) {
 		this.postGrade=postGrade;
-		return this;
 	}
 		
 	/**
@@ -453,9 +435,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractStaffInfoVO setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy=createBy;
-		return this;
 	}
 		
 	/**
@@ -468,9 +449,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractStaffInfoVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -483,9 +463,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractStaffInfoVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -498,9 +477,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractStaffInfoVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -513,9 +491,8 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 	/**
 	 *@param status the status to set
 	 */
-	public AbstractStaffInfoVO setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status=status;
-		return this;
 	}
 		
 	/**
@@ -557,169 +534,4 @@ public abstract class AbstractStaffInfoVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl staffId() {
-	    	if (!fields.contains("staffId")) {
-				fields.add("staffId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl staffCode() {
-	    	if (!fields.contains("staffCode")) {
-				fields.add("staffCode");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl staffName() {
-	    	if (!fields.contains("staffName")) {
-				fields.add("staffName");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl organId() {
-	    	if (!fields.contains("organId")) {
-				fields.add("organId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl sexType() {
-	    	if (!fields.contains("sexType")) {
-				fields.add("sexType");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl birthday() {
-	    	if (!fields.contains("birthday")) {
-				fields.add("birthday");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl entryDate() {
-	    	if (!fields.contains("entryDate")) {
-				fields.add("entryDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl termDate() {
-	    	if (!fields.contains("termDate")) {
-				fields.add("termDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl photo() {
-	    	if (!fields.contains("photo")) {
-				fields.add("photo");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl country() {
-	    	if (!fields.contains("country")) {
-				fields.add("country");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl censusRegister() {
-	    	if (!fields.contains("censusRegister")) {
-				fields.add("censusRegister");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl address() {
-	    	if (!fields.contains("address")) {
-				fields.add("address");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl email() {
-	    	if (!fields.contains("email")) {
-				fields.add("email");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl telNo() {
-	    	if (!fields.contains("telNo")) {
-				fields.add("telNo");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl post() {
-	    	if (!fields.contains("post")) {
-				fields.add("post");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl postGrade() {
-	    	if (!fields.contains("postGrade")) {
-				fields.add("postGrade");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createBy() {
-	    	if (!fields.contains("createBy")) {
-				fields.add("createBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
-			}
-	    	return this;
-	    }
-    
-	}
 }

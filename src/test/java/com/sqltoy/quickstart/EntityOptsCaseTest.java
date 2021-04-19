@@ -167,7 +167,7 @@ public class EntityOptsCaseTest {
 				// 支持select().field1().field2() 链式模式,数据库表结构变更自动报错
 				// 支持:select("field1","fields2")数组模式，书写较为麻烦，可以是POJO的属性名称
 				// 支持:select("field1,fields2") 单字符串逗号分隔模式,书写比较简单，可以是POJO的属性名称
-				EntityQuery.create().select(DeviceOrderVO.select().orderId().organId().deviceType()).where(where)
+				EntityQuery.create().select("orderId,deviceType,organId").where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
 		result.getRows().forEach((vo) -> {

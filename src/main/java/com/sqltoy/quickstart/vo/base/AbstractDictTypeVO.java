@@ -6,13 +6,12 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import org.sagacity.sqltoy.config.annotation.OneToMany;
+import java.util.ArrayList;
 import com.sqltoy.quickstart.vo.DictDetailVO;
 
 /**
@@ -123,9 +122,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param dictType the dictType to set
 	 */
-	public AbstractDictTypeVO setDictType(String dictType) {
+	public void setDictType(String dictType) {
 		this.dictType=dictType;
-		return this;
 	}
 		
 	/**
@@ -138,9 +136,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param dictTypeName the dictTypeName to set
 	 */
-	public AbstractDictTypeVO setDictTypeName(String dictTypeName) {
+	public void setDictTypeName(String dictTypeName) {
 		this.dictTypeName=dictTypeName;
-		return this;
 	}
 		
 	/**
@@ -153,9 +150,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param comments the comments to set
 	 */
-	public AbstractDictTypeVO setComments(String comments) {
+	public void setComments(String comments) {
 		this.comments=comments;
-		return this;
 	}
 		
 	/**
@@ -168,9 +164,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param showIndex the showIndex to set
 	 */
-	public AbstractDictTypeVO setShowIndex(Integer showIndex) {
+	public void setShowIndex(Integer showIndex) {
 		this.showIndex=showIndex;
-		return this;
 	}
 		
 	/**
@@ -183,9 +178,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractDictTypeVO setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy=createBy;
-		return this;
 	}
 		
 	/**
@@ -198,9 +192,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractDictTypeVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -213,9 +206,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractDictTypeVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -228,9 +220,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractDictTypeVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -243,9 +234,8 @@ public abstract class AbstractDictTypeVO implements Serializable {
 	/**
 	 *@param status the status to set
 	 */
-	public AbstractDictTypeVO setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status=status;
-		return this;
 	}
 		
 	/**
@@ -285,85 +275,4 @@ public abstract class AbstractDictTypeVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl dictType() {
-	    	if (!fields.contains("dictType")) {
-				fields.add("dictType");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl dictTypeName() {
-	    	if (!fields.contains("dictTypeName")) {
-				fields.add("dictTypeName");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl comments() {
-	    	if (!fields.contains("comments")) {
-				fields.add("comments");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl showIndex() {
-	    	if (!fields.contains("showIndex")) {
-				fields.add("showIndex");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createBy() {
-	    	if (!fields.contains("createBy")) {
-				fields.add("createBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
-			}
-	    	return this;
-	    }
-    
-	}
 }

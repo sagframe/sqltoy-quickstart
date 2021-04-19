@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -125,9 +123,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transId the transId to set
 	 */
-	public AbstractTransInfoHisVO setTransId(String transId) {
+	public void setTransId(String transId) {
 		this.transId=transId;
-		return this;
 	}
 		
 	/**
@@ -140,9 +137,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transCode the transCode to set
 	 */
-	public AbstractTransInfoHisVO setTransCode(String transCode) {
+	public void setTransCode(String transCode) {
 		this.transCode=transCode;
-		return this;
 	}
 		
 	/**
@@ -155,9 +151,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transChannel the transChannel to set
 	 */
-	public AbstractTransInfoHisVO setTransChannel(String transChannel) {
+	public void setTransChannel(String transChannel) {
 		this.transChannel=transChannel;
-		return this;
 	}
 		
 	/**
@@ -170,9 +165,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transAmt the transAmt to set
 	 */
-	public AbstractTransInfoHisVO setTransAmt(BigDecimal transAmt) {
+	public void setTransAmt(BigDecimal transAmt) {
 		this.transAmt=transAmt;
-		return this;
 	}
 		
 	/**
@@ -185,9 +179,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param status the status to set
 	 */
-	public AbstractTransInfoHisVO setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status=status;
-		return this;
 	}
 		
 	/**
@@ -200,9 +193,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param resultCode the resultCode to set
 	 */
-	public AbstractTransInfoHisVO setResultCode(String resultCode) {
+	public void setResultCode(String resultCode) {
 		this.resultCode=resultCode;
-		return this;
 	}
 		
 	/**
@@ -215,9 +207,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transTime the transTime to set
 	 */
-	public AbstractTransInfoHisVO setTransTime(LocalDateTime transTime) {
+	public void setTransTime(LocalDateTime transTime) {
 		this.transTime=transTime;
-		return this;
 	}
 		
 	/**
@@ -230,9 +221,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param transDate the transDate to set
 	 */
-	public AbstractTransInfoHisVO setTransDate(LocalDate transDate) {
+	public void setTransDate(LocalDate transDate) {
 		this.transDate=transDate;
-		return this;
 	}
 		
 	/**
@@ -245,9 +235,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param userId the userId to set
 	 */
-	public AbstractTransInfoHisVO setUserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId=userId;
-		return this;
 	}
 		
 	/**
@@ -260,9 +249,8 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 	/**
 	 *@param cardNo the cardNo to set
 	 */
-	public AbstractTransInfoHisVO setCardNo(String cardNo) {
+	public void setCardNo(String cardNo) {
 		this.cardNo=cardNo;
-		return this;
 	}
 		
 	/**
@@ -293,92 +281,4 @@ public abstract class AbstractTransInfoHisVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl transId() {
-	    	if (!fields.contains("transId")) {
-				fields.add("transId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transCode() {
-	    	if (!fields.contains("transCode")) {
-				fields.add("transCode");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transChannel() {
-	    	if (!fields.contains("transChannel")) {
-				fields.add("transChannel");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transAmt() {
-	    	if (!fields.contains("transAmt")) {
-				fields.add("transAmt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl resultCode() {
-	    	if (!fields.contains("resultCode")) {
-				fields.add("resultCode");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transTime() {
-	    	if (!fields.contains("transTime")) {
-				fields.add("transTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl transDate() {
-	    	if (!fields.contains("transDate")) {
-				fields.add("transDate");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl userId() {
-	    	if (!fields.contains("userId")) {
-				fields.add("userId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl cardNo() {
-	    	if (!fields.contains("cardNo")) {
-				fields.add("cardNo");
-			}
-	    	return this;
-	    }
-    
-	}
 }
