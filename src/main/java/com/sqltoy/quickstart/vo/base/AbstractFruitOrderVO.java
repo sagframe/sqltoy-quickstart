@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -85,9 +83,8 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	/**
 	 *@param fruitName the fruitName to set
 	 */
-	public AbstractFruitOrderVO setFruitName(String fruitName) {
+	public void setFruitName(String fruitName) {
 		this.fruitName=fruitName;
-		return this;
 	}
 		
 	/**
@@ -100,9 +97,8 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	/**
 	 *@param orderMonth the orderMonth to set
 	 */
-	public AbstractFruitOrderVO setOrderMonth(Integer orderMonth) {
+	public void setOrderMonth(Integer orderMonth) {
 		this.orderMonth=orderMonth;
-		return this;
 	}
 		
 	/**
@@ -115,9 +111,8 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	/**
 	 *@param saleCount the saleCount to set
 	 */
-	public AbstractFruitOrderVO setSaleCount(BigDecimal saleCount) {
+	public void setSaleCount(BigDecimal saleCount) {
 		this.saleCount=saleCount;
-		return this;
 	}
 		
 	/**
@@ -130,9 +125,8 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	/**
 	 *@param salePrice the salePrice to set
 	 */
-	public AbstractFruitOrderVO setSalePrice(BigDecimal salePrice) {
+	public void setSalePrice(BigDecimal salePrice) {
 		this.salePrice=salePrice;
-		return this;
 	}
 		
 	/**
@@ -145,9 +139,8 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 	/**
 	 *@param totalAmt the totalAmt to set
 	 */
-	public AbstractFruitOrderVO setTotalAmt(BigDecimal totalAmt) {
+	public void setTotalAmt(BigDecimal totalAmt) {
 		this.totalAmt=totalAmt;
-		return this;
 	}
 		
 	/**
@@ -173,57 +166,4 @@ public abstract class AbstractFruitOrderVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl fruitName() {
-	    	if (!fields.contains("fruitName")) {
-				fields.add("fruitName");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl orderMonth() {
-	    	if (!fields.contains("orderMonth")) {
-				fields.add("orderMonth");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl saleCount() {
-	    	if (!fields.contains("saleCount")) {
-				fields.add("saleCount");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl salePrice() {
-	    	if (!fields.contains("salePrice")) {
-				fields.add("salePrice");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl totalAmt() {
-	    	if (!fields.contains("totalAmt")) {
-				fields.add("totalAmt");
-			}
-	    	return this;
-	    }
-    
-	}
 }

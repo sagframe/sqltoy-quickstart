@@ -114,14 +114,14 @@ public class CascadeCaseTest {
 	public void testLoadCascade() {
 		ComplexpkHeadVO head = sqlToyCRUDService
 				.loadCascade(new ComplexpkHeadVO(LocalDate.parse("2020-09-08"), "S0001"));
-		// 打印级联加载的字表数据
+		// 打印级联加载的子表数据
 		for (ComplexpkItemVO item : head.getComplexpkItemVOs()) {
 			System.err.println(JSON.toJSONString(item));
 		}
 	}
 
 	/**
-	 * 演示级联加载
+	 * 演示批量级联加载
 	 */
 	@Test
 	public void testLoadAllCascade() {
@@ -129,7 +129,7 @@ public class CascadeCaseTest {
 		entites.add(new ComplexpkHeadVO(LocalDate.parse("2020-09-08"), "S0001"));
 		entites.add(new ComplexpkHeadVO(LocalDate.parse("2020-09-09"), "S0001"));
 		List<ComplexpkHeadVO> heads = sqlToyCRUDService.loadAllCascade(entites);
-		// 打印级联加载的字表数据
+		// 打印级联加载的子表数据
 		for (ComplexpkHeadVO item : heads) {
 			System.err.println(JSON.toJSONString(item));
 		}
@@ -138,7 +138,7 @@ public class CascadeCaseTest {
 	@Test
 	public void testLoadCascadeOrderBy() {
 		DictTypeVO head = sqlToyCRUDService.loadCascade(new DictTypeVO("DEVICE_TYPE"));
-		// 打印级联加载的字表数据
+		// 打印级联加载的子表数据
 		System.err.println(JSON.toJSONString(head.getDictDetailVOs()));
 	}
 

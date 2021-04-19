@@ -92,10 +92,12 @@ public class JavaCodeSqlCaseTest {
 		ParamsFilter paramFilter = new ParamsFilter("staffName").rlike();
 		Translate translate = new Translate("organIdName").setKeyColumn("organId").setColumn("organName");
 		PaginationModel pageModel = new PaginationModel();
+		StaffInfoVO staffInfoVO = new StaffInfoVO();
+		staffInfoVO.setStaffName("陈");
 		// 演示了缓存翻译、电话号码脱敏
 		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, pageModel,
-				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(new StaffInfoVO().setStaffName("陈"))
-						.filters(paramFilter).translates(translate).secureMask(MaskType.TEL, "telNo"));
+				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
+						.translates(translate).secureMask(MaskType.TEL, "telNo"));
 		for (StaffInfoVO staff : result.getRows()) {
 			System.err.println(JSON.toJSONString(staff));
 		}
@@ -104,15 +106,15 @@ public class JavaCodeSqlCaseTest {
 		// 单表查询
 		DebugUtil.beginTime("firstPage");
 		result = sqlToyLazyDao.findEntity(StaffInfoVO.class, pageModel,
-				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(new StaffInfoVO().setStaffName("陈"))
-						.filters(paramFilter).translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
+				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
+						.translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
 		DebugUtil.endTime("firstPage");
 
 		// 第二次查询，分页优化起作用，不会再执行count查询，提升了效率
 		DebugUtil.beginTime("secondPage");
 		result = sqlToyLazyDao.findEntity(StaffInfoVO.class, pageModel,
-				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(new StaffInfoVO().setStaffName("陈"))
-						.filters(paramFilter).translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
+				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
+						.translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
 		DebugUtil.endTime("secondPage");
 
 	}
@@ -134,16 +136,16 @@ public class JavaCodeSqlCaseTest {
 				// EntityQuery.create().select("staffId", "staffCode", "staffName",
 				// "organId","sexType")
 				// 3、采用链式模式提供字段
-				EntityQuery.create().select(StaffInfoVO.select().staffId().staffCode().staffName().organId().sexType())
+				EntityQuery.create().select("staffId,staffCode,staffName,organId,sexType")
 						// 支持动态条件
 						.where("#[STATUS=?] #[and STAFF_NAME like ?]").orderByDesc("entryDate").values(1, "陈")
 						// 支持缓存翻译
 						.translates(new Translate("organIdName").setKeyColumn("organId").setColumn("organName"))
 						// 支持分页优化
 						.pageOptimize(new PageOptimize().aliveSeconds(120))
-						//开关空白转null
-						//.blankNotNull()
-						);
+		// 开关空白转null
+		// .blankNotNull()
+		);
 
 		for (StaffInfoVO staff : result.getRows()) {
 			System.err.println(JSON.toJSONString(staff));

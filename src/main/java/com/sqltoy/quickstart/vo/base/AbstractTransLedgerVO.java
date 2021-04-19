@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -108,9 +106,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param id the id to set
 	 */
-	public AbstractTransLedgerVO setId(String id) {
+	public void setId(String id) {
 		this.id=id;
-		return this;
 	}
 		
 	/**
@@ -123,9 +120,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param orderId the orderId to set
 	 */
-	public AbstractTransLedgerVO setOrderId(String orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId=orderId;
-		return this;
 	}
 		
 	/**
@@ -138,9 +134,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param quantity the quantity to set
 	 */
-	public AbstractTransLedgerVO setQuantity(Integer quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity=quantity;
-		return this;
 	}
 		
 	/**
@@ -153,9 +148,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param amt the amt to set
 	 */
-	public AbstractTransLedgerVO setAmt(BigDecimal amt) {
+	public void setAmt(BigDecimal amt) {
 		this.amt=amt;
-		return this;
 	}
 		
 	/**
@@ -168,9 +162,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param createBy the createBy to set
 	 */
-	public AbstractTransLedgerVO setCreateBy(String createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy=createBy;
-		return this;
 	}
 		
 	/**
@@ -183,9 +176,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param createTime the createTime to set
 	 */
-	public AbstractTransLedgerVO setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime=createTime;
-		return this;
 	}
 		
 	/**
@@ -198,9 +190,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractTransLedgerVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -213,9 +204,8 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractTransLedgerVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -244,78 +234,4 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl id() {
-	    	if (!fields.contains("id")) {
-				fields.add("id");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl orderId() {
-	    	if (!fields.contains("orderId")) {
-				fields.add("orderId");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl quantity() {
-	    	if (!fields.contains("quantity")) {
-				fields.add("quantity");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl amt() {
-	    	if (!fields.contains("amt")) {
-				fields.add("amt");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createBy() {
-	    	if (!fields.contains("createBy")) {
-				fields.add("createBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl createTime() {
-	    	if (!fields.contains("createTime")) {
-				fields.add("createTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	}
 }

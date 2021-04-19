@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.18.8</version>
+	<version>4.18.13</version>
 </dependency>
 ```
 
@@ -99,7 +99,7 @@ spring:
 spring.sqltoy.sqlResourcesDir=classpath:com/sqltoy/quickstart
 # 默认配置就是classpath:sqltoy-translate.xml,一致情况下无需配置
 spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
-# 默认开启函数自动替换功能
+# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填trim只开通单个函数模式
 #spring.sqltoy.functionConverts=default
 # 是否开启debug模式,在开发阶段建议为true,会打印sql
 spring.sqltoy.debug=true
@@ -188,9 +188,9 @@ jdbc.password=quickstart
 <property name="project.name" value="sqltoy-quickstart" />
 <property name="project.package" value="com.sqltoy" />
 <property name="include.schema" value="false" />
-<!--set method 是否支持返回对象自身(默认是true),即: public VO setName(String name){this.name=name;return this;} -->
+<!--set method 是否支持返回对象自身(默认是false),即: public VO setName(String name){this.name=name;return this;} -->
 <property name="field.support.linked.set" value="true" />
-<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为true  	-->
+<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为false	-->
 <property name="generate.selectFields.class" value="true" />
 <!-- schema 对照关系:mysql 对应  db 名称; oracle 对应 用户名称;   -->
 <!-- 注意:当在多schema或tablespace场景下，会出现一个表中出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离   -->
@@ -235,6 +235,7 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 * EntityOptsCaseTest 基于POJO类型的单表操作演示
 * JsonTypeCaseTest 演示json等特殊类型的支持
 * TransLedgerConcurrentTest 演示类似订单交易台账高并发事务处理
+* ExecuteSql 演示executeSql和batchUpdate 执行sql更新或批量更新操作
 
 # 疑问解答
 ## 为什么要将*.sql.xml 放在java路径下?
@@ -307,6 +308,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 ```
 
 ## 多数据源怎么弄?
+* 如果是同类单据根据特定规则分多个库，请参见分库策略进行
 * 通过多个lazyDao模式
 
 ```java

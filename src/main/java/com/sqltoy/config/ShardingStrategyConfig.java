@@ -30,7 +30,6 @@ public class ShardingStrategyConfig {
 		DefaultShardingStrategy strategy = new DefaultShardingStrategy();
 		// 分14天表和历史表,也可以1,15,90 表示多个间隔
 		strategy.setDays("14");
-		// 此参数可以不配置
 		strategy.setDateParams("createTime,beginDate,bizDate,beginTime,bizTime,transDate");
 		HashMap<String, String> tableMap = new HashMap<String, String>();
 		// 写sql时可以直接用15d的表

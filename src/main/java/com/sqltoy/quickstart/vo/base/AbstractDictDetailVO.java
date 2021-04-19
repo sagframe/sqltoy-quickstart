@@ -6,8 +6,6 @@ package com.sqltoy.quickstart.vo.base;
 import java.io.Serializable;
 import java.util.List;
 import org.sagacity.sqltoy.config.annotation.Entity;
-import java.util.ArrayList;
-import org.sagacity.sqltoy.callback.SelectFields;
 import org.sagacity.sqltoy.config.annotation.Id;
 import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -101,9 +99,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param dictKey the dictKey to set
 	 */
-	public AbstractDictDetailVO setDictKey(String dictKey) {
+	public void setDictKey(String dictKey) {
 		this.dictKey=dictKey;
-		return this;
 	}
 		
 	/**
@@ -116,9 +113,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param dictType the dictType to set
 	 */
-	public AbstractDictDetailVO setDictType(String dictType) {
+	public void setDictType(String dictType) {
 		this.dictType=dictType;
-		return this;
 	}
 		
 	/**
@@ -131,9 +127,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param dictName the dictName to set
 	 */
-	public AbstractDictDetailVO setDictName(String dictName) {
+	public void setDictName(String dictName) {
 		this.dictName=dictName;
-		return this;
 	}
 		
 	/**
@@ -146,9 +141,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param showIndex the showIndex to set
 	 */
-	public AbstractDictDetailVO setShowIndex(Integer showIndex) {
+	public void setShowIndex(Integer showIndex) {
 		this.showIndex=showIndex;
-		return this;
 	}
 		
 	/**
@@ -161,9 +155,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param updateBy the updateBy to set
 	 */
-	public AbstractDictDetailVO setUpdateBy(String updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy=updateBy;
-		return this;
 	}
 		
 	/**
@@ -176,9 +169,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param updateTime the updateTime to set
 	 */
-	public AbstractDictDetailVO setUpdateTime(LocalDateTime updateTime) {
+	public void setUpdateTime(LocalDateTime updateTime) {
 		this.updateTime=updateTime;
-		return this;
 	}
 		
 	/**
@@ -191,9 +183,8 @@ public abstract class AbstractDictDetailVO implements Serializable {
 	/**
 	 *@param status the status to set
 	 */
-	public AbstractDictDetailVO setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status=status;
-		return this;
 	}
 		
 	/**
@@ -221,71 +212,4 @@ public abstract class AbstractDictDetailVO implements Serializable {
 		return columnsBuffer.toString();
 	}
 	
-	/**
-	 * @TODO create entityQuery fields
-	 */
-	public static SelectFieldsImpl select() {
-		return new SelectFieldsImpl();
-	}
-	
-	public static class SelectFieldsImpl extends SelectFields {
-		private List<String> fields = new ArrayList<String>();
-
-		@Override
-		public String[] getSelectFields() {
-			String[] result = new String[fields.size()];
-			fields.toArray(result);
-			return result;
-		}
-		
-	    public SelectFieldsImpl dictKey() {
-	    	if (!fields.contains("dictKey")) {
-				fields.add("dictKey");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl dictType() {
-	    	if (!fields.contains("dictType")) {
-				fields.add("dictType");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl dictName() {
-	    	if (!fields.contains("dictName")) {
-				fields.add("dictName");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl showIndex() {
-	    	if (!fields.contains("showIndex")) {
-				fields.add("showIndex");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateBy() {
-	    	if (!fields.contains("updateBy")) {
-				fields.add("updateBy");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl updateTime() {
-	    	if (!fields.contains("updateTime")) {
-				fields.add("updateTime");
-			}
-	    	return this;
-	    }
-    
-	    public SelectFieldsImpl status() {
-	    	if (!fields.contains("status")) {
-				fields.add("status");
-			}
-	    	return this;
-	    }
-    
-	}
 }
