@@ -4,9 +4,9 @@
 package com.sqltoy.quickstart.dao;
 
 import org.sagacity.sqltoy.config.model.Translate;
-import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.EntityQuery;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
+import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.support.SqlToyDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 	 * @param staffInfoVO
 	 * @return
 	 */
-	public PaginationModel<StaffInfoVO> findStaff(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
+	public Page<StaffInfoVO> findStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		// sql可以直接在代码中编写,复杂sql建议在xml中定义
 		// 单表entity查询场景下sql字段可以写成java类的属性名称
 		// 单表查询一般适用于接口内部查询
@@ -45,7 +45,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 	 * @param staffInfoVO
 	 * @return
 	 */
-	public PaginationModel<StaffInfoVO> findStaff1(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
+	public Page<StaffInfoVO> findStaff1(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		// 直接传sql或sqlId的时使用QueryExecutor
 		QueryExecutor query = new QueryExecutor("qstart_findStaff");
 		return super.findPageByQuery(pageModel, query.values(staffInfoVO).resultType(StaffInfoVO.class)

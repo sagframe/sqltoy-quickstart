@@ -10,8 +10,8 @@ import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.executor.QueryExecutor;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
+import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.model.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -69,13 +69,13 @@ public class AdvanceQueryTest {
 	 */
 	@Test
 	public void findPage() {
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
 		// 使用了分页优化器
 		// 第一次调用:执行count 和 取记录两次查询
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
+		Page<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
 		result.getRows().forEach((staff) -> {
 			System.err.println(JSON.toJSONString(staff));
 		});
@@ -86,14 +86,14 @@ public class AdvanceQueryTest {
 
 	@Test
 	public void findAllPage() {
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		pageModel.setPageNo(-1);
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
 		// 使用了分页优化器
 		// 第一次调用:执行count 和 取记录两次查询
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
+		Page<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, "qstart_fastPage", staffVO);
 		result.getRows().forEach((staff) -> {
 			System.err.println(JSON.toJSONString(staff));
 		});
@@ -102,10 +102,10 @@ public class AdvanceQueryTest {
 
 	@Test
 	public void findPageByMap() {
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		String sql = "select t.*\r\n" + "			           from sqltoy_staff_info t\r\n"
 				+ "			           where t.STATUS=1 ";
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, sql, Maps.newHashMap("pageNo", 1),
+		Page<StaffInfoVO> result = sqlToyLazyDao.findPageBySql(pageModel, sql, Maps.newHashMap("pageNo", 1),
 				StaffInfoVO.class);
 		result.getRows().forEach((staff) -> {
 			System.err.println(JSON.toJSONString(staff));
@@ -237,7 +237,7 @@ public class AdvanceQueryTest {
 
 	@Test
 	public void testFindAll() {
-		List<StaffInfoVO> staffs = sqlToyLazyDao.findAll(StaffInfoVO.class);
+		List<StaffInfoVO> staffs = sqlToyLazyDao.findEntity(StaffInfoVO.class,null);
 		for (int i = 0; i < staffs.size(); i++) {
 			System.err.println(JSON.toJSONString(staffs.get(i)));
 		}

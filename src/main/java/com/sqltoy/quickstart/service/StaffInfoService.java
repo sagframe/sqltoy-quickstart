@@ -2,7 +2,7 @@ package com.sqltoy.quickstart.service;
 
 import java.util.List;
 
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
 
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
@@ -14,7 +14,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @modify 2020年7月17日,修改说明
  */
 public interface StaffInfoService {
-	public PaginationModel<StaffInfoVO> queryStaff(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO);
+	public Page<StaffInfoVO> queryStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO);
 
 	/**
 	 * @TODO 演示锁记录查询、修改并返回修改后的结果

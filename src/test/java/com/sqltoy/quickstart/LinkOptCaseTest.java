@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -61,11 +61,11 @@ public class LinkOptCaseTest {
 
 	@Test
 	public void testPageQuery() {
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
-		PaginationModel result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
+		Page result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
 		// 查询可以链式操作
 		//sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
 	}

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +133,7 @@ public class StaffInfoServiceTest {
 
 	@Test
 	public void testQueryStaff() {
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		// 正常需设置pageNo和pageSize,默认值分别为1和10
 		// pageModel.setPageNo(1);
 		// pageModel.setPageSize(10);
@@ -141,7 +141,7 @@ public class StaffInfoServiceTest {
 		staffInfo.setBeginDate(LocalDate.parse("2019-01-01"));
 		staffInfo.setEndDate(LocalDate.now());
 		staffInfo.setStaffName("陈");
-		PaginationModel<StaffInfoVO> result = staffInfoService.queryStaff(pageModel, staffInfo);
+		Page<StaffInfoVO> result = staffInfoService.queryStaff(pageModel, staffInfo);
 		for (StaffInfoVO row : result.getRows()) {
 			System.err.println(JSON.toJSONString(row));
 		}

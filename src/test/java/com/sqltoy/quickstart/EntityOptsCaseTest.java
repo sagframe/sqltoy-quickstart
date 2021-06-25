@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.config.model.Translate;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.model.EntityQuery;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -101,7 +101,7 @@ public class EntityOptsCaseTest {
 		staffInfo.setBeginDate(LocalDate.parse("2019-01-01"));
 		staffInfo.setEndDate(LocalDate.now());
 		staffInfo.setStaffName("陈");
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new PaginationModel(10, 1L),
+		Page<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new Page(10, 1L),
 				EntityQuery.create().where(sql).values(staffInfo)
 						// 字典缓存必须要设置cacheType
 						// 单表对象查询需设置keyColumn构成select keyColumn as column模式
@@ -146,8 +146,8 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryPage() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
-		PaginationModel<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				new PaginationModel(10, 1L),
+		Page<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+				new Page(10, 1L),
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
@@ -161,8 +161,8 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryFields() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		PaginationModel<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				new PaginationModel(10, 1L),
+		Page<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+				new Page(10, 1L),
 				// select 指定查询字段
 				// 支持select().field1().field2() 链式模式,数据库表结构变更自动报错
 				// 支持:select("field1","fields2")数组模式，书写较为麻烦，可以是POJO的属性名称

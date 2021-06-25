@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.sagacity.sqltoy.callback.UpdateRowHandler;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.EntityUpdate;
 import org.sagacity.sqltoy.model.LockMode;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
+import org.sagacity.sqltoy.model.QueryExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	@Autowired
 	SqlToyLazyDao sqlToyLazyDao;
 
-	public PaginationModel<StaffInfoVO> queryStaff(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
+	public Page<StaffInfoVO> queryStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		return staffInfoDao.findStaff(pageModel, staffInfoVO);
 	}
 

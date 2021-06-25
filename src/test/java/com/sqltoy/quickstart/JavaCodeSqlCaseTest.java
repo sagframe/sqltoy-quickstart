@@ -11,11 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.config.model.PageOptimize;
 import org.sagacity.sqltoy.config.model.Translate;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.executor.QueryExecutor;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.MaskType;
-import org.sagacity.sqltoy.model.PaginationModel;
+import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.model.ParamsFilter;
+import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.utils.DebugUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,13 +61,13 @@ public class JavaCodeSqlCaseTest {
 				+ "	  order by t.ENTRY_DATE desc) t1 left join sqltoy_organ_info t2 "
 				+ "   on  t1.organ_id=t2.ORGAN_ID";
 
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
 		// 使用了分页优化器
 		// 第一次调用:执行count 和 取记录两次查询
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findPageByQuery(pageModel, new QueryExecutor(sql, staffVO)
+		Page<StaffInfoVO> result = sqlToyLazyDao.findPageByQuery(pageModel, new QueryExecutor(sql, staffVO)
 				.filters(new ParamsFilter("staffName").rlike()).pageOptimize(new PageOptimize().aliveSeconds(120)))
 				.getPageResult();
 		for (StaffInfoVO staff : result.getRows()) {
@@ -91,11 +91,11 @@ public class JavaCodeSqlCaseTest {
 		String sql = "STATUS=1 #[and STAFF_NAME like :staffName]";
 		ParamsFilter paramFilter = new ParamsFilter("staffName").rlike();
 		Translate translate = new Translate("organIdName").setKeyColumn("organId").setColumn("organName");
-		PaginationModel pageModel = new PaginationModel();
+		Page pageModel = new Page();
 		StaffInfoVO staffInfoVO = new StaffInfoVO();
 		staffInfoVO.setStaffName("陈");
 		// 演示了缓存翻译、电话号码脱敏
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, pageModel,
+		Page<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, pageModel,
 				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
 						.translates(translate).secureMask(MaskType.TEL, "telNo"));
 		for (StaffInfoVO staff : result.getRows()) {
@@ -127,7 +127,7 @@ public class JavaCodeSqlCaseTest {
 		// 3、可以排序
 		// 4、可以进行缓存翻译
 		// 5、可以做分页优化
-		PaginationModel<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new PaginationModel(),
+		Page<StaffInfoVO> result = sqlToyLazyDao.findEntity(StaffInfoVO.class, new Page(),
 				// 支持三种方式指定字段:
 				// 1、用一个字符串写多个字段
 				// EntityQuery.create().select("staffId,staffCode, staffName, organId,
