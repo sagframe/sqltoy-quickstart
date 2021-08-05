@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.18.21</version>
+	<version>5.0.9</version>
 </dependency>
 ```
 
@@ -105,7 +105,8 @@ spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
 spring.sqltoy.debug=true
 #项目中用到的数据库保留字定义,这里是举例，正常情况下不用定义
 #spring.sqltoy.reservedWords=status,sex_type
-#obtainDataSource: org.sagacity.sqltoy.plugins.datasource.impl.DefaultObtainDataSourc
+# 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultDataSourceSelector是默认实现
+#dataSourceSelector: org.sagacity.sqltoy.plugins.datasource.impl.DefaultDataSourceSelector
 #spring.sqltoy.defaultDataSource=dataSource
 spring.sqltoy.unifyFieldsHandler=com.sqltoy.plugins.SqlToyUnifyFieldsHandler
 #spring.sqltoy.printSqlTimeoutMillis=200000
@@ -293,7 +294,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 	 * @param staffInfoVO
 	 * @return
 	 */
-	public PaginationModel<StaffInfoVO> findStaff(PaginationModel<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
+	public Page<StaffInfoVO> findStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		// sql可以直接在代码中编写,复杂sql建议在xml中定义
 		// 单表entity查询场景下sql字段可以写成java类的属性名称
 		// 单表查询一般适用于接口内部查询
@@ -335,42 +336,41 @@ sqlToyLazyDao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staff
 ```
 
 ## 我想通过包路径来实现不同数据库访问
-* 请扩展实现org.sagacity.sqltoy.plugins.datasource.ObtainDataSource 接口
+* 请扩展实现org.sagacity.sqltoy.plugins.datasource.DataSourceSelector 接口
 * 当前默认实现(你可以通过aop+ThreadLocal来修改实现)
 
 ```java
-public class DefaultObtainDataSource implements ObtainDataSource {
-	/**
-	 * 定义日志
-	 */
-	protected final Logger logger = LoggerFactory.getLogger(DefaultObtainDataSource.class);
-
-	private DataSource dataSource;
+public class DefaultDataSourceSelector implements DataSourceSelector {
 
 	@Override
-	public DataSource getDataSource(ApplicationContext applicationContext, DataSource defaultDataSource) {
-		// 避免每次去查找(适用于固定数据源场景)
-		if (this.dataSource != null) {
-			return this.dataSource;
+	public DataSource getDataSource(ApplicationContext applicationContext, DataSource pointDataSouce,
+			String sqlDataSourceName, DataSource injectDataSource, DataSource defaultDataSource) {
+		// 第一优先:直接指定的数据源不为空
+		if (pointDataSouce != null) {
+			return pointDataSouce;
 		}
-		Map<String, DataSource> result = applicationContext.getBeansOfType(DataSource.class);
-		// 只有一个dataSource,直接使用
-		if (result.size() == 1) {
-			this.dataSource = result.values().iterator().next();
+		DataSource result = null;
+		// 第二优先:sql中指定的数据源<sql id="xxx" datasource="xxxxDataSource">
+		if (StringUtil.isNotBlank(sqlDataSourceName)) {
+			result = getDataSourceBean(applicationContext, sqlDataSourceName);
 		}
-		// 非单一数据源,通过sqltoyContext中定义的默认dataSource来获取
-		if (this.dataSource == null) {
-			this.dataSource = defaultDataSource;
+		// 第三优先:dao中autowired注入的数据源
+		if (result == null) {
+			result = injectDataSource;
 		}
-		// 理论上应该先获取primary的数据源,目前不知道如何获取
-		// 多数据源情况下没有指定默认dataSource则返回名称为dataSource的数据源
-		if (this.dataSource == null && applicationContext.containsBean("dataSource")) {
-			this.dataSource = (DataSource) applicationContext.getBean("dataSource");
+		// 第四优先:sqltoy 统一设置的默认数据源
+		if (result == null) {
+			result = defaultDataSource;
 		}
-		if (this.dataSource == null) {
-			logger.error("在多数据源场景下,请为dao正确指定dataSource,或配置spring.sqltoy.defaultDataSource=默认数据源名称!");
+		// 如果项目中只定义了唯一的数据源，则直接使用
+		if (result == null) {
+			Map<String, DataSource> dataSources = applicationContext.getBeansOfType(DataSource.class);
+			// 只有一个dataSource,直接使用
+			if (dataSources.size() == 1) {
+				result = dataSources.values().iterator().next();
+			}
 		}
-		return this.dataSource;
+		return result;
 	}
 }
 ```
