@@ -105,7 +105,8 @@ spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
 spring.sqltoy.debug=true
 #项目中用到的数据库保留字定义,这里是举例，正常情况下不用定义
 #spring.sqltoy.reservedWords=status,sex_type
-#obtainDataSource: org.sagacity.sqltoy.plugins.datasource.impl.DefaultObtainDataSourc
+# 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultDataSourceSelector是默认实现
+#dataSourceSelector: org.sagacity.sqltoy.plugins.datasource.impl.DefaultDataSourceSelector
 #spring.sqltoy.defaultDataSource=dataSource
 spring.sqltoy.unifyFieldsHandler=com.sqltoy.plugins.SqlToyUnifyFieldsHandler
 #spring.sqltoy.printSqlTimeoutMillis=200000
