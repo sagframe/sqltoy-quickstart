@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>4.18.21</version>
+	<version>5.0.9</version>
 </dependency>
 ```
 
