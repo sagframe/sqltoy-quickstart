@@ -15,6 +15,8 @@
 		<sqltoy-starter.version>5.0.11</sqltoy-starter.version>
 		<fastjson.version>1.2.76</fastjson.version>
 		<druid.version>1.2.6</druid.version>
+		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
+		<ehcache.version>3.9.5</ehcache.version>
 		<junit-jupiter.version>5.7.2</junit-jupiter.version>
 		<junit-platform.version>1.7.2</junit-platform.version>
 		<mysql.version>8.0.26</mysql.version>
@@ -118,6 +120,7 @@
 			<groupId>org.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<scope>provided</scope>
+			<version>${ehcache.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
