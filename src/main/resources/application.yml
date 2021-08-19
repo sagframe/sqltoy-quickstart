@@ -11,6 +11,8 @@ spring:
         #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
+        # 出现重复sqlId是否抛出异常终止启动,默认值为true
+        #breakWhenSqlRepeat: true
         # 如果是单一类型数据库填写有利于减少一些判断(即排除类似于:mysql\oracle多种类型混用场景)
         #dialect: mysql
         # 设置默认使用的datasource(可选配置)
