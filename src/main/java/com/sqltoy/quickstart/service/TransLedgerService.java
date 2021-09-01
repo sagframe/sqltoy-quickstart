@@ -14,4 +14,6 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
  */
 public interface TransLedgerService {
 	public TransLedgerVO updateTrans(TransLedgerVO transVO);
+	
+	public TransLedgerVO updateSaveTrans(TransLedgerVO transVO);
 }

@@ -32,7 +32,6 @@ public class TransLedgerVO extends AbstractTransLedgerVO {
 	{
 		this.id=id;
 	}
-
 	/*---end-constructor-area---don't-update-this-area--*/
 
 	/**

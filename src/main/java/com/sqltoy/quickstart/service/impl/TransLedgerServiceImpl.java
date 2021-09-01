@@ -54,4 +54,18 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 		return result.get(0);
 	}
 
+	@Override
+	public TransLedgerVO updateSaveTrans(TransLedgerVO transVO) {
+		transVO.setQuantity(1);
+		transVO.setAmt(BigDecimal.ONE);
+		return sqlToyLazyDao.updateSaveFetch(transVO, new UpdateRowHandler() {
+			@Override
+			public void updateRow(ResultSet rs, int index) throws Exception {
+				// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
+				rs.updateInt("QUANTITY", rs.getInt("QUANTITY") + transVO.getQuantity());
+				rs.updateBigDecimal("AMT", rs.getBigDecimal("AMT").add(transVO.getAmt()));
+			}
+		}, "orderId");
+	}
+
 }

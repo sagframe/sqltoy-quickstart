@@ -76,7 +76,7 @@ public class EntityOptsCaseTest {
 	@Test
 	public void testEntityQueryMap() {
 		String[] authedOrgans = { "100004", "100007" };
-		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		String where = "#[ORDER_ID=:orderId] #[and organId in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
 		// sqltoy中参数为null可以无需传参
 		Map params = new HashMap() {
 			{
@@ -147,7 +147,7 @@ public class EntityOptsCaseTest {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
 		Page<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				new Page(10, 1L),
+				new Page(10, 1),
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));

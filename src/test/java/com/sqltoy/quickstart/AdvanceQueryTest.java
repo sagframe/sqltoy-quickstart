@@ -164,7 +164,7 @@ public class AdvanceQueryTest {
 			result.forEach((vo) -> {
 				System.err.println(JSON.toJSONString(vo));
 			});
-			Thread.sleep(100000);
+			Thread.sleep(5000);
 		}
 	}
 
