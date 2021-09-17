@@ -91,7 +91,6 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	@Column(name="UPDATE_TIME",length=19L,type=java.sql.Types.DATE,nullable=false)
 	protected LocalDateTime updateTime;
 	
-
 	/** default constructor */
 	public AbstractTransLedgerVO() {
 	}
@@ -101,7 +100,6 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	{
 		this.id=id;
 	}
-
 	
 	/**
 	 *@param id the id to set
@@ -214,7 +212,6 @@ public abstract class AbstractTransLedgerVO implements Serializable {
 	public LocalDateTime getUpdateTime() {
 	    return this.updateTime;
 	}
-
 
 
 	/**

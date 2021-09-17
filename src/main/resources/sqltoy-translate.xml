@@ -16,6 +16,7 @@
 			datasource="dataSource">
 			<sql>
 			<![CDATA[
+				--#not_debug#--
 				select t.DICT_KEY,t.DICT_NAME,t.STATUS
 				from SQLTOY_DICT_DETAIL t
 		        where t.DICT_TYPE=:dictType
@@ -29,6 +30,7 @@
 			datasource="dataSource">
 			<sql>
 			<![CDATA[
+				--#not_debug#--
 				select STAFF_ID,STAFF_NAME,STATUS
 				from SQLTOY_STAFF_INFO
 			]]>
@@ -39,6 +41,7 @@
 			datasource="dataSource">
 			<sql>
 			<![CDATA[
+				--#not_debug#--
 				select ORGAN_ID,ORGAN_NAME from SQLTOY_ORGAN_INFO order by SHOW_INDEX
 			]]>
 			</sql>

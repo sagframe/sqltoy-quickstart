@@ -76,7 +76,7 @@ public class EntityOptsCaseTest {
 	@Test
 	public void testEntityQueryMap() {
 		String[] authedOrgans = { "100004", "100007" };
-		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
+		String where = "#[ORDER_ID=:orderId] #[and organId in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
 		// sqltoy中参数为null可以无需传参
 		Map params = new HashMap() {
 			{
@@ -146,8 +146,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryPage() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
-		Page<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				new Page(10, 1L),
+		Page<DeviceOrderVO> result = sqlToyLazyDao.findPageEntity(new Page(10, 1),DeviceOrderVO.class, 
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
@@ -161,8 +160,8 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryFields() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		Page<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
-				new Page(10, 1L),
+		Page<DeviceOrderVO> result = sqlToyLazyDao.findPageEntity(new Page(10, 1L), DeviceOrderVO.class,
+
 				// select 指定查询字段
 				// 支持select().field1().field2() 链式模式,数据库表结构变更自动报错
 				// 支持:select("field1","fields2")数组模式，书写较为麻烦，可以是POJO的属性名称

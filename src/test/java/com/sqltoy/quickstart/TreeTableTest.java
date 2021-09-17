@@ -9,6 +9,9 @@ import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.model.CacheMatchFilter;
+import org.sagacity.sqltoy.model.ColumnMeta;
+import org.sagacity.sqltoy.model.TableMeta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -53,6 +56,30 @@ public class TreeTableTest {
 				Arrays.array("100007"), OrganInfoVO.class);
 		for (OrganInfoVO vo : organs) {
 			System.err.println(JSON.toJSONString(vo));
+		}
+	}
+
+	@Test
+	public void getTables() {
+		List<TableMeta> tables = sqlToyLazyDao.getTables(null, null, "%");
+		for (TableMeta vo : tables) {
+			System.err.println(JSON.toJSONString(vo));
+		}
+	}
+
+	@Test
+	public void getTableColumns() {
+		List<ColumnMeta> tables = sqlToyLazyDao.getTableColumns(null, null, "SQLTOY_DICT_DETAIL");
+		for (ColumnMeta vo : tables) {
+			System.err.println(JSON.toJSONString(vo));
+		}
+	}
+
+	@Test
+	public void testMatchKey() {
+		String[] keys = sqlToyLazyDao.cacheMatchKeys("新能源研究院",CacheMatchFilter.create().cacheName("organIdName").matchIndexs(1).cacheKeyIndex(0).priorMatchEqual(true).matchSize(2));
+		for (String key : keys) {
+			System.err.println(key);
 		}
 	}
 }

@@ -164,7 +164,7 @@ public class AdvanceQueryTest {
 			result.forEach((vo) -> {
 				System.err.println(JSON.toJSONString(vo));
 			});
-			Thread.sleep(100000);
+			Thread.sleep(5000);
 		}
 	}
 
@@ -237,6 +237,7 @@ public class AdvanceQueryTest {
 
 	@Test
 	public void testFindAll() {
+		//sqlToyLazyDao.query().sql("").resultType(User.class).find();
 		List<StaffInfoVO> staffs = sqlToyLazyDao.findEntity(StaffInfoVO.class,null);
 		for (int i = 0; i < staffs.size(); i++) {
 			System.err.println(JSON.toJSONString(staffs.get(i)));
