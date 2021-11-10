@@ -241,6 +241,22 @@ create table SQLTOY_TRANS_LEDGER
 
 alter table SQLTOY_TRANS_LEDGER comment '交易台账并发演示表';
 
+create table SQLTOY_SECURE_CASE
+(
+   STAFF_ID             varchar(22) not null  comment '工号',
+   STAFF_NAME           varchar(30) not null  comment '姓名',
+   TEL_NO               varchar(500) not null  comment '移动电话',
+   TEL_NO_MASK          varchar(30) not null  comment '电话检索',
+   HOME_ADDRESS         varchar(500) not null  comment '家庭地址',
+   HOME_ADDRESS_MASK    varchar(100) not null  comment '家庭地址检索',
+   CREATE_BY            varchar(22) not null  comment '创建人',
+   CREATE_TIME          datetime not null  comment '创建时间',
+   UPDATE_BY            varchar(22) not null  comment '最后修改人',
+   UPDATE_TIME          datetime not null  comment '最后修改时间',
+   primary key (STAFF_ID)
+);
+
+alter table SQLTOY_SECURE_CASE comment '安全加解密演示';
 
 INSERT INTO SQLTOY_DICT_TYPE 
 (`DICT_TYPE`, `DICT_TYPE_NAME`, `COMMENTS`, `SHOW_INDEX`, `CREATE_BY`, `CREATE_TIME`, `UPDATE_BY`, `UPDATE_TIME`, `STATUS`)

@@ -31,7 +31,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 		// 单表entity查询场景下sql字段可以写成java类的属性名称
 		// 单表查询一般适用于接口内部查询
 		String sql = "#[staffName like :staffName]#[and createTime>=:beginDate]#[and createTime<=:endDate]";
-		return findEntity(StaffInfoVO.class, pageModel, EntityQuery.create().where(sql).values(staffInfoVO)
+		return findPageEntity(pageModel, StaffInfoVO.class, EntityQuery.create().where(sql).values(staffInfoVO)
 				// 字典缓存必须要设置cacheType
 				// 单表对象查询需设置keyColumn构成select keyColumn as column模式
 				.translates(new Translate("dictKeyName").setColumn("sexTypeName").setCacheType("SEX_TYPE")
@@ -47,8 +47,7 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 	 */
 	public Page<StaffInfoVO> findStaff1(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		// 直接传sql或sqlId的时使用QueryExecutor
-		QueryExecutor query = new QueryExecutor("qstart_findStaff");
-		return super.findPageByQuery(pageModel, query.values(staffInfoVO).resultType(StaffInfoVO.class)
+		return super.findPageByQuery(pageModel, new QueryExecutor("qstart_findStaff", staffInfoVO)
 				.translates(new Translate("organIdName").setColumn("organName").setIndex(2))).getPageResult();
 	}
 }

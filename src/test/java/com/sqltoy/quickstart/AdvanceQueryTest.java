@@ -10,6 +10,7 @@ import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.model.QueryResult;
@@ -53,8 +54,9 @@ public class AdvanceQueryTest {
 		// 授权的机构
 		String[] authedOrgans = { "100004", "100007" };
 		List<DeviceOrderVO> result = sqlToyLazyDao.findBySql("qstart_order_search",
-				new String[] { "orderId", "authedOrganIds", "staffName", "beginDate", "endDate" },
-				new Object[] { null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null }, DeviceOrderVO.class);
+				MapKit.keys("orderId", "authedOrganIds", "staffName", "beginDate", "endDate").values(null, authedOrgans,
+						"陈", LocalDate.parse("2018-09-01"), null),
+				DeviceOrderVO.class);
 		result.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
@@ -120,11 +122,12 @@ public class AdvanceQueryTest {
 	public void findTop() {
 		// topSize:
 		// 授权的机构
-		String[] authedOrgans = { "100004", "100007" };
+		String[] authedOrgans = { "100005", "100007" };
 		double topSize = 20;
 		List<DeviceOrderVO> result = sqlToyLazyDao.findTopBySql("qstart_order_search",
-				new String[] { "orderId", "authedOrganIds", "staffName", "beginDate", "endDate" },
-				new Object[] { null, authedOrgans, "陈", "2018-09-01", null }, DeviceOrderVO.class, topSize);
+				MapKit.keys("orderId", "authedOrganIds", "staffName", "beginDate", "endDate").values(null, authedOrgans,
+						"陈", "2018-09-01", null),
+				DeviceOrderVO.class, topSize);
 		result.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
@@ -134,9 +137,13 @@ public class AdvanceQueryTest {
 	public void findTopByQuery() {
 		// topSize:
 		// 授权的机构
-		String[] authedOrgans = { "100004", "100007" };
-		String[] paramNames = { "orderId", "authedOrganIds", "staffName", "beginDate", "endDate" };
-		Object[] paramValues = { null, authedOrgans, "陈", "2018-09-01", null };
+		// String[] authedOrgans = { "100004", "100007" };
+		// String[] paramNames = { "orderId", "authedOrganIds", "staffName",
+		// "beginDate", "endDate" };
+		// Object[] paramValues = { null, null, "陈", "2018-09-01", null };
+		// 采用统一数据权限传参，可不用显式的传递authedOrgans
+		String[] paramNames = { "orderId", "staffName", "beginDate", "endDate" };
+		Object[] paramValues = { null, "陈", "2018-09-01", null };
 		double topSize = 20;
 		QueryResult result = sqlToyLazyDao.findTopByQuery(new QueryExecutor("qstart_order_search").names(paramNames)
 				.values(paramValues).resultType(DeviceOrderVO.class), topSize);
@@ -158,8 +165,9 @@ public class AdvanceQueryTest {
 			String[] authedOrgans = { "100004", "100007" };
 			double randomSize = 20;
 			List<DeviceOrderVO> result = sqlToyLazyDao.getRandomResult("qstart_order_search",
-					new String[] { "orderId", "authedOrganIds", "staffName", "beginDate", "endDate" },
-					new Object[] { null, authedOrgans, "陈", "2018-09-01", null }, DeviceOrderVO.class, randomSize);
+					MapKit.keys("orderId", "authedOrganIds", "staffName", "beginDate", "endDate").values(null,
+							authedOrgans, "陈", "2018-09-01", null),
+					DeviceOrderVO.class, randomSize);
 			System.err.println("======第[" + i + "]次取随机记录的结果输出====================");
 			result.forEach((vo) -> {
 				System.err.println(JSON.toJSONString(vo));
@@ -237,8 +245,8 @@ public class AdvanceQueryTest {
 
 	@Test
 	public void testFindAll() {
-		//sqlToyLazyDao.query().sql("").resultType(User.class).find();
-		List<StaffInfoVO> staffs = sqlToyLazyDao.findEntity(StaffInfoVO.class,null);
+		// sqlToyLazyDao.query().sql("").resultType(User.class).find();
+		List<StaffInfoVO> staffs = sqlToyLazyDao.findEntity(StaffInfoVO.class, null);
 		for (int i = 0; i < staffs.size(); i++) {
 			System.err.println(JSON.toJSONString(staffs.get(i)));
 		}

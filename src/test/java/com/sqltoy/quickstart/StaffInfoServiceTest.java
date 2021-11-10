@@ -40,10 +40,11 @@ public class StaffInfoServiceTest {
 	@Test
 	public void testSave() {
 		StaffInfoVO staffInfo = new StaffInfoVO();
-		staffInfo.setStaffId("S2007");
-		staffInfo.setStaffCode("S2007");
+		staffInfo.setStaffId("S2018");
+		staffInfo.setStaffCode("S2018");
 		staffInfo.setStaffName("测试员工9");
 		staffInfo.setSexType("M");
+		staffInfo.setTelNo("13918799460");
 		staffInfo.setEmail("test3@aliyun.com");
 		staffInfo.setEntryDate(LocalDate.now());
 		staffInfo.setStatus(1);
@@ -128,7 +129,8 @@ public class StaffInfoServiceTest {
 
 	@Test
 	public void testLoadByIds() {
-		List<StaffInfoVO> staffInfos = sqlToyCRUDService.loadByIds(StaffInfoVO.class, "S2007", "S0001");
+		List<StaffInfoVO> staffInfos = sqlToyCRUDService.loadByIds(StaffInfoVO.class, "S2018", "S0001");
+		System.err.println(JSON.toJSONString(staffInfos));
 	}
 
 	@Test

@@ -6,9 +6,13 @@ package com.sqltoy.plugins;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import org.sagacity.sqltoy.model.DataAuthFilterConfig;
 import org.sagacity.sqltoy.model.IgnoreCaseSet;
+import org.sagacity.sqltoy.model.IgnoreKeyCaseMap;
 import org.sagacity.sqltoy.plugins.IUnifyFieldsHandler;
 import org.sagacity.sqltoy.utils.DateUtil;
 
@@ -29,11 +33,11 @@ public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 	@Override
 	public Map<String, Object> createUnifyFields() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		LocalDateTime nowDate=DateUtil.getDateTime();
+		LocalDateTime nowDate = DateUtil.getDateTime();
 		Timestamp nowTime = DateUtil.getTimestamp(null);
 		// 获取用户信息
 		String userId = getUserId();
-		//不存在的字段名称会自动忽略掉(因此下述属性未必是每个表中必须存在的)
+		// 不存在的字段名称会自动忽略掉(因此下述属性未必是每个表中必须存在的)
 		map.put("createBy", userId);
 		map.put("createDate", nowDate);
 		map.put("createTime", nowTime);
@@ -68,12 +72,22 @@ public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 	 */
 	@Override
 	public IgnoreCaseSet forceUpdateFields() {
-		IgnoreCaseSet forceUpdateFields=new IgnoreCaseSet();
+		IgnoreCaseSet forceUpdateFields = new IgnoreCaseSet();
 		forceUpdateFields.add("updateTime");
 		forceUpdateFields.add("systemTime");
 		return forceUpdateFields;
 	}
-	
+
+	@Override
+	public IgnoreKeyCaseMap<String, DataAuthFilterConfig> dataAuthFilters() {
+		IgnoreKeyCaseMap<String, DataAuthFilterConfig> map = new IgnoreKeyCaseMap<String, DataAuthFilterConfig>();
+		Set<String> organIds = new HashSet<String>();
+		organIds.add("100005");
+		organIds.add("100007");
+		map.put("authedOrganIds", new DataAuthFilterConfig().setForcelimit(true).setValues(organIds));
+		return map;
+	}
+
 	/**
 	 * @todo 获取当前用户Id信息
 	 * @return
@@ -93,8 +107,7 @@ public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 	}
 
 	/**
-	 * @param defaultUserName
-	 *            the defaultUserName to set
+	 * @param defaultUserName the defaultUserName to set
 	 */
 	public void setDefaultUserName(String defaultUserName) {
 		this.defaultUserName = defaultUserName;

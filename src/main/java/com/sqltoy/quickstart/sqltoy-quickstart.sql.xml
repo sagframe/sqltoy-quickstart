@@ -50,7 +50,8 @@
 	<sql id="qstart_fastPage">
 		<!-- 分页优化器,通过缓存实现查询条件一致的情况下在一定时间周期内缓存总记录数量，从而无需每次查询总记录数量 -->
 		<!-- alive-max:最大存放多少个不同查询条件的总记录量; alive-seconds:查询条件记录量存活时长(比如120秒,超过阀值则重新查询) -->
-		<page-optimize parallel="true" alive-max="100" alive-seconds="120" />
+		<page-optimize parallel="true" alive-max="100"
+			alive-seconds="120" />
 		<!-- 安全脱敏,type提供了几种标准的脱敏模式 mask-rate:脱敏比例 mask-code:自定义脱敏掩码,一般***,默认为*** 
 			head-size:前面保留多长字符 tail-size:尾部保留多长字符 -->
 		<secure-mask columns="address" type="address" />
@@ -100,7 +101,8 @@
 				<filter compare-param="0" cache-index="2" compare-type="eq" />
 			</cache-arg>
 			<!-- 千万不要to_str(trans_date)>=:xxx 模式,sqltoy提供了日期、数字等类型转换,另外了解format的选项可以大幅简化代码处理 -->
-			<to-date params="beginDate" format="yyyy-MM-dd" increment-time="24" increment-unit="hours"/>
+			<to-date params="beginDate" format="yyyy-MM-dd"
+				increment-time="24" increment-unit="hours" />
 			<!-- 对截止日期加1,从而达到类似于 trans_date<='yyyy-MM-dd 23:59:59' 平衡时分秒因素 -->
 			<to-date params="endDate" format="yyyy-MM-dd"
 				increment-days="1" />
@@ -243,9 +245,10 @@
 				order by t.ORGAN_ID 
 			]]>
 		</value>
-		<!-- 多个列合并,可以先翻译后合并 -->
-		<link id-column="ORGAN_ID" columns="STAFF_NAME,sexTypeName"
-			sign="," />
+		<!-- 可设置多个列的值分别拼接,如有缓存翻译，会先翻译后合并 使用前提:sql语句自身进行合理排序 id-column:分组列 columns:需要拼接的列 
+			sign:拼接的字符 distinct:拼接是否去重 -->
+		<link id-columns="ORGAN_ID" columns="STAFF_NAME,sexTypeName"
+			sign="," distinct="true" />
 		<translate cache="dictKeyName" columns="sexTypeName"
 			cache-type="SEX_TYPE" />
 		<translate cache="organIdName" columns="ORGAN_NAME" />
@@ -278,6 +281,17 @@
 				                     " t.TRANS_DATE between STR_TO_DATE(':startDates[i]','%Y-%m-%d') 
 				                       and STR_TO_DATE(':endDates[i]','%Y-%m-%d') " ,
 				                       " or "))]
+			]]>
+		</value>
+	</sql>
+
+	<!-- 演示自定义sql返回类型非对应含加密属性的pojo 时通过配置对字段进行解密 -->
+	<sql id="qstart_secure_decrypt">
+		<!-- 解密配置 -->
+		<secure-decrypt columns="tel_no,home_address" />
+		<value>
+			<![CDATA[
+				select * from sqltoy_secure_case
 			]]>
 		</value>
 	</sql>

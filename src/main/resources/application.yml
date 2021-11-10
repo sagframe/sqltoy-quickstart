@@ -31,6 +31,11 @@ spring:
         #cacheType: caffeine
         #自定义缓存框架设定
         #translateCacheManager: com.xxxx.xxxCacheImpl
+        #使用sqltoy自带的RSA加解密
+        securePrivateKey: classpath:mock/rsa_private.key
+        securePublicKey: classpath:mock/rsa_public.key
+        # 自定义加解密实现
+        #fieldsSecureProvider: 可自行实现org.sagacity.sqltoy.plugins.secure.FieldsSecureProvider
     datasource:
        name: dataSource
        type: com.alibaba.druid.pool.DruidDataSource

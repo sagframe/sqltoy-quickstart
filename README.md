@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.1.14</version>
+	<version>5.1.15</version>
 </dependency>
 ```
 
@@ -238,6 +238,7 @@ java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
 * JsonTypeCaseTest 演示json等特殊类型的支持
 * TransLedgerConcurrentTest 演示类似订单交易台账高并发事务处理
 * ExecuteSql 演示executeSql和batchUpdate 执行sql更新或批量更新操作
+* SecureEncryptDecryptTest 演示字段加解密功能
 
 # 疑问解答
 ## 为什么要将*.sql.xml 放在java路径下?
@@ -310,6 +311,12 @@ public class StaffInfoDao extends SqlToyDaoSupport {
 ```
 
 ## 多数据源怎么弄?
+* sqltoy可以配置默认数据源
+
+```properties
+spring.sqltoy.defaultDataSource=dataSourceName
+```
+
 * 如果是同类单据根据特定规则分多个库，请参见分库策略进行
 * 通过多个lazyDao模式
 
