@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.1.15</version>
+	<version>5.1.18</version>
 </dependency>
 ```
 
@@ -35,7 +35,7 @@
 			<include>**/*.yml</include>
 			<include>**/*.sql</include>
 			<include>**/*.jpg</include>
-                        <include>**/*.key</include>
+            <include>**/*.key</include>
 		</includes>
 	</resource>
 </resources>
