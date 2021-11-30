@@ -35,7 +35,7 @@
 			<include>**/*.yml</include>
 			<include>**/*.sql</include>
 			<include>**/*.jpg</include>
-                        <include>**/*.key</include>
+            <include>**/*.key</include>
 		</includes>
 	</resource>
 </resources>
