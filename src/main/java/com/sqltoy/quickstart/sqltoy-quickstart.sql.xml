@@ -104,8 +104,7 @@
 			<to-date params="beginDate" format="yyyy-MM-dd"
 				increment-time="24" increment-unit="hours" />
 			<!-- 对截止日期加1,从而达到类似于 trans_date<='yyyy-MM-dd 23:59:59' 平衡时分秒因素 -->
-			<to-date params="endDate" format="yyyy-MM-dd"
-				increment-days="1" />
+			<to-date params="endDate" format="yyyy-MM-dd" increment-time="1" increment-unit="days"/>
 		</filters>
 		<value>
 			<![CDATA[
