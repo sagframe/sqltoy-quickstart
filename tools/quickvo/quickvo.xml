@@ -20,10 +20,10 @@
 	<api-doc>
 		<imports value="io.swagger.v3.oas.annotations.media.Schema" />
 		<doc-class-template>
-		<![CDATA[@Schema(name="${className}",description="${tableRemark}")]]>
+		<![CDATA[@Schema(name="${className}",description="${tableRemark!""}")]]>
 		</doc-class-template>
 		<doc-field-template>
-		<![CDATA[@Schema(name="${fieldName}",description="${colRemark}",nullable=${nullable})]]>
+		<![CDATA[@Schema(name="${fieldName}",description="${colRemark!""}",nullable=${nullable})]]>
 		</doc-field-template>
 	</api-doc>
 	<!-- schema 对照关系:mysql 对应 db 名称; oracle 对应 用户名称，如出现字段重复等情况，请结合schema和catalog进行配置过滤 -->
