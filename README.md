@@ -9,8 +9,26 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.1.24</version>
+	<version>5.1.25</version>
 </dependency>
+
+<!-- 
+注意注意: 配置连接池依赖
+
+1、druid模式
+<dependency>
+	<groupId>com.alibaba</groupId>
+	<artifactId>druid-spring-boot-starter</artifactId>
+   <version>1.2.8</version>
+</dependency>
+
+2、springboot自带的hikari连接池需要额外增加依赖
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-jdbc</artifactId>
+	<version>2.6.3</version>
+</dependency>
+-->
 ```
 
 ## 2. 配置正确pom build避免sql文件无法编译到classes下面
