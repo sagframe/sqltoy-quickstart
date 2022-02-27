@@ -151,11 +151,11 @@
 			order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<summary columns="sale_count,sale_price,total_amt"
+		<summary sum-columns="sale_count,total_amt" average-columns="sale_price"
 			reverse="true">
 			<!-- 层级顺序保持从高到低 -->
-			<global sum-label="总计" label-column="fruit_name" />
-			<group group-column="fruit_name" sum-label="小计"
+			<global sum-label="总计" average-label="总均价" label-column="fruit_name" />
+			<group group-column="fruit_name" sum-label="小计" average-label="单品均价"
 				label-column="fruit_name" />
 		</summary>
 	</sql>
