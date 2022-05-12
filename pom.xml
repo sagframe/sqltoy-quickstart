@@ -12,7 +12,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>5.1.34</sqltoy-starter.version>
+		<sqltoy-starter.version>5.1.36</sqltoy-starter.version>
 		<fastjson.version>1.2.80</fastjson.version>
 		<druid.version>1.2.9</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
