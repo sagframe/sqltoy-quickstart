@@ -137,7 +137,7 @@ spring.sqltoy.unifyFieldsHandler=com.sqltoy.plugins.SqlToyUnifyFieldsHandler
 * 参见:src/main/java 下面的SqlToyApplication
 
 ```java
-package com.sqltoy.quickstart;
+package com.sqltoy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
