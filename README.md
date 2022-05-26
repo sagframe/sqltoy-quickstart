@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.1.36</version>
+	<version>5.1.42</version>
 </dependency>
 
 <!-- 
@@ -26,7 +26,7 @@
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-jdbc</artifactId>
-	<version>2.6.7</version>
+	<version>2.6.8</version>
 </dependency>
 -->
 ```
