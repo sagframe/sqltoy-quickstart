@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.1.44</version>
+	<version>5.1.46</version>
 </dependency>
 
 <!-- 
