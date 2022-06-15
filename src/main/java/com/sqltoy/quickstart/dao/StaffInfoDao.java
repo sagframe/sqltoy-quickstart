@@ -7,7 +7,7 @@ import org.sagacity.sqltoy.config.model.Translate;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.model.QueryExecutor;
-import org.sagacity.sqltoy.support.SqlToyDaoSupport;
+import org.sagacity.sqltoy.support.SpringDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.sqltoy.quickstart.vo.StaffInfoVO;
@@ -19,7 +19,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version 1.0.0,Date:2020-07-16
  */
 @Repository("staffInfoDao")
-public class StaffInfoDao extends SqlToyDaoSupport {
+public class StaffInfoDao extends SpringDaoSupport {
 	/**
 	 * @TODO 提供一个分页并动态设置缓存翻译的演示
 	 * @param pageModel
