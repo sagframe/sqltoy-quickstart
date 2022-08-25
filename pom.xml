@@ -5,22 +5,22 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.8</version>
+		<version>2.7.3</version>
 	</parent>
 	<groupId>com.sqltoy.quickstart</groupId>
 	<artifactId>sqltoy-quickstart</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>5.2.3</sqltoy-starter.version>
-		<fastjson.version>1.2.83</fastjson.version>
+		<sqltoy-starter.version>5.2.9</sqltoy-starter.version>
+		<fastjson.version>2.0.12</fastjson.version>
 		<druid.version>1.2.11</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
-		<ehcache.version>3.10.0</ehcache.version>
-		<junit-jupiter.version>5.8.2</junit-jupiter.version>
-		<junit-platform.version>1.8.2</junit-platform.version>
-		<mysql.version>8.0.29</mysql.version>
-		<swagger-annotations.version>2.2.0</swagger-annotations.version>
+		<ehcache.version>3.10.1</ehcache.version>
+		<junit-jupiter.version>5.9.0</junit-jupiter.version>
+		<junit-platform.version>1.9.0</junit-platform.version>
+		<mysql.version>8.0.30</mysql.version>
+		<swagger-annotations.version>2.2.2</swagger-annotations.version>
 	</properties>
 	<dependencies>
 		<dependency>
