@@ -12,14 +12,14 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>5.2.21</sqltoy-starter.version>
+		<sqltoy-starter.version>5.2.23</sqltoy-starter.version>
 		<fastjson.version>2.0.19</fastjson.version>
-		<druid.version>1.2.14</druid.version>
+		<druid.version>1.2.15</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
-		<ehcache.version>3.10.3</ehcache.version>
+		<ehcache.version>3.10.6</ehcache.version>
 		<junit-jupiter.version>5.9.1</junit-jupiter.version>
 		<junit-platform.version>1.9.1</junit-platform.version>
-		<mysql.version>8.0.30</mysql.version>
+		<mysql.version>8.0.31</mysql.version>
 		<swagger-annotations.version>2.2.2</swagger-annotations.version>
 	</properties>
 	<dependencies>
@@ -88,8 +88,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
 		<dependency>
