@@ -20,9 +20,9 @@ import com.alibaba.fastjson.JSONObject;
  * @modify 2020-11-25,修改说明
  */
 public class JsonTypeHandler extends TypeHandler {
-	//根据情况对null进行设置,postgresql这个环节是必须要的
+	// 根据情况对null进行设置,postgresql这个环节是必须要的
 	@Override
-	public boolean setNull(PreparedStatement pst, int paramIndex, int jdbcType) throws SQLException {
+	public boolean setNull(Integer dbType, PreparedStatement pst, int paramIndex, int jdbcType) throws SQLException {
 		return false;
 	}
 
@@ -31,7 +31,8 @@ public class JsonTypeHandler extends TypeHandler {
 	 * <li>返回false 表示常规类型,交回框架自行处理</li>
 	 */
 	@Override
-	public boolean setValue(PreparedStatement pst, int paramIndex, int jdbcType, Object value) throws SQLException {
+	public boolean setValue(Integer dbType, PreparedStatement pst, int paramIndex, int jdbcType, Object value)
+			throws SQLException {
 		// 通过quickvo.xml 中jdbc-type 里面直接设置int数字,来区分特定的类型
 		if (jdbcType == 1021) {
 			pst.setString(paramIndex, JSONObject.toJSONString(value));
