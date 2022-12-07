@@ -5,15 +5,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>2.7.6</version>
 	</parent>
 	<groupId>com.sqltoy.quickstart</groupId>
 	<artifactId>sqltoy-quickstart</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>5.2.24</sqltoy-starter.version>
-		<fastjson.version>2.0.19</fastjson.version>
+		<sqltoy-starter.version>5.2.25</sqltoy-starter.version>
+		<fastjson.version>2.0.20</fastjson.version>
 		<druid.version>1.2.15</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
 		<ehcache.version>3.10.8</ehcache.version>
