@@ -98,7 +98,7 @@
 				alias-name="staffIds">
 				<!-- 可选配置:这里的filter是排除的概念,将符合条件的排除掉(可以不使用) compare-param:可以是具体的一个条件参数名称,也可以是一个固定值 
 					cache-index:针对缓存具体哪一列进行值对比 compare-type:目前分 eq和neq两种情况 这里表示将状态无效的员工过滤掉 -->
-				<filter compare-param="0" cache-index="2" compare-type="eq" />
+				<filter compare-param="1" cache-index="2" compare-type="eq" />
 			</cache-arg>
 			<!-- 千万不要to_str(trans_date)>=:xxx 模式,sqltoy提供了日期、数字等类型转换,另外了解format的选项可以大幅简化代码处理 -->
 			<to-date params="beginDate" format="yyyy-MM-dd"
