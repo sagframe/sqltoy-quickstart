@@ -53,6 +53,8 @@ spring:
          maxWait: 60000
          numTestsPerEvictionRun: 3
          keepAlive: true
+         socketTimeout: 20000
+         connect-timeout: 30000
          # 切记切记不要打开poolPreparedStatements 和设置maxOpenPreparedStatements，druid这里有bug，会报关闭的语句，让你找不到错误的原因
          #poolPreparedStatements: false
          #注意maxOpenPreparedStatements设置>0 就等同于设置poolPreparedStatements=true
