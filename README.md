@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.2.34</version>
+	<version>5.2.39</version>
 </dependency>
 
 <!-- 
@@ -19,14 +19,14 @@
 <dependency>
 	<groupId>com.alibaba</groupId>
 	<artifactId>druid-spring-boot-starter</artifactId>
-   <version>1.2.15</version>
+   <version>1.2.16</version>
 </dependency>
 
 2、springboot自带的hikari连接池需要额外增加依赖
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-jdbc</artifactId>
-	<version>2.7.8</version>
+	<version>2.7.9</version>
 </dependency>
 -->
 ```
