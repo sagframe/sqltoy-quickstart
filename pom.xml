@@ -12,8 +12,8 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sqltoy-starter.version>5.2.39</sqltoy-starter.version>
-		<fastjson.version>2.0.25</fastjson.version>
+		<sqltoy-starter.version>5.2.42</sqltoy-starter.version>
+		<fastjson.version>2.0.26</fastjson.version>
 		<druid.version>1.2.16</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
 		<ehcache.version>3.10.8</ehcache.version>
@@ -21,8 +21,16 @@
 		<junit-platform.version>1.9.2</junit-platform.version>
 		<mysql.version>8.0.32</mysql.version>
 		<swagger-annotations.version>2.2.8</swagger-annotations.version>
+		<lombok.version>1.18.26</lombok.version>
+		<spring-framework.version>5.3.26</spring-framework.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -138,6 +146,11 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>${swagger-annotations.version}</version>
 		</dependency>
+		<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring-framework.version}</version>
+			</dependency>
 	</dependencies>
 	<build>
 		<resources>

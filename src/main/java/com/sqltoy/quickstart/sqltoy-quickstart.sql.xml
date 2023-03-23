@@ -94,7 +94,7 @@
 		<!-- 机构名称翻译 -->
 		<translate cache="organIdName" columns="organName" />
 		<filters>
-			<cache-arg cache-name="staffIdName" param="staffName"
+			<cache-arg cache-name="staffIdName" param="staffName" prior-match-equal="true"
 				alias-name="staffIds">
 				<!-- 可选配置:这里的filter是排除的概念,将符合条件的排除掉(可以不使用) compare-param:可以是具体的一个条件参数名称,也可以是一个固定值 
 					cache-index:针对缓存具体哪一列进行值对比 compare-type:目前分 eq和neq两种情况 这里表示将状态无效的员工过滤掉 -->
@@ -151,11 +151,11 @@
 			order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<summary sum-columns="sale_count,total_amt" average-columns="sale_price"
-			reverse="true">
+		<summary sum-columns="sale_count,sale_price,total_amt" 
+			reverse="true" sum-site="top" skip-single-row="true">
 			<!-- 层级顺序保持从高到低 -->
-			<global sum-label="总计" average-label="总均价" label-column="fruit_name" />
-			<group group-column="fruit_name" sum-label="小计" average-label="单品均价"
+			<global sum-label="总计"  label-column="fruit_name" />
+			<group group-column="fruit_name" sum-label="小计" 
 				label-column="fruit_name" />
 		</summary>
 	</sql>

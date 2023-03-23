@@ -78,12 +78,17 @@ public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 		return forceUpdateFields;
 	}
 
+	/**
+	 * 统一数据权限传参、越权校验
+	 */
 	@Override
 	public IgnoreKeyCaseMap<String, DataAuthFilterConfig> dataAuthFilters() {
 		IgnoreKeyCaseMap<String, DataAuthFilterConfig> map = new IgnoreKeyCaseMap<String, DataAuthFilterConfig>();
+		//模拟授权机构
 		Set<String> organIds = new HashSet<String>();
 		organIds.add("100005");
 		organIds.add("100007");
+		//sql中用:authedOrganIds 引入授权机构条件参数
 		map.put("authedOrganIds", new DataAuthFilterConfig().setForcelimit(true).setValues(organIds));
 		return map;
 	}
