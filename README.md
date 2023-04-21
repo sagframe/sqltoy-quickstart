@@ -9,24 +9,24 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.2.23</version>
+	<version>5.2.43</version>
 </dependency>
 
 <!-- 
 注意注意: 配置连接池依赖
 
-1、druid模式
+1、druid连接池
 <dependency>
 	<groupId>com.alibaba</groupId>
 	<artifactId>druid-spring-boot-starter</artifactId>
-   <version>1.2.15</version>
+   <version>1.2.16</version>
 </dependency>
 
 2、springboot自带的hikari连接池需要额外增加依赖
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-jdbc</artifactId>
-	<version>2.7.5</version>
+	<version>2.7.9</version>
 </dependency>
 -->
 ```
@@ -74,7 +74,7 @@
 			<include>**/*.properties</include>
 			<include>**/*.yml</include>
 			<include>**/*.sql</include>
-                        <include>**/*.key</include>
+            <include>**/*.key</include>
 		</includes>
 	</testResource>
 </testResources>
@@ -90,9 +90,9 @@ spring:
    sqltoy:
         # 多个路径用逗号分隔(这里要注意是路径,sqltoy会自动向下寻找以sql.xml结尾的文件,不要写成classpath:com/**/*.sql.xml)
         sqlResourcesDir: classpath:com/sqltoy/quickstart
-        # 默认值:classpath:sqltoy-translate.xml;classpath:translates  支持.trans.xml多文件存放于指定目录
+        # 默认值为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
-		# 默认关闭(如oracle的nvl,当数据库切到mysql时会自动替换成ifnull)
+		# 默认开启跨数据库函数自动适配(如oracle的nvl,当数据库切到mysql时会自动替换成ifnull)
         #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
@@ -118,9 +118,9 @@ spring:
 ```
 # sqltoy config
 spring.sqltoy.sqlResourcesDir=classpath:com/sqltoy/quickstart
-# 默认配置就是classpath:sqltoy-translate.xml,一致情况下无需配置
+# 默认配置:classpath:sqltoy-translate.xml;classpath:translates,可以多个.trans.xml 放于classpath:translates目录下面
 spring.sqltoy.translateConfig=classpath:sqltoy-translate.xml
-# 默认开启函数自动替换功能 ,4.15.7设置为close会关闭，之前版本可以填trim只开通单个函数模式
+# 默认关闭函数替换
 #spring.sqltoy.functionConverts=default
 # 是否开启debug模式,在开发阶段建议为true,会打印sql
 spring.sqltoy.debug=true
