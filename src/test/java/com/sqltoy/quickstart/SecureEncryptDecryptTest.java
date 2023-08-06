@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +30,7 @@ public class SecureEncryptDecryptTest {
 	@Autowired
 	SqlToyCRUDService sqlToyCRUDService;
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	@Test
 	public void save() {
@@ -59,8 +61,7 @@ public class SecureEncryptDecryptTest {
 	// 演示结果类型是POJO的，自动将跟pojo上加密的属性名一致的解密
 	@Test
 	public void search() {
-		List<SecureCaseVO> result = sqlToyLazyDao.findBySql("select * from sqltoy_secure_case", null,
-				SecureCaseVO.class);
+		List<SecureCaseVO> result = lightDao.find("select * from sqltoy_secure_case", MapKit.map(), SecureCaseVO.class);
 		System.err.println(JSON.toJSONString(result));
 	}
 
@@ -69,7 +70,7 @@ public class SecureEncryptDecryptTest {
 	 */
 	@Test
 	public void searchByXML() {
-		List result = sqlToyLazyDao.findBySql("qstart_secure_decrypt", null, null, null);
+		List result = lightDao.find("qstart_secure_decrypt", null);
 		System.err.println(JSON.toJSONString(result));
 	}
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sagacity.sqltoy.callback.DataSourceCallbackHandler;
-import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.utils.DataSourceUtils;
 import org.sagacity.sqltoy.utils.DateUtil;
@@ -36,7 +36,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 @Service("initDBService")
 public class InitDBServiceImpl implements InitDBService {
 	@Autowired
-	private SqlToyLazyDao sqlToyLazyDao;
+	private LightDao lightDao;
 
 	@Transactional
 	public void initDatabase(String dataSqlFile) {
@@ -45,7 +45,7 @@ public class InitDBServiceImpl implements InitDBService {
 		if (StringUtil.isBlank(sqlContent)) {
 			return;
 		}
-		DataSourceUtils.processDataSource(sqlToyLazyDao.getSqlToyContext(), sqlToyLazyDao.getDataSource(),
+		DataSourceUtils.processDataSource(lightDao.getSqlToyContext(), lightDao.getDataSource(),
 				new DataSourceCallbackHandler() {
 					@Override
 					public void doConnection(Connection conn, Integer dbType, String dialect) throws Exception {
@@ -61,20 +61,19 @@ public class InitDBServiceImpl implements InitDBService {
 	@Transactional
 	public Long initOrderData() {
 		// 第一步清除数据(deleteByQuery 不允许无条件删除,简易方式跳过)
-		sqlToyLazyDao.deleteByQuery(DeviceOrderVO.class, EntityQuery.create().where("1=?").values(1));
+		lightDao.deleteByQuery(DeviceOrderVO.class, EntityQuery.create().where("1=?").values(1));
 
 		// 模拟订单信息
 		List<DeviceOrderVO> orderInfos = new ArrayList<DeviceOrderVO>();
 		int max = 1000;
 		// 查询全部员工(空条件,sqltoy强制约束需要设置条件)
-		List<StaffInfoVO> staffs = sqlToyLazyDao.findEntity(StaffInfoVO.class,
-				EntityQuery.create().where("").values(""));
+		List<StaffInfoVO> staffs = lightDao.findEntity(StaffInfoVO.class, EntityQuery.create().where("").values(""));
 		StaffInfoVO staff;
 		int[] days = { 10, 15, 20, 30, 60 };
 		LocalDate nowTime = DateUtil.getDate();
 		// 直接通过sqltoy的缓存获取字典数据,避免查询数据库
 		List<Object[]> deviceTypes = new ArrayList<Object[]>(
-				sqlToyLazyDao.getTranslateCache("dictKeyName", "DEVICE_TYPE").values());
+				lightDao.getTranslateCache("dictKeyName", "DEVICE_TYPE").values());
 		// 采购、销售标志
 		String[] psTypes = { "PO", "SO" };
 		for (int i = 0; i < max; i++) {
@@ -97,7 +96,7 @@ public class InitDBServiceImpl implements InitDBService {
 			orderInfos.add(orderVO);
 		}
 		// 事务控制在service层上面的
-		return sqlToyLazyDao.saveAll(orderInfos);
+		return lightDao.saveAll(orderInfos);
 	}
 
 }

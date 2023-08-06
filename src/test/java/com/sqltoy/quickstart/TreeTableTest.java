@@ -5,12 +5,12 @@ package com.sqltoy.quickstart;
 
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.CacheMatchFilter;
 import org.sagacity.sqltoy.model.ColumnMeta;
+import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.model.TableMeta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,7 +35,7 @@ public class TreeTableTest {
 	OrganInfoService organInfoService;
 
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	/**
 	 * @TODO 通过保存机构演示节点路径、节点等级、是否叶子节点等数据的生成
@@ -53,8 +53,8 @@ public class TreeTableTest {
 
 	@Test
 	public void searchTree() {
-		List<OrganInfoVO> organs = sqlToyLazyDao.findBySql("qstart_treeTable_search", Arrays.array("nodeRoute"),
-				Arrays.array("100007"), OrganInfoVO.class);
+		List<OrganInfoVO> organs = lightDao.find("qstart_treeTable_search", MapKit.map("nodeRoute", "100007"),
+				OrganInfoVO.class);
 		for (OrganInfoVO vo : organs) {
 			System.err.println(JSON.toJSONString(vo));
 		}
@@ -62,7 +62,7 @@ public class TreeTableTest {
 
 	@Test
 	public void getTables() {
-		List<TableMeta> tables = sqlToyLazyDao.getTables(null, null, "%");
+		List<TableMeta> tables = lightDao.tableApi().getTables(null, null, "%");
 		for (TableMeta vo : tables) {
 			System.err.println(JSON.toJSONString(vo));
 		}
@@ -70,7 +70,7 @@ public class TreeTableTest {
 
 	@Test
 	public void getTableColumns() {
-		List<ColumnMeta> tables = sqlToyLazyDao.getTableColumns(null, null, "SQLTOY_DICT_DETAIL");
+		List<ColumnMeta> tables = lightDao.tableApi().getTableColumns(null, null, "SQLTOY_DICT_DETAIL");
 		for (ColumnMeta vo : tables) {
 			System.err.println(JSON.toJSONString(vo));
 		}
@@ -78,7 +78,8 @@ public class TreeTableTest {
 
 	@Test
 	public void testMatchKey() {
-		String[] keys = sqlToyLazyDao.cacheMatchKeys("新能源研究院",CacheMatchFilter.create().cacheName("organIdName").matchIndexs(1).cacheKeyIndex(0).priorMatchEqual(true).matchSize(2));
+		String[] keys = lightDao.cacheMatchKeys(CacheMatchFilter.create().cacheName("organIdName").matchIndexs(1)
+				.cacheKeyIndex(0).priorMatchEqual(true).matchSize(2), "新能源研究院");
 		for (String key : keys) {
 			System.err.println(key);
 		}

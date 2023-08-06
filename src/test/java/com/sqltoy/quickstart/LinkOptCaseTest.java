@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,8 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 @SpringBootTest(classes = SqlToyApplication.class)
 public class LinkOptCaseTest {
 	// 链式操作包含:save、load、update、batch(批量更新)、execute(sql执行)、store(存储过程)等
-
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	// 数据库更新保存操作要放入service用事务包裹
 	@Test
@@ -46,7 +46,7 @@ public class LinkOptCaseTest {
 		staffInfo.setOrganId("100007");
 
 		// 单条记录保存
-		sqlToyLazyDao.save().one(staffInfo);
+		lightDao.save().one(staffInfo);
 		// 动态设置数据库、批量、保存模式(ignore、update)
 		// sqlToyLazyDao.save().dataSource(dataSource).saveMode(SaveMode.IGNORE).many(entities);
 	}
@@ -57,7 +57,7 @@ public class LinkOptCaseTest {
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
 		// resultType可以额外指定结果类型
-		List result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).resultType(StaffInfoVO.class).find();
+		List result = lightDao.query().sql("qstart_fastPage").entity(staffVO).resultType(StaffInfoVO.class).find();
 	}
 
 	@Test
@@ -66,9 +66,9 @@ public class LinkOptCaseTest {
 		StaffInfoVO staffVO = new StaffInfoVO();
 		// 作为查询条件传参数
 		staffVO.setStaffName("陈");
-		Page result = sqlToyLazyDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
+		Page result = lightDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
 		// 查询可以链式操作
-		//sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
+		// sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
 	}
 
 }

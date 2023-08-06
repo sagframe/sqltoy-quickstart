@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import org.sagacity.sqltoy.callback.UpdateRowHandler;
-import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.LockMode;
 import org.sagacity.sqltoy.model.QueryExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
 @Service("transLedgerService")
 public class TransLedgerServiceImpl implements TransLedgerService {
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	private LightDao lightDao;
 
 	@Transactional
 	public TransLedgerVO updateTrans(TransLedgerVO transVO) {
@@ -39,7 +39,7 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 		// 如果lockMode不符合要求，可以在sql语句中直接写 for update xxx ,sqltoy则优先以你的优先
 		String sql = "select * from SQLTOY_TRANS_LEDGER t where t.order_id=?";
 		@SuppressWarnings("unchecked")
-		List<TransLedgerVO> result = (List<TransLedgerVO>) sqlToyLazyDao.updateFetch(new QueryExecutor(sql)
+		List<TransLedgerVO> result = (List<TransLedgerVO>) lightDao.updateFetch(new QueryExecutor(sql)
 				.values(transVO.getOrderId()).resultType(TransLedgerVO.class).lock(LockMode.UPGRADE),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
@@ -55,17 +55,14 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 	}
 
 	/**
-	 * updateSaveFetch 一般用于台账类高并发强事务(库存台账、资金台账)操作，一次交互完成多种操作
-	 * 1、根据主键查询并锁住记录
-	 * 2、记录不存在，执行save保存操作
-	 * 3、记录存在，执行数据叠加更新操作
-	 * 4、返回更新后的结果
+	 * updateSaveFetch 一般用于台账类高并发强事务(库存台账、资金台账)操作，一次交互完成多种操作 1、根据主键查询并锁住记录
+	 * 2、记录不存在，执行save保存操作 3、记录存在，执行数据叠加更新操作 4、返回更新后的结果
 	 */
 	@Override
 	public TransLedgerVO updateSaveTrans(TransLedgerVO transVO) {
 		transVO.setQuantity(1);
 		transVO.setAmt(BigDecimal.ONE);
-		return sqlToyLazyDao.updateSaveFetch(transVO, new UpdateRowHandler() {
+		return lightDao.updateSaveFetch(transVO, new UpdateRowHandler() {
 			@Override
 			public void updateRow(ResultSet rs, int index) throws Exception {
 				// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update

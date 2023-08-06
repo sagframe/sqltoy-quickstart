@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.sagacity.sqltoy.callback.UpdateRowHandler;
-import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.EntityUpdate;
 import org.sagacity.sqltoy.model.LockMode;
@@ -37,7 +37,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	StaffInfoDao staffInfoDao;
 
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	public Page<StaffInfoVO> queryStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
 		return staffInfoDao.findStaff(pageModel, staffInfoVO);
@@ -60,11 +60,10 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 		staffInfo.setEntryDate(LocalDate.now());
 		staffInfo.setStatus(1);
 
-	//	sqlToyLazyDao.save(staffInfo);
+		// sqlToyLazyDao.save(staffInfo);
 		String sql = "select t.STAFF_ID,t.STAFF_NAME,t.ADDRESS,t.ENTRY_DATE,t.ORGAN_ID,t.ORGAN_ID ORGAN_NAME,t.UPDATE_TIME"
 				+ " from sqltoy_staff_info t where staff_id=?";
-		return sqlToyLazyDao.updateFetch(
-				new QueryExecutor(sql).values("S2029").resultType(StaffInfoVO.class),
+		return lightDao.updateFetch(new QueryExecutor(sql).values("S2029").resultType(StaffInfoVO.class),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
 						String staffName = rs.getString("STAFF_NAME");
@@ -79,14 +78,14 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 
 	@Transactional
 	public void updateLockStaff(String id, String address) {
-		StaffInfoVO staffInfo = sqlToyLazyDao.load(new StaffInfoVO(id), LockMode.UPGRADE);
+		StaffInfoVO staffInfo = lightDao.load(new StaffInfoVO(id), LockMode.UPGRADE);
 		staffInfo.setAddress(address);
-		sqlToyLazyDao.update(staffInfo);
+		lightDao.update(staffInfo);
 	}
 
 	@Transactional
 	public List<StaffInfoVO> callStore() {
-		return sqlToyLazyDao.executeStore("{call sp_showcase(?,?)}", new Object[] { 1, null }, null, StaffInfoVO.class)
+		return lightDao.executeStore("{call sp_showcase(?,?)}", new Object[] { 1, null }, null, StaffInfoVO.class)
 				.getRows();
 	}
 
@@ -96,7 +95,7 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 */
 	@Transactional
 	public Long updateByQuery() {
-		return sqlToyLazyDao.updateByQuery(StaffInfoVO.class,
+		return lightDao.updateByQuery(StaffInfoVO.class,
 				EntityUpdate.create().set("createBy", "chenrenfei").where("staffName like ?").values("张"));
 	}
 
@@ -106,6 +105,6 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	 */
 	@Transactional
 	public Long deleteByQuery() {
-		return sqlToyLazyDao.deleteByQuery(StaffInfoVO.class, EntityQuery.create().where("status=?").values(0));
+		return lightDao.deleteByQuery(StaffInfoVO.class, EntityQuery.create().where("status=?").values(0));
 	}
 }

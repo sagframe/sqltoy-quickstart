@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.config.model.Translate;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.Page;
@@ -35,7 +36,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 @SpringBootTest(classes = SqlToyApplication.class)
 public class EntityOptsCaseTest {
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	@Autowired
 	StaffInfoService staffInfoService;
@@ -51,7 +52,7 @@ public class EntityOptsCaseTest {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
 		// sqltoy中参数为null可以无需传参
-		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+		List<DeviceOrderVO> result = lightDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
@@ -65,7 +66,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQuerySkipNull() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
-		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+		List<DeviceOrderVO> result = lightDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where).names("authedOrganIds", "staffName", "beginDate")
 						.values(authedOrgans, "陈", LocalDate.parse("2018-09-01")).top(10));
 		result.forEach((vo) -> {
@@ -86,7 +87,7 @@ public class EntityOptsCaseTest {
 				put("beginDate", LocalDate.parse("2018-09-01"));
 			}
 		};
-		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+		List<DeviceOrderVO> result = lightDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where).paramsMap(params).top(20));
 		result.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
@@ -102,7 +103,7 @@ public class EntityOptsCaseTest {
 		staffInfo.setBeginDate(LocalDate.parse("2019-01-01"));
 		staffInfo.setEndDate(LocalDate.now());
 		staffInfo.setStaffName("陈");
-		Page<StaffInfoVO> result = sqlToyLazyDao.findPageEntity(new Page(10, 1L), StaffInfoVO.class,
+		Page<StaffInfoVO> result = lightDao.findPageEntity(new Page(10, 1L), StaffInfoVO.class,
 				EntityQuery.create().where(sql).values(staffInfo)
 						// 字典缓存必须要设置cacheType
 						// 单表对象查询需设置keyColumn构成select keyColumn as column模式
@@ -119,7 +120,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryTop() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+		List<DeviceOrderVO> result = lightDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null).top(20));
@@ -133,7 +134,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryRandom() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		List<DeviceOrderVO> result = sqlToyLazyDao.findEntity(DeviceOrderVO.class,
+		List<DeviceOrderVO> result = lightDao.findEntity(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null).random(15));
@@ -147,7 +148,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryPage() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[ORDER_ID=:orderId] #[and ORGAN_ID in (:authedOrganIds)] #[and STAFF_ID in (:staffIds)] #[and TRANS_DATE>=:beginDate] #[and TRANS_DATE<:endDate]";
-		Page<DeviceOrderVO> result = sqlToyLazyDao.findPageEntity(new Page(10, 1), DeviceOrderVO.class,
+		Page<DeviceOrderVO> result = lightDao.findPageEntity(new Page(10, 1), DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
@@ -161,7 +162,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryFields() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		Page<DeviceOrderVO> result = sqlToyLazyDao.findPageEntity(new Page(10, 1L), DeviceOrderVO.class,
+		Page<DeviceOrderVO> result = lightDao.findPageEntity(new Page(10, 1L), DeviceOrderVO.class,
 
 				// select 指定查询字段
 				// 支持select().field1().field2() 链式模式,数据库表结构变更自动报错
@@ -180,7 +181,7 @@ public class EntityOptsCaseTest {
 	public void testEntityQueryCount() {
 		String[] authedOrgans = { "100004", "100007" };
 		String where = "#[orderId=:orderId] #[and organId in (:authedOrganIds)] #[and staffId in (:staffIds)] #[and transDate>=:beginDate] #[and transDate<:endDate]";
-		Long result = sqlToyLazyDao.getCount(DeviceOrderVO.class,
+		Long result = lightDao.getCount(DeviceOrderVO.class,
 				EntityQuery.create().where(where)
 						.names("orderId", "authedOrganIds", "staffName", "beginDate", "endDate")
 						.values(null, authedOrgans, "陈", LocalDate.parse("2018-09-01"), null));
@@ -192,7 +193,7 @@ public class EntityOptsCaseTest {
 	 */
 	@Test
 	public void testEntityQueryCountNoConditions() {
-		Long result = sqlToyLazyDao.getCount(DeviceOrderVO.class, null);
+		Long result = lightDao.getCount(DeviceOrderVO.class, null);
 		System.err.println(result);
 	}
 

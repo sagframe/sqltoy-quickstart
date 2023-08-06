@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.sagacity.sqltoy.dao.SqlToyLazyDao;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.EntityQuery;
+import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.StringUtil;
@@ -36,7 +36,7 @@ import com.sqltoy.quickstart.vo.TransInfo15dVO;
 @SpringBootTest(classes = SqlToyApplication.class)
 public class ShardingSearchTest {
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	@Autowired
 	SqlToyCRUDService sqlToyCRUDService;
@@ -70,8 +70,8 @@ public class ShardingSearchTest {
 	// 演示根据开始日期作为分表依据，开始日期是40天前的会自动sharding到历史表中去查询
 	@Test
 	public void testShardingTableSearch() {
-		List<TransInfo15dVO> trans = sqlToyLazyDao.findBySql("qstart_sharding_table_case",
-				Arrays.array("beginDate", "endDate"), Arrays.array(LocalDate.now().plusDays(-40), null),
+		List<TransInfo15dVO> trans = lightDao.find("qstart_sharding_table_case",
+				MapKit.keys("beginDate", "endDate").values(LocalDate.now().plusDays(-40), null),
 				TransInfo15dVO.class);
 		trans.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
@@ -87,7 +87,7 @@ public class ShardingSearchTest {
 		query.tableSharding("realHisTable", new String[] { "sqltoy_trans_info_15d" }, "beginDate");
 		query.names("beginDate", "endDate").values(LocalDate.now().plusDays(-30), null)
 				.resultType(TransInfo15dVO.class);
-		List trans = sqlToyLazyDao.findByQuery(query).getRows();
+		List trans = lightDao.findByQuery(query).getRows();
 		trans.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});
@@ -96,7 +96,7 @@ public class ShardingSearchTest {
 
 	@Test
 	public void testShardingTableSearch2() {
-		List trans = sqlToyLazyDao.findEntity(TransInfo15dVO.class,
+		List trans = lightDao.findEntity(TransInfo15dVO.class,
 				EntityQuery.create().where("trans_date>=:transDate #[and trans_date<=:endDate]")
 						.names("transDate", "endDate").values(LocalDate.now().plusDays(-30), null));
 		trans.forEach((vo) -> {

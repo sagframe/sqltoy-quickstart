@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ public class DTOConvertPOJOTest {
 	// 在SqlToyCRUDService和sqlToyLazyDao 以及SqlToySupportDao里面都有提供
 	//
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	@Test
 	public void testVOToPO() {
@@ -49,7 +50,7 @@ public class DTOConvertPOJOTest {
 		// staffInfoVO.setPhoto(FileUtil.readAsBytes("classpath:/mock/staff_photo.jpg"));
 		staffInfoVO.setCountry("86");
 		try {
-			StaffInfo staffInfo = sqlToyLazyDao.convertType(staffInfoVO, StaffInfo.class);
+			StaffInfo staffInfo = lightDao.convertType(staffInfoVO, StaffInfo.class);
 			System.err.println(JSON.toJSONString(staffInfo));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,7 +74,7 @@ public class DTOConvertPOJOTest {
 		// staffInfoVO.setPhoto(FileUtil.readAsBytes("classpath:/mock/staff_photo.jpg"));
 		staffInfo.setCountry("86");
 		try {
-			StaffInfoVO staffInfoVO = sqlToyLazyDao.convertType(staffInfo, StaffInfoVO.class);
+			StaffInfoVO staffInfoVO = lightDao.convertType(staffInfo, StaffInfoVO.class);
 			System.err.println(JSON.toJSONString(staffInfoVO));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -111,7 +112,7 @@ public class DTOConvertPOJOTest {
 		staffVOs.add(staffInfoVO);
 		staffVOs.add(staffInfoVO1);
 		try {
-			List<StaffInfo> staffInfos = sqlToyLazyDao.convertType(staffVOs, StaffInfo.class);
+			List<StaffInfo> staffInfos = lightDao.convertType(staffVOs, StaffInfo.class);
 			System.err.println(JSON.toJSONString(staffInfos));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
