@@ -8,8 +8,9 @@
 ```xml
 <dependency>
 	<groupId>com.sagframe</groupId>
-	<artifactId>sagacity-sqltoy-starter</artifactId>
-	<version>5.2.98</version>
+	<artifactId>sagacity-sqltoy-spring-starter</artifactId>
+	<!-- jdk17+ /springboot3.x 请使用5.6.0 版本 -->
+	<version>5.6.0.jre8</version>
 </dependency>
 
 <!-- 
