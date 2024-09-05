@@ -4,16 +4,18 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.OneToMany;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.time.LocalDateTime;
-import org.sagacity.sqltoy.config.annotation.OneToMany;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * @project sqltoy-quickstart

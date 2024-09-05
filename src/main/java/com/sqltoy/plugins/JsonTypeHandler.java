@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 import org.sagacity.sqltoy.plugins.TypeHandler;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 
 /**
  * @project sagacity-sqltoy

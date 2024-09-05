@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+
 import com.sqltoy.quickstart.pojo.base.AbstractStaffInfo;
 
 /**

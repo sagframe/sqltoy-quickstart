@@ -5,7 +5,7 @@ package com.sqltoy.plugins;
 
 import org.sagacity.sqltoy.utils.NumberUtil;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.sqltoy.quickstart.service.TransLedgerService;
 import com.sqltoy.quickstart.vo.TransLedgerVO;
 

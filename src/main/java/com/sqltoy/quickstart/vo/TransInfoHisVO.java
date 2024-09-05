@@ -4,15 +4,17 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
 
 /**
  * @project sqltoy-quickstart
