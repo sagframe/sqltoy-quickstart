@@ -9,8 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-spring-starter</artifactId>
-	<!-- jdk17+ /springboot3.x 请使用5.6.22 版本 -->
-	<version>5.6.22.jre8</version>
+	<version>5.6.31</version>
 </dependency>
 
 <!-- 
@@ -27,7 +26,7 @@
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-jdbc</artifactId>
-	<version>2.7.18</version>
+	<version>3.3.5</version>
 </dependency>
 -->
 ```
@@ -188,21 +187,29 @@ public class InitDataBaseTest {
 
 ## 6. 利用quickvo生产VO(或POJO)
 * 在出问题时关注dataSource中的schema、catalog配置,其他问题请参见quickvo.xml中的注释
-* 将数据库驱动类放于tools/quickvo/libs下面
-* 配置tools/quickvo/db.properties 文件
+* pom.xml中增加quickvo的maven插件
 
-```properties
-#############  db config ####################
-jdbc.driver_class=com.mysql.cj.jdbc.Driver
-# url characterEncoding=utf-8 param is need
-jdbc.url=jdbc:mysql://192.168.56.109:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
-# mysql schema=dbname,oracle schema=username
-jdbc.schema=quickstart
-jdbc.username=quickstart
-jdbc.password=quickstart
+
+```xml
+<plugin>
+	<groupId>com.sagframe</groupId>
+	<artifactId>quickvo-maven-plugin</artifactId>
+	<version>1.0.1</version>
+	<configuration>
+		<configFile>./src/main/resources/quickvo.xml</configFile>
+		<baseDir>${project.basedir}</baseDir>
+	</configuration>
+	<dependencies>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+	</dependencies>
+</plugin>
 ```
 
-* 配置tools/quickvo/quickvo.xml 中的任务,关键部分如下
+* 配置src/main/resources/quickvo.xml 中的任务,关键部分如下
 
 ```xml
 <!-- db配置文件 -->
@@ -213,13 +220,11 @@ jdbc.password=quickstart
 <property name="include.schema" value="false" />
 <!--set method 是否支持返回对象自身(默认是false),即: public VO setName(String name){this.name=name;return this;} -->
 <property name="field.support.linked.set" value="true" />
-<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为false	-->
-<property name="generate.selectFields.class" value="true" />
 <!-- schema 对照关系:mysql 对应  db 名称; oracle 对应 用户名称;   -->
 <!-- 注意:当在多schema或tablespace场景下，会出现一个表中出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离   -->
-<datasource name="quickstart" url="${db.url}" driver="${db.driver_class}" 
-		schema="${db.schema}" catalog="${db.schema}" username="${db.username}" password="${db.password}" />
-<tasks dist="../../src/main/java" encoding="UTF-8">
+<datasource name="quickstart" url="${spring.datasource.url}" driver="${spring.datasource.driver-class-name}" schema="${spring.datasource.username}"
+		catalog="${spring.datasource.username}" username="${spring.datasource.username}" password="${spring.datasource.password}" />
+<tasks dist="src/main/java" encoding="UTF-8">
 	<!-- include 是表名匹配的正则表达式  -->
 	<task active="true" author="zhongxuchen" include="^SQLTOY_\w+" datasource="quickstart" swagger-model="false">
 		<!-- substr 表示截取表名的前缀部分(一般表会按模块增加前缀),如不截取则substr="" name="#{subName}VO" subName是约定词,VO这两个字符可以随意改变  -->
@@ -228,17 +233,11 @@ jdbc.password=quickstart
 </tasks>
 ```
 
-* 点击quickvo.bat 即可生产VO了,linux 或 mac 则执行quickvo.sh 
+* 点击mvn-quickvo.bat 即可生产VO了
 * windows环境下:
 
 ```
-java -cp ./libs/* org.sagacity.quickvo.QuickVOStart quickvo.xml
-```
-
-* mac电脑:
-
-```
-java -cp ./libs/\* org.sagacity.quickvo.QuickVOStart ./quickvo.xml
+mvn quickvo:quickvo
 ```
 
 # 源码导航

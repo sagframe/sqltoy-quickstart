@@ -6,14 +6,11 @@ package com.sqltoy.quickstart;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.service.StaffInfoService;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
@@ -24,8 +21,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020年8月13日
  * @modify 2020年8月13日,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class StoreTest {
 	@Autowired
 	LightDao lightDao;
@@ -48,7 +44,7 @@ public class StoreTest {
 
 	@Test
 	public void testCallStoreBySql() {
-		List<StaffInfoVO> result = (List<StaffInfoVO>) lightDao
+		List<StaffInfoVO> result = lightDao
 				.executeStore("{ call sp_showcase(?,?)}", new Object[] { 1, null }, null, StaffInfoVO.class).getRows();
 		for (StaffInfoVO staff : result) {
 			System.err.println(JSON.toJSONString(staff));

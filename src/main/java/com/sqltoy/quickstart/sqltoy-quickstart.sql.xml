@@ -157,6 +157,7 @@
 			<global sum-label="总计"  label-column="fruit_name" />
 			<group group-column="fruit_name" sum-label="小计" 
 				label-column="fruit_name" />
+			<group group-column="" sum-label="" label-column="" />
 		</summary>
 	</sql>
 
@@ -209,7 +210,7 @@
 		<rows-chain-relative group-column="fruit_name"
 			relative-columns="sale_count,total_amt" />
 	</sql>
-	<!-- 列转行 -->
+	<!-- 行转列 -->
 	<sql id="qstart_pivot_case">
 		<value>
 			<![CDATA[

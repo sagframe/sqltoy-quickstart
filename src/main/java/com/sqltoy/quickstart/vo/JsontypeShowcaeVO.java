@@ -4,16 +4,15 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-
+import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import java.util.List;
+import com.sqltoy.quickstart.vo.StaffInfoVO;
+import java.time.LocalDateTime;
 
 /**
  * @project sqltoy-quickstart
@@ -31,35 +30,23 @@ public class JsontypeShowcaeVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 3425808763023689603L;
 /*---begin-auto-generate-don't-update-this-area--*/	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="id",description="主键ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="ID",comment="主键ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="ID",comment="主键ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String id;
-	
-	/**
-	 * jdbcType:JSON
-	 */
+
 	@Schema(name="staffSet",description="员工信息集合",nullable=false)
-	@Column(name="STAFF_SET",comment="员工信息集合",length=1073741824L,type=1021,nullable=false)
+	@Column(name="STAFF_SET",comment="员工信息集合",length=1073741824L,type=1021,nativeType="JSON",nullable=false)
 	private List<StaffInfoVO> staffSet;
-	
-	/**
-	 * jdbcType:DATETIME
-	 */
+
 	@Schema(name="createTime",description="创建日期",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建日期",length=19L,type=java.sql.Types.DATE,nullable=false)
+	@Column(name="CREATE_TIME",comment="创建日期",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime createTime;
-	
-	/**
-	 * jdbcType:DATETIME
-	 */
+
 	@Schema(name="updateTime",description="修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="修改时间",length=19L,type=java.sql.Types.DATE,nullable=false)
+	@Column(name="UPDATE_TIME",comment="修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime updateTime;
-	
 	/** default constructor */
 	public JsontypeShowcaeVO() {
 	}

@@ -4,157 +4,108 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
+import org.sagacity.sqltoy.config.annotation.Entity;
+import org.sagacity.sqltoy.config.annotation.Id;
+import org.sagacity.sqltoy.config.annotation.Column;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.sagacity.sqltoy.config.annotation.Column;
-import org.sagacity.sqltoy.config.annotation.Entity;
-import org.sagacity.sqltoy.config.annotation.Id;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
- * @version 1.0.0
+ * @version 1.0.0 
  */
-@Schema(name = "DeviceOrderVO", description = "硬件购销定单表(演示有规则单号)")
+@Schema(name="DeviceOrderVO",description="硬件购销定单表(演示有规则单号)")
 @Data
 @Accessors(chain = true)
-@Entity(tableName = "sqltoy_device_order", comment = "硬件购销定单表(演示有规则单号)", pk_constraint = "PRIMARY")
+@Entity(tableName="sqltoy_device_order",comment="硬件购销定单表(演示有规则单号)",pk_constraint="PRIMARY")
 public class DeviceOrderVO implements Serializable {
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5720676300522791730L;
-	/*---begin-auto-generate-don't-update-this-area--*/
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "orderId", description = "订单ID", nullable = false)
-	@Id(strategy = "generator", generator = "org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name = "ORDER_ID", comment = "订单ID", length = 22L, type = java.sql.Types.VARCHAR, nullable = false)
+/*---begin-auto-generate-don't-update-this-area--*/	
+
+	@Schema(name="orderId",description="订单ID",nullable=false)
+	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
+	@Column(name="ORDER_ID",comment="订单ID",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String orderId;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "deviceType", description = "设备类型", nullable = false)
-	@Column(name = "DEVICE_TYPE", comment = "设备类型", length = 10L, type = java.sql.Types.VARCHAR, nullable = false)
+	@Schema(name="deviceType",description="设备类型",nullable=false)
+	@Column(name="DEVICE_TYPE",comment="设备类型",length=10L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String deviceType;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "psType", description = "购销标志", nullable = false)
-	@Column(name = "PS_TYPE", comment = "购销标志", length = 10L, type = java.sql.Types.VARCHAR, nullable = false)
+	@Schema(name="psType",description="购销标志",nullable=false)
+	@Column(name="PS_TYPE",comment="购销标志",length=10L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String psType;
 
-	/**
-	 * jdbcType:DECIMAL
-	 */
-	@Schema(name = "totalCnt", description = "商品总量", nullable = true)
-	@Column(name = "TOTAL_CNT", comment = "商品总量", length = 12L, type = java.sql.Types.DECIMAL, nullable = true)
+	@Schema(name="totalCnt",description="商品总量",nullable=true)
+	@Column(name="TOTAL_CNT",comment="商品总量",length=12L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=true)
 	private BigDecimal totalCnt;
 
-	/**
-	 * jdbcType:DECIMAL
-	 */
-	@Schema(name = "totalAmt", description = "总金额", nullable = true)
-	@Column(name = "TOTAL_AMT", comment = "总金额", length = 12L, type = java.sql.Types.DECIMAL, nullable = true)
+	@Schema(name="totalAmt",description="总金额",nullable=true)
+	@Column(name="TOTAL_AMT",comment="总金额",length=12L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=true)
 	private BigDecimal totalAmt;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "buyer", description = "购买方", nullable = true)
-	@Column(name = "BUYER", comment = "购买方", length = 22L, type = java.sql.Types.VARCHAR, nullable = true)
+	@Schema(name="buyer",description="购买方",nullable=true)
+	@Column(name="BUYER",comment="购买方",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String buyer;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "saler", description = "销售方", nullable = true)
-	@Column(name = "SALER", comment = "销售方", length = 22L, type = java.sql.Types.VARCHAR, nullable = true)
+	@Schema(name="saler",description="销售方",nullable=true)
+	@Column(name="SALER",comment="销售方",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String saler;
 
-	/**
-	 * jdbcType:DATE
-	 */
-	@Schema(name = "transDate", description = "成交日期", nullable = false)
-	@Column(name = "TRANS_DATE", comment = "成交日期", length = 10L, type = java.sql.Types.DATE, nullable = false)
+	@Schema(name="transDate",description="成交日期",nullable=false)
+	@Column(name="TRANS_DATE",comment="成交日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
 	private LocalDate transDate;
 
-	/**
-	 * jdbcType:DATE
-	 */
-	@Schema(name = "deliveryTerm", description = "交货期限", nullable = true)
-	@Column(name = "DELIVERY_TERM", comment = "交货期限", length = 10L, type = java.sql.Types.DATE, nullable = true)
+	@Schema(name="deliveryTerm",description="交货期限",nullable=true)
+	@Column(name="DELIVERY_TERM",comment="交货期限",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
 	private LocalDate deliveryTerm;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "staffId", description = "业务员", nullable = true)
-	@Column(name = "STAFF_ID", comment = "业务员", length = 22L, type = java.sql.Types.VARCHAR, nullable = true)
+	@Schema(name="staffId",description="业务员",nullable=true)
+	@Column(name="STAFF_ID",comment="业务员",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String staffId;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "organId", description = "业务机构", nullable = true)
-	@Column(name = "ORGAN_ID", comment = "业务机构", length = 22L, type = java.sql.Types.VARCHAR, nullable = true)
+	@Schema(name="organId",description="业务机构",nullable=true)
+	@Column(name="ORGAN_ID",comment="业务机构",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String organId;
 
-	/**
-	 * jdbcType:INT
-	 */
-	@Schema(name = "status", description = "状态", nullable = false)
-	@Column(name = "STATUS", comment = "状态", length = 10L, type = java.sql.Types.INTEGER, nullable = false)
+	@Schema(name="status",description="状态",nullable=false)
+	@Column(name="STATUS",comment="状态",length=10L,type=java.sql.Types.INTEGER,nativeType="INT",nullable=false)
 	private Integer status;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "createBy", description = "创建人", nullable = false)
-	@Column(name = "CREATE_BY", comment = "创建人", length = 22L, type = java.sql.Types.VARCHAR, nullable = false)
+	@Schema(name="createBy",description="创建人",nullable=false)
+	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String createBy;
 
-	/**
-	 * jdbcType:DATETIME
-	 */
-	@Schema(name = "createTime", description = "创建时间", nullable = false)
-	@Column(name = "CREATE_TIME", comment = "创建时间", length = 19L, type = java.sql.Types.DATE, nullable = false)
+	@Schema(name="createTime",description="创建时间",nullable=false)
+	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime createTime;
 
-	/**
-	 * jdbcType:VARCHAR
-	 */
-	@Schema(name = "updateBy", description = "最后修改人", nullable = false)
-	@Column(name = "UPDATE_BY", comment = "最后修改人", length = 22L, type = java.sql.Types.VARCHAR, nullable = false)
+	@Schema(name="updateBy",description="最后修改人",nullable=false)
+	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String updateBy;
 
-	/**
-	 * jdbcType:DATETIME
-	 */
-	@Schema(name = "updateTime", description = "最后修改时间", nullable = false)
-	@Column(name = "UPDATE_TIME", comment = "最后修改时间", length = 19L, type = java.sql.Types.DATE, nullable = false)
+	@Schema(name="updateTime",description="最后修改时间",nullable=false)
+	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime updateTime;
-
 	/** default constructor */
 	public DeviceOrderVO() {
 	}
-
+	
 	/** pk constructor */
-	public DeviceOrderVO(String orderId) {
-		this.orderId = orderId;
+	public DeviceOrderVO(String orderId)
+	{
+		this.orderId=orderId;
 	}
-	/*---end-auto-generate-don't-update-this-area--*/
-
+/*---end-auto-generate-don't-update-this-area--*/
+	
 	private String deviceTypeName;
 
 	private String psTypeName;

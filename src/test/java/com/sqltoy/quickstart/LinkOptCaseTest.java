@@ -7,14 +7,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
@@ -24,10 +21,10 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020-10-27
  * @modify 2020-10-27,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class LinkOptCaseTest {
 	// 链式操作包含:save、load、update、batch(批量更新)、execute(sql执行)、store(存储过程)等
+
 	@Autowired
 	LightDao lightDao;
 
@@ -67,7 +64,7 @@ public class LinkOptCaseTest {
 		staffVO.setStaffName("陈");
 		Page result = lightDao.query().sql("qstart_fastPage").entity(staffVO).findPage(pageModel);
 		// 查询可以链式操作
-		// sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
+		//sqlToyLazyDao.query().sql("qstart_fastPage").rowhandler(rowCallbackHandler).dataSource(dataSource).entity(staffVO).findPage(pageModel);
 	}
 
 }

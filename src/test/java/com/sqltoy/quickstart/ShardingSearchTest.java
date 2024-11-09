@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.model.MapKit;
@@ -19,10 +18,8 @@ import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.vo.TransInfo15dVO;
 
 /**
@@ -32,8 +29,7 @@ import com.sqltoy.quickstart.vo.TransInfo15dVO;
  * @version v1.0, Date:2020-7-22
  * @modify 2020-7-22,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class ShardingSearchTest {
 	@Autowired
 	LightDao lightDao;
@@ -71,8 +67,7 @@ public class ShardingSearchTest {
 	@Test
 	public void testShardingTableSearch() {
 		List<TransInfo15dVO> trans = lightDao.find("qstart_sharding_table_case",
-				MapKit.keys("beginDate", "endDate").values(LocalDate.now().plusDays(-40), null),
-				TransInfo15dVO.class);
+				MapKit.keys("beginDate", "endDate").values(LocalDate.now().plusDays(-40), null), TransInfo15dVO.class);
 		trans.forEach((vo) -> {
 			System.err.println(JSON.toJSONString(vo));
 		});

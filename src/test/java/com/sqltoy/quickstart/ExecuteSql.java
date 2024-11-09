@@ -5,17 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.vo.OrganInfoVO;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class ExecuteSql {
 	@Autowired
 	LightDao lightDao;
@@ -31,7 +27,7 @@ public class ExecuteSql {
 		lightDao.executeSql(sql, organInfoVO);
 	}
 
-	// 直接?传参
+	//直接?传参
 	@Test
 	public void testExecuteSql() {
 		String sql = "update sqltoy_organ_info set update_time=? where status=? #[and organ_id=?]";

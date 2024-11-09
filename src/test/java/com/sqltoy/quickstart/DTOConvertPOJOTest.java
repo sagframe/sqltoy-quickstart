@@ -8,14 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.dto.StaffInfoVO;
 import com.sqltoy.quickstart.pojo.StaffInfo;
 
@@ -26,8 +23,7 @@ import com.sqltoy.quickstart.pojo.StaffInfo;
  * @version v1.0, Date:2020-8-10
  * @modify 2020-8-10,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class DTOConvertPOJOTest {
 	// 在SqlToyCRUDService和sqlToyLazyDao 以及SqlToySupportDao里面都有提供
 	//

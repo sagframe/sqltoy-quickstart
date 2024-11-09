@@ -6,7 +6,6 @@ package com.sqltoy.quickstart;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.CacheMatchFilter;
 import org.sagacity.sqltoy.model.ColumnMeta;
@@ -14,10 +13,8 @@ import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.model.TableMeta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.service.OrganInfoService;
 import com.sqltoy.quickstart.vo.OrganInfoVO;
 
@@ -28,8 +25,7 @@ import com.sqltoy.quickstart.vo.OrganInfoVO;
  * @version v1.0, Date:2020-7-20
  * @modify 2020-7-20,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class TreeTableTest {
 	@Autowired
 	OrganInfoService organInfoService;

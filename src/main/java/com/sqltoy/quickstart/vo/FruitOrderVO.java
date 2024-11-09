@@ -4,15 +4,13 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-
+import org.sagacity.sqltoy.config.annotation.Column;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import java.math.BigDecimal;
 
 /**
  * @project sqltoy-quickstart
@@ -30,43 +28,28 @@ public class FruitOrderVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 6351778226462253330L;
 /*---begin-auto-generate-don't-update-this-area--*/	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="fruitName",description="水果名称",nullable=false)
 	@Id
-	@Column(name="FRUIT_NAME",comment="水果名称",length=100L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="FRUIT_NAME",comment="水果名称",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String fruitName;
-	
-	/**
-	 * jdbcType:INT
-	 */
+
 	@Schema(name="orderMonth",description="订单月份",nullable=false)
 	@Id
-	@Column(name="ORDER_MONTH",comment="订单月份",length=10L,type=java.sql.Types.INTEGER,nullable=false)
+	@Column(name="ORDER_MONTH",comment="订单月份",length=10L,type=java.sql.Types.INTEGER,nativeType="INT",nullable=false)
 	private Integer orderMonth;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="saleCount",description="销售数量",nullable=false)
-	@Column(name="SALE_COUNT",comment="销售数量",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="SALE_COUNT",comment="销售数量",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal saleCount;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="salePrice",description="销售单价",nullable=false)
-	@Column(name="SALE_PRICE",comment="销售单价",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="SALE_PRICE",comment="销售单价",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal salePrice;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="totalAmt",description="总金额",nullable=false)
-	@Column(name="TOTAL_AMT",comment="总金额",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="TOTAL_AMT",comment="总金额",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal totalAmt;
-	
 	/** default constructor */
 	public FruitOrderVO() {
 	}

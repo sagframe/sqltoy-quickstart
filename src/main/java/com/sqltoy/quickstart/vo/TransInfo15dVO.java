@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
+import org.sagacity.sqltoy.config.annotation.Sharding;
+import org.sagacity.sqltoy.config.annotation.Strategy;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -24,6 +26,7 @@ import lombok.experimental.Accessors;
 @Schema(name="TransInfo15dVO",description="支付交易流水表(15天表)")
 @Data
 @Accessors(chain = true)
+@Sharding(table = @Strategy(name = "realHisTable", fields = "transDate"))
 @Entity(tableName="sqltoy_trans_info_15d",comment="支付交易流水表(15天表)",pk_constraint="PRIMARY")
 public class TransInfo15dVO implements Serializable {
 	
@@ -32,77 +35,47 @@ public class TransInfo15dVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 3025156483258790277L;
 /*---begin-auto-generate-don't-update-this-area--*/	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="transId",description="交易ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="TRANS_ID",comment="交易ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="TRANS_ID",comment="交易ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String transId;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="transCode",description="交易代码",nullable=false)
-	@Column(name="TRANS_CODE",comment="交易代码",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="TRANS_CODE",comment="交易代码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String transCode;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="transChannel",description="交易渠道",nullable=false)
-	@Column(name="TRANS_CHANNEL",comment="交易渠道",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="TRANS_CHANNEL",comment="交易渠道",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String transChannel;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="transAmt",description="交易金额",nullable=false)
-	@Column(name="TRANS_AMT",comment="交易金额",length=14L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="TRANS_AMT",comment="交易金额",length=14L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal transAmt;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="status",description="交易状态",nullable=false)
-	@Column(name="STATUS",comment="交易状态",length=1L,type=java.sql.Types.INTEGER,nullable=false)
+	@Column(name="STATUS",comment="交易状态",length=1L,type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="resultCode",description="交易返回码",nullable=false)
-	@Column(name="RESULT_CODE",comment="交易返回码",length=20L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="RESULT_CODE",comment="交易返回码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String resultCode;
-	
-	/**
-	 * jdbcType:DATETIME
-	 */
+
 	@Schema(name="transTime",description="交易时间",nullable=false)
-	@Column(name="TRANS_TIME",comment="交易时间",length=19L,type=java.sql.Types.DATE,nullable=false)
+	@Column(name="TRANS_TIME",comment="交易时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime transTime;
-	
-	/**
-	 * jdbcType:DATE
-	 */
+
 	@Schema(name="transDate",description="交易日期",nullable=false)
-	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nullable=false)
+	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
 	private LocalDate transDate;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="userId",description="用户ID",nullable=false)
-	@Column(name="USER_ID",comment="用户ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="USER_ID",comment="用户ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String userId;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="cardNo",description="交易卡号",nullable=true)
-	@Column(name="CARD_NO",comment="交易卡号",length=32L,type=java.sql.Types.VARCHAR,nullable=true)
+	@Column(name="CARD_NO",comment="交易卡号",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String cardNo;
-	
 	/** default constructor */
 	public TransInfo15dVO() {
 	}

@@ -7,14 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.vo.JsontypeShowcaeVO;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
@@ -25,8 +22,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020-11-26
  * @modify 2020-11-26,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class JsonTypeCaseTest {
 	@Autowired
 	private SqlToyCRUDService sqlToyCRUDService;

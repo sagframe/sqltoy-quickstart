@@ -4,13 +4,10 @@
 package com.sqltoy.quickstart;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
@@ -20,8 +17,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020-8-6
  * @modify 2020-8-6,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class UniqueCaseTest {
 	@Autowired
 	private SqlToyCRUDService sqlToyCRUDService;

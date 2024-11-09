@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sagframe.com/schema/quickvo http://www.sagframe.com/schema/sqltoy/quickvo.xsd">
 	<!-- db配置文件 -->
-	<property file="db.properties" />
+	<property file="src/main/resources/application.yml" />
 	<property name="project.version" value="1.0.0" />
 	<property name="project.name" value="sqltoy-quickstart" />
 
@@ -11,9 +11,7 @@
 	<property name="project.package" value="com.sqltoy" />
 	<property name="include.schema" value="false" />
 	<!-- set method 是否支持返回对象自身(默认是true),即: public VO setName(String name){this.name=name;return this;} -->
-	<property name="field.support.linked.set" value="false" />
-	<!-- 是否在抽象类中生成SelectFieldImpl内部类,默认值为false -->
-	<property name="generate.selectFields.class" value="false" />
+	<property name="field.support.linked.set" value="true" />
 	<!-- 演示自定义类似swagger api文档注释实现,配合task定义中的api-doc="custom"使用
 	     当然这里是演示，正常task中的api-doc 有swagger-v3、swagger-v2默认选项
 	 -->
@@ -29,11 +27,11 @@
 	
 	<!-- schema 对照关系:mysql 对应 db 名称; oracle 对应 用户名称，如出现字段重复等情况，请结合schema和catalog进行配置过滤 -->
 	<!-- 注意:当在多schema或tablespace场景下,在POJO中会出现重复字段，是因为schema和catalog 配置不正确，没有完成隔离 -->
-	<datasource name="quickstart" url="${db.url}" driver="${db.driver_class}" schema="${db.schema}"
-		catalog="${db.schema}" username="${db.username}" password="${db.password}" />
+	<datasource name="quickstart" url="${spring.datasource.url}" driver="${spring.datasource.driver-class-name}" schema="${spring.datasource.username}"
+		catalog="${spring.datasource.username}" username="${spring.datasource.username}" password="${spring.datasource.password}" />
 
 	<!-- dist 定义生成的java代码存放路径 -->
-	<tasks dist="../../src/main/java" encoding="UTF-8">
+	<tasks dist="src/main/java" encoding="UTF-8">
 		<!-- active 表示任务开关 include是表名匹配的表达式, exclude 表示在include基础上排除哪些表(也是表达式) 
 			datasource 指定上面的数据库定义名称, swagger-model:v3或v2 生成swagger的注解 fields-rid-prefix剔除字段中统一前缀,如:fields-rid-prefix="F_" -->
 		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+"	datasource="quickstart" api-doc="swagger-v3">

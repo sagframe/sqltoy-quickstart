@@ -6,16 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.service.StaffInfoService;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
@@ -26,8 +23,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020年7月17日
  * @modify 2020年7月17日,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class StaffInfoServiceTest {
 
 	@Autowired

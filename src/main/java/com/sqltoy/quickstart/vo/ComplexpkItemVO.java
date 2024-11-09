@@ -4,17 +4,18 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-
+import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Indexes;
+import org.sagacity.sqltoy.config.annotation.Index;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.sagacity.sqltoy.config.annotation.Foreign;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @project sqltoy-quickstart
@@ -25,6 +26,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @Entity(tableName="sqltoy_complexpk_item",comment="复合主键级联操作子表",pk_constraint="PRIMARY")
+@Indexes(indexes={@Index(name="FK_COMPLEXH_REF_ITEM",columns={"TRANS_DATE","TRANS_ID"},sortTypes={"ASC","ASC"})
+})
 public class ComplexpkItemVO implements Serializable {
 	
 	/**
@@ -32,63 +35,41 @@ public class ComplexpkItemVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 2570764298251994911L;
 /*---begin-auto-generate-don't-update-this-area--*/	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="id",description="ID",nullable=false)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="ID",comment="ID",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="ID",comment="ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String id;
-	
-	/**
-	 * jdbcType:DATE
-	 */
+
 	@Schema(name="transDate",description="交易日期",nullable=true)
-	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nullable=true)
+	@Foreign(table="sqltoy_complexpk_head",field="TRANS_DATE",deleteRestict=1,updateRestict=1,constraintName="FK_COMPLEXH_REF_ITEM")
+	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
 	private LocalDate transDate;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="transId",description="业务代码",nullable=true)
-	@Column(name="TRANS_ID",comment="业务代码",length=30L,type=java.sql.Types.VARCHAR,nullable=true)
+	@Foreign(table="sqltoy_complexpk_head",field="TRANS_CODE",deleteRestict=1,updateRestict=1,constraintName="FK_COMPLEXH_REF_ITEM")
+	@Column(name="TRANS_ID",comment="业务代码",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
 	private String transId;
-	
-	/**
-	 * jdbcType:VARCHAR
-	 */
+
 	@Schema(name="productId",description="商品编码",nullable=false)
-	@Column(name="PRODUCT_ID",comment="商品编码",length=32L,type=java.sql.Types.VARCHAR,nullable=false)
+	@Column(name="PRODUCT_ID",comment="商品编码",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
 	private String productId;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="quantity",description="数量",nullable=false)
-	@Column(name="QUANTITY",comment="数量",length=8L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="QUANTITY",comment="数量",length=8L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal quantity;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="price",description="价格",nullable=false)
-	@Column(name="PRICE",comment="价格",length=8L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="PRICE",comment="价格",length=8L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal price;
-	
-	/**
-	 * jdbcType:DECIMAL
-	 */
+
 	@Schema(name="amt",description="总金额",nullable=false)
-	@Column(name="AMT",comment="总金额",length=10L,type=java.sql.Types.DECIMAL,nullable=false)
+	@Column(name="AMT",comment="总金额",length=10L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal amt;
-	
-	/**
-	 * jdbcType:DATETIME
-	 */
+
 	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nullable=false)
+	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
 	private LocalDateTime createTime;
-	
 	/** default constructor */
 	public ComplexpkItemVO() {
 	}

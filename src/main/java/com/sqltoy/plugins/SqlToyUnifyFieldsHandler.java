@@ -80,6 +80,7 @@ public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 
 	/**
 	 * 统一数据权限传参、越权校验
+	 * sql上写上 and tenent_id in (:authedTenantIds)
 	 */
 	@Override
 	public IgnoreKeyCaseMap<String, DataAuthFilterConfig> dataAuthFilters() {

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.quickstart;
 
 import java.time.LocalDate;
@@ -8,18 +5,19 @@ import java.util.List;
 
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.sagacity.sqltoy.dao.LightDao;
+import org.sagacity.sqltoy.model.CacheArg;
 import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.model.Page;
+import org.sagacity.sqltoy.model.ParamsFilter;
 import org.sagacity.sqltoy.model.QueryExecutor;
 import org.sagacity.sqltoy.model.QueryResult;
+import org.sagacity.sqltoy.model.Summary;
+import org.sagacity.sqltoy.model.SummaryGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.alibaba.fastjson2.JSON;
-import com.sqltoy.SqlToyApplication;
 import com.sqltoy.quickstart.service.InitDBService;
 import com.sqltoy.quickstart.vo.DeviceOrderVO;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
@@ -31,8 +29,7 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
  * @version v1.0, Date:2020-7-20
  * @modify 2020-7-20,修改说明
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SqlToyApplication.class)
+@SpringBootTest
 public class AdvanceQueryTest {
 	@Autowired
 	LightDao lightDao;
@@ -108,7 +105,8 @@ public class AdvanceQueryTest {
 		Page pageModel = new Page();
 		String sql = "select t.*\r\n" + "			           from sqltoy_staff_info t\r\n"
 				+ "			           where t.STATUS=1 ";
-		Page<StaffInfoVO> result = lightDao.findPage(pageModel, sql, Maps.newHashMap("pageNo", 1), StaffInfoVO.class);
+		Page<StaffInfoVO> result = lightDao.findPage(pageModel, sql, Maps.newHashMap("pageNo", 1),
+				StaffInfoVO.class);
 		result.getRows().forEach((staff) -> {
 			System.err.println(JSON.toJSONString(staff));
 		});
@@ -250,5 +248,50 @@ public class AdvanceQueryTest {
 		for (int i = 0; i < staffs.size(); i++) {
 			System.err.println(JSON.toJSONString(staffs.get(i)));
 		}
+	}
+
+	@Test
+	public void testFindQuery() {
+
+		// 授权的机构
+		String[] authedOrgans = { "100005", "100007" };
+		List result = lightDao.findByQuery(new QueryExecutor("qstart_order_search")
+				.filters(new ParamsFilter("staffName")
+						.cacheArg(new CacheArg("staffIdName").aliasName("staffIds").filterIndex(2).filterValues("1")))
+				.resultType(DeviceOrderVO.class)
+				.values(MapKit.keys("orderId", "authedOrganIds", "staffName", "beginDate", "endDate").values(null,
+						authedOrgans, "陈", LocalDate.parse("2018-09-01"), null)))
+				.getRows();
+//		result.forEach((vo) -> {
+//			System.err.println(JSON.toJSONString(vo));
+//		});
+	}
+
+	@Test
+	public void testFindQuerySummary() {
+//		<value>
+//		<![CDATA[
+//		select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+//		from sqltoy_fruit_order t
+//		order by t.fruit_name ,t.order_month
+//		]]>
+//	</value>
+//	<summary sum-columns="sale_count,sale_price,total_amt" 
+//		reverse="true" sum-site="top" skip-single-row="true">
+//		<!-- 层级顺序保持从高到低 -->
+//		<global sum-label="总计"  label-column="fruit_name" />
+//		<group group-column="fruit_name" sum-label="小计" 
+//			label-column="fruit_name" />
+//	</summary>
+		String sql = "select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt "
+				+ "	from sqltoy_fruit_order t order by t.fruit_name ,t.order_month";
+		List result = lightDao.findByQuery(new QueryExecutor(sql)
+				.summary(new Summary().globalReverse(true).sumColumns("sale_count", "sale_price", "total_amt")
+						.skipSingleRow(true).summaryGroups(new SummaryGroup().labelColumn("fruit_name").sumTitle("总计"),
+								new SummaryGroup("fruit_name").labelColumn("fruit_name").sumTitle("小计"))))
+				.getRows();
+		result.forEach((vo) -> {
+			System.err.println(JSON.toJSONString(vo));
+		});
 	}
 }

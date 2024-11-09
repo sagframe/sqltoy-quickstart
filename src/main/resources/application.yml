@@ -15,6 +15,9 @@ spring:
         #breakWhenSqlRepeat: true
         # 如果是单一类型数据库填写有利于减少一些判断(即排除类似于:mysql\oracle多种类型混用场景)
         #dialect: mysql
+        # 设置特定方言转调其他方言实现，如oscar-->oracle
+        dialectMap:
+               oscar: oracle
         # 设置默认使用的datasource(可选配置)
         #defaultDataSource: dataSource
         # 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultDataSourceSelector是默认实现

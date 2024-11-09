@@ -28,7 +28,7 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
 @Service("transLedgerService")
 public class TransLedgerServiceImpl implements TransLedgerService {
 	@Autowired
-	private LightDao lightDao;
+	LightDao lightDao;
 
 	@Transactional
 	public TransLedgerVO updateTrans(TransLedgerVO transVO) {
@@ -55,8 +55,11 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 	}
 
 	/**
-	 * updateSaveFetch 一般用于台账类高并发强事务(库存台账、资金台账)操作，一次交互完成多种操作 1、根据主键查询并锁住记录
-	 * 2、记录不存在，执行save保存操作 3、记录存在，执行数据叠加更新操作 4、返回更新后的结果
+	 * updateSaveFetch 一般用于台账类高并发强事务(库存台账、资金台账)操作，一次交互完成多种操作
+	 * 1、根据主键查询并锁住记录
+	 * 2、记录不存在，执行save保存操作
+	 * 3、记录存在，执行数据叠加更新操作
+	 * 4、返回更新后的结果
 	 */
 	@Override
 	public TransLedgerVO updateSaveTrans(TransLedgerVO transVO) {
