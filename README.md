@@ -287,18 +287,18 @@ mvn quickvo:quickvo
 ```java
 @Service("organInfoService")
 public class OrganInfoServiceImpl implements OrganInfoService {
-    //sqltoyLazyDao 就可以代替接口式的dao
+    //lightDao 就可以代替接口式的dao
 	@Autowired
-	SqlToyLazyDao sqlToyLazyDao;
+	LightDao lightDao;
 
 	@Transactional
 	public void saveOrganInfo(OrganInfoVO organInfoVO) {
 		// 先保存机构
-		sqlToyLazyDao.saveOrUpdate(organInfoVO);
+		lightDao.saveOrUpdate(organInfoVO);
 		// 设置树形表的节点路径等字段值,便于统一树形查询
 		// id字段根据vo找表的主键会自动匹配上,其它的NODE_ROUTE\NODE_LEVEL\IS_LEAF 为标准命名无需额外设置
 		//idField 如果是主键则无需设置
-		sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).pidField("organPid"));
+		lightDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).pidField("organPid"));
 	}
 }
 
@@ -338,29 +338,29 @@ spring.sqltoy.defaultDataSource=dataSourceName
 ```
 
 * 如果是同类单据根据特定规则分多个库，请参见分库策略进行
-* 通过多个lazyDao模式
+* 通过多个lightDao模式
 
 ```java
-	 @Bean(name = "sqlToySkylineDao")
-    public SqlToyLazyDao sqlToySkylineDao(@Qualifier("dataSourceSkyline") DataSource dataSource){
-        SqlToyLazyDaoImpl dao = new SqlToyLazyDaoImpl();
+	@Bean(name = "skyLightDao")
+    public LightDao sqlToySkylineDao(@Qualifier("dataSourceSkyline") DataSource dataSource){
+        LightDao dao = new LightDaoImpl();
         dao.setDataSource(dataSource);
         return dao;
     }
 
-    @Bean(name = "sqlToyLazyDao")
-    public SqlToyLazyDao sqlToyLazyDao(@Qualifier("dataSource") DataSource dataSource) {
-        SqlToyLazyDaoImpl dao = new SqlToyLazyDaoImpl();
+    @Bean(name = "lightDdao")
+    public LightDao sqlToyLazyDao(@Qualifier("dataSource") DataSource dataSource) {
+        LightDao dao = new LightDaoImpl();
         dao.setDataSource(dataSource);
         return dao;
     }
 ```
 
-* 通过lazyDao里面调用时指定dataSource,save、update、load等都有链式操作
+* 通过lightDdao里面调用时指定dataSource,save、update、load等都有链式操作
 
 ```java
-sqlToyLazyDao.save().dataSource(dataSource).saveMode(SaveMode.IGNORE).many(entities);
-sqlToyLazyDao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staffVO).findPage(pageModel);
+lightDdao.save().dataSource(dataSource).saveMode(SaveMode.IGNORE).many(entities);
+lightDdao.query().sql("qstart_fastPage").dataSource(dataSource).entity(staffVO).findPage(pageModel);
 ```
 
 ## 我想通过包路径来实现不同数据库访问
