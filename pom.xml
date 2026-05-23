@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
+		<version>3.5.14</version>
 	</parent>
 	<groupId>com.sqltoy.quickstart</groupId>
 	<artifactId>sqltoy-quickstart</artifactId>
@@ -13,17 +13,17 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
-		<sqltoy.version>5.6.31</sqltoy.version>
-		<fastjson.version>2.0.53</fastjson.version>
-		<druid.version>1.2.23</druid.version>
+		<sqltoy.version>5.6.75</sqltoy.version>
+		<fastjson.version>2.0.62</fastjson.version>
+		<druid.version>1.2.28</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
-		<ehcache.version>3.10.8</ehcache.version>
-		<junit-jupiter.version>5.11.3</junit-jupiter.version>
-		<junit-platform.version>1.11.3</junit-platform.version>
-		<mysql.version>8.4.0</mysql.version>
-		<swagger-annotations.version>2.2.25</swagger-annotations.version>
-		<lombok.version>1.18.34</lombok.version>
-		<spring-framework.version>6.1.14</spring-framework.version>
+		<ehcache.version>3.12.0</ehcache.version>
+		<junit-jupiter.version>6.1.0</junit-jupiter.version>
+		<junit-platform.version>6.1.0</junit-platform.version>
+		<mysql.version>9.7.0</mysql.version>
+		<swagger-annotations.version>2.2.49</swagger-annotations.version>
+		<lombok.version>1.18.46</lombok.version>
+		<spring-framework.version>6.2.18</spring-framework.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -75,7 +75,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
+			<artifactId>druid-spring-boot-3-starter</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
 		<dependency>
@@ -212,7 +212,7 @@
 			<plugin>
 				<groupId>com.sagframe</groupId>
 				<artifactId>quickvo-maven-plugin</artifactId>
-				<version>1.0.2</version>
+				<version>1.0.20</version>
 				<configuration>
 					<configFile>./src/main/resources/quickvo.xml</configFile>
 					<baseDir>${project.basedir}</baseDir>

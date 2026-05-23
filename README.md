@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>com.sagframe</groupId>
 	<artifactId>sagacity-sqltoy-spring-starter</artifactId>
-	<version>5.6.31</version>
+	<version>5.6.75</version>
 </dependency>
 
 <!-- 
@@ -18,15 +18,15 @@
 1、druid连接池
 <dependency>
 	<groupId>com.alibaba</groupId>
-	<artifactId>druid-spring-boot-starter</artifactId>
-   <version>1.2.23</version>
+	<artifactId>druid-spring-boot-3-starter</artifactId>
+   <version>1.2.28</version>
 </dependency>
 
 2、springboot自带的hikari连接池需要额外增加依赖
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-jdbc</artifactId>
-	<version>3.3.5</version>
+	<version>3.5.14</version>
 </dependency>
 -->
 ```
@@ -194,7 +194,7 @@ public class InitDataBaseTest {
 <plugin>
 	<groupId>com.sagframe</groupId>
 	<artifactId>quickvo-maven-plugin</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.20</version>
 	<configuration>
 		<configFile>./src/main/resources/quickvo.xml</configFile>
 		<baseDir>${project.basedir}</baseDir>

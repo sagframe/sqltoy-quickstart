@@ -15,7 +15,6 @@ import org.sagacity.sqltoy.model.MaskType;
 import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.model.ParamsFilter;
 import org.sagacity.sqltoy.model.QueryExecutor;
-import org.sagacity.sqltoy.utils.DebugUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -101,18 +100,14 @@ public class JavaCodeSqlCaseTest {
 
 		// 第一次查询
 		// 单表查询
-		DebugUtil.beginTime("firstPage");
 		result = lightDao.findPageEntity(pageModel, StaffInfoVO.class,
 				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
 						.translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
-		DebugUtil.endTime("firstPage");
 
 		// 第二次查询，分页优化起作用，不会再执行count查询，提升了效率
-		DebugUtil.beginTime("secondPage");
 		result = lightDao.findPageEntity(pageModel, StaffInfoVO.class,
 				EntityQuery.create().where(sql).orderByDesc("ENTRY_DATE").values(staffInfoVO).filters(paramFilter)
 						.translates(translate).pageOptimize(new PageOptimize().aliveSeconds(120)));
-		DebugUtil.endTime("secondPage");
 
 	}
 
