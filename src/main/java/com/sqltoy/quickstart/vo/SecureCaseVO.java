@@ -4,79 +4,89 @@
 package com.sqltoy.quickstart.vo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import org.sagacity.sqltoy.config.annotation.Column;
 import org.sagacity.sqltoy.config.annotation.Entity;
 import org.sagacity.sqltoy.config.annotation.Id;
-import org.sagacity.sqltoy.config.annotation.Column;
+import org.sagacity.sqltoy.config.annotation.Secure;
+import org.sagacity.sqltoy.config.annotation.SecureConfig;
+import org.sagacity.sqltoy.model.SecureType;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.time.LocalDateTime;
 
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
- * @version 1.0.0 
+ * @version 1.0.0
  */
-@Schema(name="SecureCaseVO",description="安全加解密演示")
+@Schema(name = "SecureCaseVO", description = "安全加解密演示")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_secure_case",comment="安全加解密演示",pk_constraint="PRIMARY")
+@SecureConfig(secures = { @Secure(field = "telNoMask", secureType = SecureType.TEL),
+		@Secure(field = "telNo", secureType = SecureType.ENCRYPT),
+		@Secure(field = "telNoMask", secureType = SecureType.TEL,sourceField="telNo"),
+		@Secure(field = "homeAddressMask", secureType = SecureType.DISCRETE_RATE, maskRate = 50, sourceField = "homeAddress"),
+		@Secure(field = "homeAddress", secureType = SecureType.ENCRYPT) })
+@Entity(tableName = "sqltoy_secure_case", comment = "安全加解密演示", pk_constraint = "PRIMARY")
 public class SecureCaseVO implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5349728950824234491L;
-/*---begin-auto-generate-don't-update-this-area--*/	
+	/*---begin-auto-generate-don't-update-this-area--*/
 
-	@Schema(name="staffId",description="工号",nullable=false)
-	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="STAFF_ID",comment="工号",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "staffId", description = "工号", nullable = false)
+	@Id(strategy = "generator", generator = "org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
+	@Column(name = "STAFF_ID", comment = "工号", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String staffId;
 
-	@Schema(name="staffName",description="姓名",nullable=false)
-	@Column(name="STAFF_NAME",comment="姓名",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "staffName", description = "姓名", nullable = false)
+	@Column(name = "STAFF_NAME", comment = "姓名", length = 30L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String staffName;
 
-	@Schema(name="telNo",description="移动电话",nullable=false)
-	@Column(name="TEL_NO",comment="移动电话",length=500L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "telNo", description = "移动电话", nullable = false)
+	@Column(name = "TEL_NO", comment = "移动电话", length = 500L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String telNo;
 
-	@Schema(name="telNoMask",description="电话检索",nullable=false)
-	@Column(name="TEL_NO_MASK",comment="电话检索",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "telNoMask", description = "电话检索", nullable = false)
+	@Column(name = "TEL_NO_MASK", comment = "电话检索", length = 30L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String telNoMask;
 
-	@Schema(name="homeAddress",description="家庭地址",nullable=false)
-	@Column(name="HOME_ADDRESS",comment="家庭地址",length=500L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "homeAddress", description = "家庭地址", nullable = false)
+	@Column(name = "HOME_ADDRESS", comment = "家庭地址", length = 500L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String homeAddress;
 
-	@Schema(name="homeAddressMask",description="家庭地址检索",nullable=false)
-	@Column(name="HOME_ADDRESS_MASK",comment="家庭地址检索",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "homeAddressMask", description = "家庭地址检索", nullable = false)
+	@Column(name = "HOME_ADDRESS_MASK", comment = "家庭地址检索", length = 100L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String homeAddressMask;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "createBy", description = "创建人", nullable = false)
+	@Column(name = "CREATE_BY", comment = "创建人", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
+	@Schema(name = "createTime", description = "创建时间", nullable = false)
+	@Column(name = "CREATE_TIME", comment = "创建时间", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
 	private LocalDateTime createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(name = "updateBy", description = "最后修改人", nullable = false)
+	@Column(name = "UPDATE_BY", comment = "最后修改人", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
+	@Schema(name = "updateTime", description = "最后修改时间", nullable = false)
+	@Column(name = "UPDATE_TIME", comment = "最后修改时间", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
 	private LocalDateTime updateTime;
+
 	/** default constructor */
 	public SecureCaseVO() {
 	}
-	
+
 	/** pk constructor */
-	public SecureCaseVO(String staffId)
-	{
-		this.staffId=staffId;
+	public SecureCaseVO(String staffId) {
+		this.staffId = staffId;
 	}
-/*---end-auto-generate-don't-update-this-area--*/
+	/*---end-auto-generate-don't-update-this-area--*/
 }

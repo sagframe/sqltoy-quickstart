@@ -87,6 +87,6 @@
 		<!-- <sql-type native-types="_text" jdbc-type="ARRAY" java-type="String[]" /> -->
 
 		<!-- 泛型注意xml转义符号，table-field指定具体表和字段; jdbc-type 可以直接填数字，这里java-type="List<StaffInfoVO>" -->
-		<sql-type table-field="sqltoy_jsontype_showcae.staff_set" native-types="json" jdbc-type="1021" java-type="List&lt;StaffInfoVO&gt;" import-types="com.sqltoy.quickstart.vo.StaffInfoVO" />
+		<sql-type table-field="sqltoy_jsontype_showcae.staff_set" native-types="json" jdbc-type="2016" java-type="List&lt;StaffInfoVO&gt;" import-types="com.sqltoy.quickstart.vo.StaffInfoVO" />
 	</type-mapping>
 </quickvo>

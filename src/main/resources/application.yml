@@ -5,8 +5,8 @@ spring:
         sqlResourcesDir: classpath:com/sqltoy/quickstart
         # 默认为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
-        # 针对json等特殊类型做处理(可选配置)
-        typeHandler: com.sqltoy.plugins.JsonTypeHandler
+        # 针对json等特殊类型做处理(可选配置)sqltoy5.6.79.RC3 默认支持JSON/JSONB处理
+        #typeHandler: com.sqltoy.plugins.JsonTypeHandler
         # 跨数据库函数自适配功能,默认是关闭的
         #functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
@@ -47,7 +47,7 @@ spring:
        password: quickstart
        defaultAutoCommit: false
        # 注意characterEncoding=utf-8 参数,在mysql6~7 版本下不设置like 中文时会无法匹配
-       url: jdbc:mysql://192.168.56.101:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+       url: jdbc:mysql://192.168.56.105:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
        druid:
          initial-size: 5
          min-idle: 5

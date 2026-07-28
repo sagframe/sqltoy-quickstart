@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.sagacity.sqltoy.dao.LightDao;
+import org.sagacity.sqltoy.model.MapKit;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
+import org.sagacity.sqltoy.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,6 +29,9 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 public class JsonTypeCaseTest {
 	@Autowired
 	private SqlToyCRUDService sqlToyCRUDService;
+
+	@Autowired
+	private LightDao lightDao;
 
 	@Test
 	public void testSave() {
@@ -85,5 +91,15 @@ public class JsonTypeCaseTest {
 	public void testLoad() {
 		JsontypeShowcaeVO dTypeVO = sqlToyCRUDService.load(new JsontypeShowcaeVO("100001"));
 		System.err.println(JSON.toJSONString(dTypeVO));
+	}
+
+	@Test
+	public void testQuery() {
+		List<JsontypeShowcaeVO> result = lightDao.find(
+				"select * from sqltoy_jsontype_showcae where create_time>=:createTime",
+				MapKit.map("createTime", DateUtil.parseLocalDateTime("2025-01-01 12:02:30")), JsontypeShowcaeVO.class);
+		for (JsontypeShowcaeVO item : result) {
+			System.err.println(JSON.toJSONString(item));
+		}
 	}
 }

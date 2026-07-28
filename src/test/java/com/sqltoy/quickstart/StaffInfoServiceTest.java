@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.model.Page;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 import org.sagacity.sqltoy.utils.FileUtil;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.alibaba.fastjson2.JSON;
 import com.sqltoy.quickstart.service.StaffInfoService;
+import com.sqltoy.quickstart.vo.DateRange;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
@@ -28,6 +30,9 @@ public class StaffInfoServiceTest {
 
 	@Autowired
 	StaffInfoService staffInfoService;
+
+	@Autowired
+	LightDao lightDao;
 
 	@Autowired
 	SqlToyCRUDService sqlToyCRUDService;
@@ -157,5 +162,27 @@ public class StaffInfoServiceTest {
 		for (StaffInfoVO row : result) {
 			System.err.println(JSON.toJSONString(row));
 		}
+	}
+
+	@Test
+	public void testUpdateSaveFetch() {
+		StaffInfoVO staffInfo = new StaffInfoVO();
+		staffInfo.setStaffId("S0001");
+		staffInfo.setBeginDate(LocalDate.parse("2019-01-01"));
+		staffInfo.setEndDate(LocalDate.now());
+		staffInfo.setStaffName("陈");
+		lightDao.updateSaveFetch(staffInfo, (entity, rowIndex) -> {
+			// 这里entity取值，实际通过代理，走的是rs.getString("tel_no")获取的值
+			String telNo = entity.getTelNo();
+			if (telNo != null) {
+				// 这里set，实际是rs.updateString("tel_no", telNo.substring(0, 3) + "#**#" +
+				// telNo.substring(7));
+				entity.setTelNo(telNo.substring(0, 3) + "#**#" + telNo.substring(7));
+				entity.setBirthday(LocalDate.now());
+				entity.setStatus(0);
+				entity.setDateRange(
+						new DateRange().setBeginDate(LocalDate.now()).setEndDate(LocalDate.now()).setStaffName("测试"));
+			}
+		});
 	}
 }

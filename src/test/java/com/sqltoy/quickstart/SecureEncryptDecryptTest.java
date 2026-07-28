@@ -30,9 +30,10 @@ public class SecureEncryptDecryptTest {
 	@Test
 	public void save() {
 		SecureCaseVO vo = new SecureCaseVO();
-		vo.setStaffId("S0001");
+		vo.setStaffId("S0002");
 		vo.setStaffName("测试");
 		vo.setTelNo("13918765443");
+		//vo.setTelNoMask("13918765443");
 		vo.setHomeAddress("江苏省南京市栖霞区公平街道解放小区345弄89号2987室");
 		sqlToyCRUDService.save(vo);
 	}

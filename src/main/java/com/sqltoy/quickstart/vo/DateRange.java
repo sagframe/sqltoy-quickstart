@@ -30,8 +30,9 @@ public class DateRange {
 	/**
 	 * @param beginDate the beginDate to set
 	 */
-	public void setBeginDate(LocalDate beginDate) {
+	public DateRange setBeginDate(LocalDate beginDate) {
 		this.beginDate = beginDate;
+		return this;
 	}
 
 	/**
@@ -44,8 +45,9 @@ public class DateRange {
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(LocalDate endDate) {
+	public DateRange setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+		return this;
 	}
 
 	/**
@@ -58,8 +60,9 @@ public class DateRange {
 	/**
 	 * @param staffName the staffName to set
 	 */
-	public void setStaffName(String staffName) {
+	public DateRange setStaffName(String staffName) {
 		this.staffName = staffName;
+		return this;
 	}
 
 }
