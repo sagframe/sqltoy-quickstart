@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.sagacity.sqltoy.callback.DataSourceCallbackHandler;
 import org.sagacity.sqltoy.dao.LightDao;
+import org.sagacity.sqltoy.model.DBProfile;
 import org.sagacity.sqltoy.model.EntityQuery;
 import org.sagacity.sqltoy.utils.DataSourceUtils;
 import org.sagacity.sqltoy.utils.DateUtil;
@@ -48,7 +49,7 @@ public class InitDBServiceImpl implements InitDBService {
 		DataSourceUtils.processDataSource(lightDao.getSqlToyContext(), lightDao.getDataSource(),
 				new DataSourceCallbackHandler() {
 					@Override
-					public void doConnection(Connection conn, Integer dbType, String dialect) throws Exception {
+					public void doConnection(Connection conn, DBProfile dbProfile) throws Exception {
 						// executeBatchSql可以根据数据库类型将大的sql字符进行分割循环执行
 						SqlUtil.executeBatchSql(conn, sqlContent, 100, true);
 						// 返回结果

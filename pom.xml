@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.1.1</version>
 	</parent>
 	<groupId>com.sqltoy.quickstart</groupId>
 	<artifactId>sqltoy-quickstart</artifactId>
@@ -13,17 +13,17 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
-		<sqltoy.version>5.6.87</sqltoy.version>
-		<fastjson.version>2.0.62</fastjson.version>
+		<sqltoy.version>6.0.1</sqltoy.version>
+		<fastjson.version>2.0.65</fastjson.version>
 		<druid.version>1.2.28</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
 		<ehcache.version>3.12.0</ehcache.version>
-		<junit-jupiter.version>6.1.2</junit-jupiter.version>
-		<junit-platform.version>6.1.2</junit-platform.version>
+		<junit-jupiter.version>6.1.3</junit-jupiter.version>
+		<junit-platform.version>6.1.3</junit-platform.version>
 		<mysql.version>9.7.0</mysql.version>
 		<swagger-annotations.version>2.2.49</swagger-annotations.version>
-		<lombok.version>1.18.46</lombok.version>
-		<spring-framework.version>7.0.8</spring-framework.version>
+		<lombok.version>1.18.48</lombok.version>
+		<spring-framework.version>7.0.9</spring-framework.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -223,7 +223,7 @@
 			<plugin>
 				<groupId>com.sagframe</groupId>
 				<artifactId>quickvo-maven-plugin</artifactId>
-				<version>1.0.20</version>
+				<version>1.0.24</version>
 				<configuration>
 					<configFile>./src/main/resources/quickvo.xml</configFile>
 					<baseDir>${project.basedir}</baseDir>
