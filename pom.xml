@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
-		<sqltoy.version>6.0.2</sqltoy.version>
+		<sqltoy.version>6.0.4</sqltoy.version>
 		<fastjson.version>2.0.65</fastjson.version>
 		<druid.version>1.2.28</druid.version>
 		<!-- 注意缓存翻译是默认依赖ehcache的,不要去除 -->
@@ -223,7 +223,7 @@
 			<plugin>
 				<groupId>com.sagframe</groupId>
 				<artifactId>quickvo-maven-plugin</artifactId>
-				<version>2.0.0</version>
+				<version>2.0.2</version>
 				<configuration>
 					<configFile>./src/main/resources/quickvo.xml</configFile>
 					<baseDir>${project.basedir}</baseDir>
