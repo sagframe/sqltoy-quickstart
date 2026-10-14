@@ -93,6 +93,35 @@ COMMENT ON COLUMN sqltoy_dict_detail.CREATE_BY IS 'Created by';
 COMMENT ON COLUMN sqltoy_dict_detail.CREATE_TIME IS 'Create time';
 COMMENT ON COLUMN sqltoy_dict_detail.UPDATE_BY IS 'Last updated by';
 COMMENT ON COLUMN sqltoy_dict_detail.UPDATE_TIME IS 'Last update time';
+-- Lesson 6: ledger table for the updateFetch/updateSaveFetch concurrency demos
+DROP TABLE IF EXISTS lesson_trans_ledger;
+CREATE TABLE lesson_trans_ledger (
+    ORDER_ID    VARCHAR(16) NOT NULL,
+    QUANTITY    INT NOT NULL DEFAULT 0,
+    AMT         DECIMAL(12, 2) NOT NULL DEFAULT 0,
+    CREATE_BY   VARCHAR(22),
+    CREATE_TIME TIMESTAMP,
+    UPDATE_BY   VARCHAR(22),
+    UPDATE_TIME TIMESTAMP,
+    STATUS      INT DEFAULT 1,
+    CONSTRAINT pk_lesson_ledger PRIMARY KEY (ORDER_ID)
+);
+
+-- Lesson 7: monthly sales for the pivot / summary / period-over-period demos
+DROP TABLE IF EXISTS lesson_monthly_sales;
+CREATE TABLE lesson_monthly_sales (
+    PRODUCT     VARCHAR(30) NOT NULL,
+    ORDER_MONTH VARCHAR(7) NOT NULL,
+    SALE_COUNT  INT NOT NULL,
+    TOTAL_AMT   DECIMAL(12, 2) NOT NULL,
+    CREATE_BY   VARCHAR(22),
+    CREATE_TIME TIMESTAMP,
+    UPDATE_BY   VARCHAR(22),
+    UPDATE_TIME TIMESTAMP,
+    STATUS      INT DEFAULT 1,
+    CONSTRAINT pk_lesson_sales PRIMARY KEY (PRODUCT, ORDER_MONTH)
+);
+
 COMMENT ON TABLE lesson_device_order IS 'Device orders (Redis business-key demo)';
 COMMENT ON COLUMN lesson_device_order.ORDER_ID IS 'Order ID';
 COMMENT ON COLUMN lesson_device_order.BUYER IS 'Buyer';
@@ -105,3 +134,22 @@ COMMENT ON COLUMN lesson_device_order.CREATE_TIME IS 'Create time';
 COMMENT ON COLUMN lesson_device_order.UPDATE_BY IS 'Last updated by';
 COMMENT ON COLUMN lesson_device_order.UPDATE_TIME IS 'Last update time';
 COMMENT ON COLUMN lesson_device_order.STATUS IS 'Status';
+COMMENT ON TABLE lesson_trans_ledger IS 'Transaction ledger (updateFetch concurrency demo)';
+COMMENT ON COLUMN lesson_trans_ledger.ORDER_ID IS 'Ledger key';
+COMMENT ON COLUMN lesson_trans_ledger.QUANTITY IS 'Remaining quantity';
+COMMENT ON COLUMN lesson_trans_ledger.AMT IS 'Remaining amount';
+COMMENT ON COLUMN lesson_trans_ledger.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN lesson_trans_ledger.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN lesson_trans_ledger.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN lesson_trans_ledger.UPDATE_TIME IS 'Last update time';
+COMMENT ON COLUMN lesson_trans_ledger.STATUS IS 'Status';
+COMMENT ON TABLE lesson_monthly_sales IS 'Monthly sales (report demo)';
+COMMENT ON COLUMN lesson_monthly_sales.PRODUCT IS 'Product';
+COMMENT ON COLUMN lesson_monthly_sales.ORDER_MONTH IS 'Order month';
+COMMENT ON COLUMN lesson_monthly_sales.SALE_COUNT IS 'Sale count';
+COMMENT ON COLUMN lesson_monthly_sales.TOTAL_AMT IS 'Total amount';
+COMMENT ON COLUMN lesson_monthly_sales.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN lesson_monthly_sales.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN lesson_monthly_sales.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN lesson_monthly_sales.UPDATE_TIME IS 'Last update time';
+COMMENT ON COLUMN lesson_monthly_sales.STATUS IS 'Status';

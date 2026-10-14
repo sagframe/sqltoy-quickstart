@@ -24,7 +24,8 @@ spring:
        driver-class-name: org.h2.Driver
        username: sa
        password: ""
-       url: jdbc:h2:mem:quickstart;DB_CLOSE_DELAY=-1
+       # a random database name per application context, so test contexts never see each other's data
+       url: jdbc:h2:mem:${random.uuid};DB_CLOSE_DELAY=-1
        # connection pool: HikariCP shipped with spring-boot-starter-jdbc, defaults are fine; to tune:
        #hikari:
        #  maximum-pool-size: 10

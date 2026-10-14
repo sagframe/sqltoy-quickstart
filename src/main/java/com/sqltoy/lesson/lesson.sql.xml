@@ -71,4 +71,58 @@
 		]]>
 		</value>
 	</sql>
+
+	<!-- Lesson 6: locked row, deducted against its current value, returned — one round trip -->
+	<sql id="lesson06_ledger_deduct">
+		<value>
+		<![CDATA[
+		select t.ORDER_ID,t.QUANTITY,t.AMT
+		from lesson_trans_ledger t
+		where t.ORDER_ID=:orderId
+		]]>
+		</value>
+	</sql>
+
+	<!-- Lesson 7: pivot months into columns, two measures under each month -->
+	<sql id="lesson07_sales_pivot">
+		<value>
+		<![CDATA[
+		select t.PRODUCT,t.ORDER_MONTH,t.SALE_COUNT,t.TOTAL_AMT
+		from lesson_monthly_sales t
+		order by t.PRODUCT,t.ORDER_MONTH
+		]]>
+		</value>
+		<pivot start-column="SALE_COUNT" end-column="TOTAL_AMT"
+			group-columns="PRODUCT" category-columns="ORDER_MONTH" />
+	</sql>
+
+	<!-- Lesson 7: group subtotals and a grand total row, no ETL code -->
+	<sql id="lesson07_sales_summary">
+		<value>
+		<![CDATA[
+		select t.PRODUCT,t.ORDER_MONTH,t.SALE_COUNT,t.TOTAL_AMT
+		from lesson_monthly_sales t
+		order by t.PRODUCT,t.ORDER_MONTH
+		]]>
+		</value>
+		<summary sum-columns="SALE_COUNT,TOTAL_AMT" reverse="true" sum-site="top" skip-single-row="true">
+			<global sum-label="Total" label-column="PRODUCT" />
+			<group group-column="PRODUCT" sum-label="Subtotal" label-column="PRODUCT" />
+		</summary>
+	</sql>
+
+	<!-- Lesson 7: pivot first, then month-over-month between columns -->
+	<sql id="lesson07_sales_mom">
+		<value>
+		<![CDATA[
+		select t.PRODUCT,t.ORDER_MONTH,t.SALE_COUNT,t.TOTAL_AMT
+		from lesson_monthly_sales t
+		order by t.PRODUCT,t.ORDER_MONTH
+		]]>
+		</value>
+		<pivot start-column="SALE_COUNT" end-column="TOTAL_AMT"
+			group-columns="PRODUCT" category-columns="ORDER_MONTH" />
+		<cols-chain-relative group-size="2" relative-indexs="1" start-column="1"
+			format="#.00%" />
+	</sql>
 </sqltoy>

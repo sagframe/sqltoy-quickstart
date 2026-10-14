@@ -20,6 +20,8 @@ mvn test
 | [4](https://github.com/sagframe/sqltoy-quickstart#lesson-4--skip-the-dictionary-join) | 码值翻译名称、消灭字典 JOIN | 缓存翻译，内存完成 |
 | [5](https://github.com/sagframe/sqltoy-quickstart#lesson-5--one-sql-multiple-databases) | 同一套 SQL 跑多种数据库 | `nvl→coalesce` 自动转换、`@virtualTable()` |
 
+> **进阶两课（Going further）**：[第 6 课](https://github.com/sagframe/sqltoy-quickstart#lesson-6--race-proof-ledgers-in-one-round-trip)高并发台账——`updateFetch` 一次交互完成锁定→扣减→返回，测试 8 线程×50 次并发扣减零丢失；[第 7 课](https://github.com/sagframe/sqltoy-quickstart#lesson-7--reports-without-etl)报表零 ETL——`<pivot>/<summary>/<cols-chain-relative>` 声明式完成行转列、小计与环比。
+
 > 环境要求：JDK 17+。每课的代码、真实运行输出与深入文档链接见[英文 README](README.md)。
 
 ## quickvo：从数据库生成实体

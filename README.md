@@ -2,7 +2,7 @@ English | [简体中文](README.zh-CN.md)
 
 # SqlToy Quick Start
 
-**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.**
+**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Two [going-further lessons](#going-further) cover high-contention ledgers and management reports.
 
 Each lesson is a JUnit test in the [`com.sqltoy.lesson`](src/test/java/com/sqltoy/lesson) package, phrased as an everyday problem rather than a feature name. The project runs on an in-memory H2 database (schema and seed data load automatically) plus an embedded Redis for Lesson 1, so it works right after cloning:
 
@@ -269,6 +269,79 @@ Change nothing but the datasource URL and these statements keep working — this
 
 ---
 
+## Going further
+
+Two more lessons for the problems that show up after the basics: high-contention ledgers and management reports. Same format, same runnable tests.
+
+### Lesson 6 — Race-proof ledgers in one round-trip
+
+The classic lost-update bug: thread A reads `quantity=100`, thread B reads `100`, both write `99` — one deduction vanishes. `updateFetch` prevents it: **lock → compute against the current row → update → return**, one database interaction, no window for a race ([`Lesson06LedgerConcurrencyTest`](src/test/java/com/sqltoy/lesson/Lesson06LedgerConcurrencyTest.java)):
+
+```java
+// inside a transaction; LockMode.UPGRADE maps to "for update"
+List<TransLedger> rows = lightDao.updateFetch(
+        new QueryExecutor("select t.ORDER_ID,t.QUANTITY,t.AMT from lesson_trans_ledger t where t.ORDER_ID=?")
+                .values("LEDGER-01").resultType(TransLedger.class).lock(LockMode.UPGRADE),
+        new UpdateRowHandler() {
+            public void updateRow(java.sql.ResultSet rs, int index) throws Exception {
+                // deduct against the CURRENT server-side value, not a stale read
+                rs.updateInt("QUANTITY", rs.getInt("QUANTITY") - 1);
+            }
+        });
+```
+
+The test fires **8 threads × 50 deductions** at a 1000-unit ledger and asserts the exact result (real run):
+
+```text
+threads=8 x 50 deductions, failures=0
+remaining quantity = 600 (expected 600), remaining amount = 499600.00
+```
+
+`updateSaveFetch` is the sibling for insert-or-update ledgers: when the row does not exist it inserts (skipping the handler), on later calls it locks and updates in place — `0 → 5` in the test output.
+
+🔗 Deep dive: [Object CRUD — updateFetch](https://sagframe.github.io/sqltoy-docs/#/en/crud/sqltoy_crud)
+
+### Lesson 7 — Reports without ETL
+
+Month-per-column pivots, subtotals and month-over-month percentages — declared in xml over the same sales query, zero Java code ([`Lesson07ReportTest`](src/test/java/com/sqltoy/lesson/Lesson07ReportTest.java)):
+
+```xml
+<sql id="lesson07_sales_mom">
+    <value><![CDATA[
+    select t.PRODUCT,t.ORDER_MONTH,t.SALE_COUNT,t.TOTAL_AMT
+    from lesson_monthly_sales t
+    order by t.PRODUCT,t.ORDER_MONTH
+    ]]></value>
+    <!-- months become column headings, two measures under each month -->
+    <pivot start-column="SALE_COUNT" end-column="TOTAL_AMT"
+        group-columns="PRODUCT" category-columns="ORDER_MONTH" />
+    <!-- month-over-month between the pivoted columns -->
+    <cols-chain-relative group-size="2" relative-indexs="1" start-column="1" format="#.00%" />
+</sql>
+```
+
+Real output of the three transforms:
+
+```text
+pivot (months as columns):
+  Laptop   120  96000.00   135  108000.00   150  120000.00
+  Printer   80  24000.00    72   21600.00    90   27000.00
+  Server    30  45000.00    42   63000.00    36   54000.00
+
+summary (grand total + per-product subtotals):
+  Total     -    755  558600.00
+  Subtotal  -    405  324000.00
+  Laptop    2026-01  120   96000.00
+
+month-over-month (pivot + relative columns):
+  Laptop   120  96000.00  -     135  108000.00  112.50%   150  120000.00  111.10%
+  Server    30  45000.00  -      42   63000.00  140.00%    36   54000.00   85.70%
+```
+
+🔗 Deep dive: [Complex queries — pivot / summary / relative](https://sagframe.github.io/sqltoy-docs/#/en/query/sqltoy_complex_query)
+
+---
+
 ## Using a real database
 
 Everything runs on the in-memory H2 database by default, so the project works right after cloning. To connect a real database instead: add its JDBC driver to `pom.xml`, point `spring.datasource` in [`application.yml`](src/main/resources/application.yml) at it, and create the demo tables — [`mock/h2/schema-h2.sql`](src/main/resources/mock/h2/schema-h2.sql) holds the full DDL (translate it to your database's dialect, or let [quickvo](#generate-entities-from-the-database-quickvo) reverse-engineer your own schema). sqltoy adapts to 25 dialects automatically (that is what Lesson 5 demonstrates).
@@ -303,7 +376,7 @@ public class StaffInfoVO implements Serializable {
 }
 ```
 
-In a real project you point the datasource in [`quickvo.xml`](src/main/resources/quickvo.xml) at your own database — typically a legacy one you are migrating — add its JDBC driver, and run the same command.
+In a real project you point the datasource in [`quickvo.xml`](src/main/resources/quickvo.xml) at your own database — typically a legacy one you are migrating — add its JDBC driver, and run the same command. [`GeneratedEntityTest`](src/test/java/com/sqltoy/lesson/GeneratedEntityTest.java) proves the generated code is fully functional: CRUD through a generated VO works out of the box, including the primary-key generator and audit-field auto-fill.
 
 🔗 Deep dive: [quickvo](https://sagframe.github.io/sqltoy-docs/#/en/prepare/quickvo) · [quickvo-maven-plugin](https://sagframe.github.io/sqltoy-docs/#/en/prepare/quickvo_plugin)
 
