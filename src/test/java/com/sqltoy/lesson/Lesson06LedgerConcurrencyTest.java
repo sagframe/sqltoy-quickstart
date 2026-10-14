@@ -40,8 +40,10 @@ class Lesson06LedgerConcurrencyTest {
 	@Autowired
 	TransactionTemplate transactionTemplate;
 
-	private static final String DEDUCT_SQL = "select t.ORDER_ID,t.QUANTITY,t.AMT"
-			+ " from lesson_trans_ledger t where t.ORDER_ID=?";
+	private static final String DEDUCT_SQL = """
+			select t.ORDER_ID,t.QUANTITY,t.AMT
+			from lesson_trans_ledger t where t.ORDER_ID=?
+			""";
 
 	private int deductOne() {
 		// updateFetch must run inside a transaction: the locked update is committed with it
