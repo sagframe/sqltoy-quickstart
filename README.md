@@ -2,6 +2,10 @@ English | [简体中文](README.zh-CN.md)
 
 # SqlToy Quick Start
 
+[![CI](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml)
+[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.6-blue)](https://github.com/sagframe/sagacity-sqltoy)
+![Java 17+](https://img.shields.io/badge/Java-17%2B-blue)
+
 **Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Two [going-further lessons](#going-further) cover high-contention ledgers and management reports.
 
 Each lesson is a JUnit test in the [`com.sqltoy.lesson`](src/test/java/com/sqltoy/lesson) package, phrased as an everyday problem rather than a feature name. The project runs on an in-memory H2 database (schema and seed data load automatically) plus an embedded Redis for Lesson 1, so it works right after cloning:
