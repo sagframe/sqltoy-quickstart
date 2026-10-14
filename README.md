@@ -100,8 +100,9 @@ A search form where every filter is optional. In SqlToy each condition is wrappe
 
 ```java
 // only staffName set → one condition; add organIds → both conditions
+// pass the bare value "Chen": sqltoy auto-wraps like parameters with % on both sides
 List<StaffMember> rows = lightDao.find("lesson02_staff_search",
-        MapKit.keys("staffName").values("%Chen%"), StaffMember.class);
+        MapKit.keys("staffName").values("Chen"), StaffMember.class);
 ```
 
 The four parameter combinations from the test, and the SQL each one produced (debug log, values shown inlined for readability — execution itself always uses JDBC `?` placeholders):
@@ -148,6 +149,8 @@ no optional filter               -> 19 rows
 ```
 
 One `<if>` (plus `<foreach>` for collections) per filter, and the SQL gets chopped into fragments that no database client can execute as-is. The SqlToy version above is complete — and you can paste it straight into your DB console.
+
+Small ergonomic details worth noticing: a `like` parameter without `%` is wrapped automatically on both sides (user input containing `%`/`_` is escaped), and `l-like`/`r-like` filters wrap one side only so the query can still use an index.
 </details>
 
 🔗 Deep dive: [Dynamic SQL specification](https://sagframe.github.io/sqltoy-docs/#/en/query/dynamic_sql)

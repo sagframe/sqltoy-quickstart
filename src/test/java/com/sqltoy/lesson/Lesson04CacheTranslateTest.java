@@ -30,7 +30,7 @@ class Lesson04CacheTranslateTest {
 	@Test
 	void namesResolvedWithoutJoin() {
 		List<StaffMember> rows = lightDao.find("lesson04_staff_with_names",
-				MapKit.keys("staffName").values("%Chen%"), StaffMember.class);
+				MapKit.keys("staffName").values("Chen"), StaffMember.class);
 
 		System.out.println("staffId  organId -> organName      sexType -> sexTypeName");
 		rows.forEach(r -> System.out.println("  " + r.getStaffId() + "  " + r.getOrganId() + " -> "

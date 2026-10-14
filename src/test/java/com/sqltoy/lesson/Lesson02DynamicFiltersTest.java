@@ -32,7 +32,8 @@ class Lesson02DynamicFiltersTest {
 	@Test
 	void optionalFilters() {
 		// 1) name filter only — matches Alice Chen and Jack Chen
-		Map<String, Object> nameOnly = MapKit.keys("staffName").values("%Chen%");
+		// (pass the bare value: sqltoy auto-wraps like parameters with % on both sides)
+		Map<String, Object> nameOnly = MapKit.keys("staffName").values("Chen");
 		List<StaffMember> byName = lightDao.find("lesson02_staff_search", nameOnly, StaffMember.class);
 		System.out.println("filter: staffName like '%Chen%'  -> " + byName.size() + " rows");
 		assertEquals(2, byName.size());
