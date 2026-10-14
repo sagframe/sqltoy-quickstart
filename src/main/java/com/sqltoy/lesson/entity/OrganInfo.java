@@ -27,6 +27,18 @@ public class OrganInfo implements Serializable {
 	@Column(name = "SHOW_INDEX")
 	private Integer showIndex;
 
+	@Column(name = "CREATE_BY", length = 22)
+	private String createBy;
+
+	@Column(name = "CREATE_TIME")
+	private LocalDateTime createTime;
+
+	@Column(name = "UPDATE_BY", length = 22)
+	private String updateBy;
+
 	@Column(name = "UPDATE_TIME")
 	private LocalDateTime updateTime;
+
+	@Column(name = "STATUS")
+	private Integer status;
 }

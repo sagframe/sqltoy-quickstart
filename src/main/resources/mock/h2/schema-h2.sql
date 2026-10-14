@@ -1,4 +1,4 @@
--- H2 schema for the quickstart lessons (same table names as the MySQL script mock/quickstart_init.sql)
+-- H2 schema for the quickstart lessons
 -- standard audit columns on every business table: CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, STATUS
 DROP TABLE IF EXISTS sqltoy_organ_info;
 CREATE TABLE sqltoy_organ_info (
@@ -60,3 +60,48 @@ CREATE TABLE lesson_device_order (
     STATUS      INT DEFAULT 1,
     CONSTRAINT pk_lesson_order PRIMARY KEY (ORDER_ID)
 );
+
+COMMENT ON TABLE sqltoy_organ_info IS 'Organization information';
+COMMENT ON COLUMN sqltoy_organ_info.ORGAN_ID IS 'Organ ID';
+COMMENT ON COLUMN sqltoy_organ_info.ORGAN_NAME IS 'Organ name';
+COMMENT ON COLUMN sqltoy_organ_info.SHOW_INDEX IS 'Display order';
+COMMENT ON COLUMN sqltoy_organ_info.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN sqltoy_organ_info.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN sqltoy_organ_info.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN sqltoy_organ_info.UPDATE_TIME IS 'Last update time';
+COMMENT ON COLUMN sqltoy_organ_info.STATUS IS 'Status';
+COMMENT ON TABLE sqltoy_staff_info IS 'Staff information';
+COMMENT ON COLUMN sqltoy_staff_info.STAFF_ID IS 'Staff ID';
+COMMENT ON COLUMN sqltoy_staff_info.STAFF_CODE IS 'Staff code';
+COMMENT ON COLUMN sqltoy_staff_info.STAFF_NAME IS 'Name';
+COMMENT ON COLUMN sqltoy_staff_info.ORGAN_ID IS 'Department';
+COMMENT ON COLUMN sqltoy_staff_info.SEX_TYPE IS 'Gender';
+COMMENT ON COLUMN sqltoy_staff_info.ENTRY_DATE IS 'Entry date';
+COMMENT ON COLUMN sqltoy_staff_info.STATUS IS 'Status';
+COMMENT ON COLUMN sqltoy_staff_info.EMAIL IS 'Email';
+COMMENT ON COLUMN sqltoy_staff_info.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN sqltoy_staff_info.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN sqltoy_staff_info.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN sqltoy_staff_info.UPDATE_TIME IS 'Last update time';
+COMMENT ON TABLE sqltoy_dict_detail IS 'Dictionary detail';
+COMMENT ON COLUMN sqltoy_dict_detail.DICT_TYPE IS 'Dict type code';
+COMMENT ON COLUMN sqltoy_dict_detail.DICT_KEY IS 'Dict key';
+COMMENT ON COLUMN sqltoy_dict_detail.DICT_NAME IS 'Dict value';
+COMMENT ON COLUMN sqltoy_dict_detail.STATUS IS 'Status';
+COMMENT ON COLUMN sqltoy_dict_detail.SHOW_INDEX IS 'Display order';
+COMMENT ON COLUMN sqltoy_dict_detail.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN sqltoy_dict_detail.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN sqltoy_dict_detail.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN sqltoy_dict_detail.UPDATE_TIME IS 'Last update time';
+COMMENT ON TABLE lesson_device_order IS 'Device orders (Redis business-key demo)';
+COMMENT ON COLUMN lesson_device_order.ORDER_ID IS 'Order ID';
+COMMENT ON COLUMN lesson_device_order.BUYER IS 'Buyer';
+COMMENT ON COLUMN lesson_device_order.ORGAN_ID IS 'Organ ID';
+COMMENT ON COLUMN lesson_device_order.DEVICE_TYPE IS 'Device type';
+COMMENT ON COLUMN lesson_device_order.TRANS_DATE IS 'Transaction date';
+COMMENT ON COLUMN lesson_device_order.TOTAL_AMT IS 'Total amount';
+COMMENT ON COLUMN lesson_device_order.CREATE_BY IS 'Created by';
+COMMENT ON COLUMN lesson_device_order.CREATE_TIME IS 'Create time';
+COMMENT ON COLUMN lesson_device_order.UPDATE_BY IS 'Last updated by';
+COMMENT ON COLUMN lesson_device_order.UPDATE_TIME IS 'Last update time';
+COMMENT ON COLUMN lesson_device_order.STATUS IS 'Status';

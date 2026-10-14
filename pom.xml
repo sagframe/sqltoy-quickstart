@@ -54,11 +54,6 @@
 			<artifactId>ehcache</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Jackson: JSON serialization for the JSON-column type handler -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
 		<!-- runtime requirement of sqltoy's EntityResultSetProxy (used by updateFetch/updateSaveFetch) -->
 		<dependency>
 			<groupId>net.bytebuddy</groupId>

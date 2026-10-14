@@ -2,7 +2,6 @@ package com.sqltoy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @version v1.0, Date:2020-07-17
  */
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.sqltoy.config", "com.sqltoy.quickstart" })
 @EnableTransactionManagement
 public class SqlToyApplication {
 

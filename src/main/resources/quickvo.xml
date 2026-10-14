@@ -2,8 +2,6 @@
 <quickvo xmlns="http://www.sagframe.com/schema/quickvo"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sagframe.com/schema/quickvo https://sagframe.github.io/schema/quickvo.xsd">
-	<!-- property source for placeholders -->
-	<property file="src/main/resources/application.yml" />
 	<property name="project.version" value="1.0.0" />
 	<property name="project.name" value="sqltoy-quickstart" />
 
@@ -23,66 +21,41 @@
 		</doc-field-template>
 	</api-doc>
 
-	<!-- schema mapping: for mysql the schema is the database name, for oracle the user name.
-	     With multiple schemas/tablespaces configure schema/catalog carefully to isolate columns. -->
-	<!-- points at an in-memory H2 database by default: the INIT=RUNSCRIPT in the url creates the full set
-	     of SQLTOY_ demo tables when the connection opens — nothing to install.
+	<!-- points at an in-memory H2 database by default: the INIT=RUNSCRIPT in the url creates the
+	     lesson tables (mock/h2/schema-h2.sql) when the connection opens — nothing to install.
 	     To run against a real database (e.g. a legacy one you are migrating), change url/driver/schema/catalog
 	     and add the matching JDBC driver to the pom. -->
-	<datasource name="quickstart" url="jdbc:h2:mem:quickvogen;INIT=RUNSCRIPT FROM 'src/main/resources/mock/h2/quickvo-schema-h2.sql'"
+	<datasource name="quickstart" url="jdbc:h2:mem:quickvogen;INIT=RUNSCRIPT FROM 'src/main/resources/mock/h2/schema-h2.sql'"
 		driver="org.h2.Driver" schema="PUBLIC" catalog="" username="sa" password="" />
 
 	<!-- dist: where the generated java sources are written -->
 	<tasks dist="src/main/java" encoding="UTF-8">
-		<!-- active toggles the task; include/exclude are table-name patterns;
-		     api-doc selects the annotation style; fields-rid-prefix strips a common column prefix -->
-		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+"	datasource="quickstart" api-doc="swagger-v3">
-			<!-- substr removes a table-name prefix (e.g. sys_) before building the class name #{subName} -->
-			<!-- lombok="true" lombok-chain="true" supported since 5.0 -->
-			<entity package="${project.package}.quickstart.vo"	substr="Sqltoy" name="#{subName}VO" lombok-chain="true"/>
-			<!-- vo: dto-style classes for upper layers (example, inactive)
-			<vo package="${project.package}.quickstart.dto" substr="Sqltoy" name="#{subName}VO"
-				to-dir="../../../provider-api/src/main/java" has-abstract="true" extends="org.sagacity.core.model.Request"/> -->
+		<!-- active toggles the task; include/exclude are table-name patterns; api-doc selects annotations -->
+		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+|^LESSON_\w+"	datasource="quickstart" api-doc="swagger-v3">
+			<!-- substr removes a table-name prefix before building the class name #{subName} -->
+			<entity package="${project.package}.lesson.gen"	substr="Sqltoy" name="#{subName}VO" lombok-chain="true"/>
 		</task>
 	</tasks>
+
 	<!-- primary-key strategies: identity columns get a strategy automatically, others are inferred from
 	     type and length. strategy: sequence (needs the sequence name) | assign (manual) |
 	     generator (default 22-digit | nanotime 26-digit | snowflake | uuid | redis | custom class) -->
 	<primary-key>
-		<table name="SQLTOY_\w+|SYS_\w+" strategy="generator" generator="default" />
+		<table name="SQLTOY_\w+|LESSON_\w+|SYS_\w+" strategy="generator" generator="default" />
 		<!--<table name="xxxTABLE" strategy="sequence" sequence="SEQ_XXXX"/> -->
 		<!--<table name="sys_staff_info" strategy="generator" generator="snowflake"/> -->
-
-		<!-- custom generator: fully qualified class name or @bean(beanName) -->
-		<!--<table name="sys_staff_info" strategy="generator" generator="com.xxxx.ClassName"/> -->
-		<!--<table name="sys_staff_info" strategy="generator" generator="@bean(beanName)"/> -->
 	</primary-key>
 
-	<!-- Redis-based business primary keys with a specific rule (see Lesson 1) -->
+	<!-- Redis-based business primary keys with a specific rule (see Lesson 1 for the annotation form).
+	     macros: @substr(${field},startIndex,length) @case(value,case1,value1,...) @df(yyMMdd) -->
 	<business-primary-key>
-		<!-- example: 1-char purchase/sale flag + 2-char device class + 6-char date + 3-digit sequence
-		     (extends to 4 digits automatically when exceeded).
-		     macros: @substr(${field},startIndex,length) @case(value,case1,value1,...) @df(yyMMdd) -->
-		<!--<table name="SQLTOY_DEVICE_ORDER" column="ORDER_ID" generator="redis" signature="${psType}@case(${deviceType},PC,PC,NET,NT,OFFICE,OF,SOFTWARE,SF,OT)@day(yyMMdd)"
-			related-columns="psType,deviceType" length="12" /> -->
+		<!--<table name="LESSON_DEVICE_ORDER" column="ORDER_ID" generator="redis" signature="PO@df(yyMMdd)" length="16" /> -->
 	</business-primary-key>
-
-	<!-- head-item cascade: update-cascade="delete" removes existing rows (or a sql fragment like ENABLED=0
-	     to invalidate them); orderBy controls ordering. Usually no cascade config is needed. -->
-	<cascade>
-		<table name="SQLTOY_DICT_DETAIL" orderBy="showIndex desc" />
-		<!-- <table name="SQLTOY_DICT_DETAIL" update-cascade="delete" load="STATUS=1" orderBy=""/> -->
-	</cascade>
 
 	<!-- type mapping: native-types matches database-specific type names; jdbc-type the java.sql.Types value
 	     used in @Column; java-type the property type; import-types extra imports -->
 	<type-mapping>
-		<!-- one example kept: map BIGINT to BigInteger (snowflake demo) -->
+		<!-- one example kept: map BIGINT to BigInteger (snowflake-friendly) -->
 		<sql-type native-types="BIGINT" jdbc-type="BIGINT" java-type="java.math.BigInteger" />
-		<!-- array types are matched by quickvo itself -->
-		<!-- <sql-type native-types="_text" jdbc-type="ARRAY" java-type="String[]" /> -->
-
-		<!-- per-column override; jdbc-type can be a raw number; java-type="List<StaffInfoVO>" (xml-escaped) -->
-		<sql-type table-field="sqltoy_jsontype_showcae.staff_set" native-types="json" jdbc-type="2016" java-type="List&lt;StaffInfoVO&gt;" import-types="com.sqltoy.quickstart.vo.StaffInfoVO" />
 	</type-mapping>
 </quickvo>

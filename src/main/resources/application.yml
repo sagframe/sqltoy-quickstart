@@ -2,31 +2,23 @@ spring:
     # note: sqltoy properties live under the spring.sqltoy prefix
     # (a common mistake is omitting the "spring." prefix so nothing gets loaded)
     sqltoy:
-        # comma-separated sql resource directories:
-        # quickstart = full-feature demo sql, lesson = the sql used by Lesson 1-5
-        sqlResourcesDir: classpath:com/sqltoy/quickstart,classpath:com/sqltoy/lesson
-        # cache translate configuration (default location, shown for clarity)
+        # the sql files used by Lesson 1-5
+        sqlResourcesDir: classpath:com/sqltoy/lesson
+        # cache translate configuration (Lesson 4)
         translateConfig: classpath:sqltoy-translate.xml
         # cross-database function auto-adaptation (Lesson 5: nvl -> coalesce on H2)
         functionConverts: default
         # debug mode: print every executed sql and hot-reload sql files on change
         debug: true
-        # throw an error on duplicate sqlId at startup (default true)
-        #breakWhenSqlRepeat: true
         # optional: pin a single database type to skip mixed-dialect detection
         #dialect: h2
         # redirect one dialect to another implementation (e.g. oscar -> oracle)
         dialectMap:
                oscar: oracle
-        # auto-fill common audit fields (createBy/createTime/updateBy/updateTime) when absent
+        # auto-fill the standard audit columns (createBy/createTime/updateBy/updateTime) when absent
         unifyFieldsHandler: com.sqltoy.plugins.SqlToyUnifyFieldsHandler
         # log sql statements slower than this many milliseconds (slow-sql watch)
         printSqlTimeoutMillis: 300000
-        # database reserved words used as column names, comma-separated
-        reservedWords: maxvalue,minvalue
-        # built-in RSA keys for the secure encrypt/decrypt demos
-        securePrivateKey: classpath:mock/rsa_private.key
-        securePublicKey: classpath:mock/rsa_public.key
     datasource:
        name: dataSource
        driver-class-name: org.h2.Driver
