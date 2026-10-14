@@ -15,47 +15,53 @@ import java.util.List;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0
  */
-@Schema(name = "JsontypeShowcaeVO", description = "JSON等特殊类型处理演示")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "JSON / special-type handling demo")
 @Data
 @Accessors(chain = true)
-@Entity(tableName = "sqltoy_jsontype_showcae", comment = "JSON等特殊类型处理演示", pk_constraint = "PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_JSONTYPE_SHOWCAE",comment="JSON / special-type handling demo",pk_constraint="CONSTRAINT_9")
+/*---end-class-annotations-area---auto-managed---*/
 public class JsontypeShowcaeVO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3425808763023689603L;
-	/*---begin-auto-generate-don't-update-this-area--*/
+	/*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name = "id", description = "主键ID", nullable = false)
-	@Id(strategy = "generator", generator = "org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name = "ID", comment = "主键ID", length = 32L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Primary key ID", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
+	@Column(name="ID",comment="Primary key ID",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String id;
 
-	@Schema(name = "staffSet", description = "员工信息集合", nullable = false)
-	@Column(name = "STAFF_SET", comment = "员工信息集合", length = 1073741824L, type = JdbcTypes.JSON, nativeType = "JSON", nullable = false)
+	@Schema(description = "Staff collection", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STAFF_SET",comment="Staff collection",length=1000000000L,type=2016,nativeType="JSON",nullable=false)
 	private List<StaffInfoVO> staffSet;
 
-	@Schema(name = "createTime", description = "创建日期", nullable = false)
-	@Column(name = "CREATE_TIME", comment = "创建日期", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name = "updateTime", description = "修改时间", nullable = false)
-	@Column(name = "UPDATE_TIME", comment = "修改时间", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
-	private LocalDateTime updateTime;
-
+	@Schema(description = "Update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 	/** default constructor */
 	public JsontypeShowcaeVO() {
 	}
-
+	
 	/** pk constructor */
-	public JsontypeShowcaeVO(String id) {
-		this.id = id;
+	public JsontypeShowcaeVO(String id)
+	{
+		this.id=id;
 	}
-	/*---end-auto-generate-don't-update-this-area--*/
+/*---end-auto-generate-don't-update-this-area--*/
 }

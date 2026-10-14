@@ -14,15 +14,22 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="DeviceOrderVO",description="硬件购销定单表(演示有规则单号)")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Device purchase/sales order (rule-based order number demo)")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_device_order",comment="硬件购销定单表(演示有规则单号)",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_DEVICE_ORDER",comment="Device purchase/sales order (rule-based order number demo)",pk_constraint="CONSTRAINT_3")
+/*---end-class-annotations-area---auto-managed---*/
 public class DeviceOrderVO implements Serializable {
 	
 	/**
@@ -31,70 +38,70 @@ public class DeviceOrderVO implements Serializable {
 	private static final long serialVersionUID = 5720676300522791730L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="orderId",description="订单ID",nullable=false)
+	@Schema(description = "Order ID", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="ORDER_ID",comment="订单ID",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="ORDER_ID",comment="Order ID",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String orderId;
 
-	@Schema(name="deviceType",description="设备类型",nullable=false)
-	@Column(name="DEVICE_TYPE",comment="设备类型",length=10L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Device type", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="DEVICE_TYPE",comment="Device type",length=10L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String deviceType;
 
-	@Schema(name="psType",description="购销标志",nullable=false)
-	@Column(name="PS_TYPE",comment="购销标志",length=10L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Purchase/sale flag", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="PS_TYPE",comment="Purchase/sale flag",length=10L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String psType;
 
-	@Schema(name="totalCnt",description="商品总量",nullable=true)
-	@Column(name="TOTAL_CNT",comment="商品总量",length=12L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=true)
+	@Schema(description = "Total quantity")
+	@Column(name="TOTAL_CNT",comment="Total quantity",length=12L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=true)
 	private BigDecimal totalCnt;
 
-	@Schema(name="totalAmt",description="总金额",nullable=true)
-	@Column(name="TOTAL_AMT",comment="总金额",length=12L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=true)
+	@Schema(description = "Total amount")
+	@Column(name="TOTAL_AMT",comment="Total amount",length=12L,scale=2,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=true)
 	private BigDecimal totalAmt;
 
-	@Schema(name="buyer",description="购买方",nullable=true)
-	@Column(name="BUYER",comment="购买方",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Buyer")
+	@Column(name="BUYER",comment="Buyer",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String buyer;
 
-	@Schema(name="saler",description="销售方",nullable=true)
-	@Column(name="SALER",comment="销售方",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Seller")
+	@Column(name="SALER",comment="Seller",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String saler;
 
-	@Schema(name="transDate",description="成交日期",nullable=false)
-	@Column(name="TRANS_DATE",comment="成交日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
+	@Schema(description = "Transaction date", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_DATE",comment="Transaction date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=false)
 	private LocalDate transDate;
 
-	@Schema(name="deliveryTerm",description="交货期限",nullable=true)
-	@Column(name="DELIVERY_TERM",comment="交货期限",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
+	@Schema(description = "Delivery deadline")
+	@Column(name="DELIVERY_TERM",comment="Delivery deadline",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=true)
 	private LocalDate deliveryTerm;
 
-	@Schema(name="staffId",description="业务员",nullable=true)
-	@Column(name="STAFF_ID",comment="业务员",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Sales staff")
+	@Column(name="STAFF_ID",comment="Sales staff",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String staffId;
 
-	@Schema(name="organId",description="业务机构",nullable=true)
-	@Column(name="ORGAN_ID",comment="业务机构",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Sales organization")
+	@Column(name="ORGAN_ID",comment="Sales organization",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String organId;
 
-	@Schema(name="status",description="状态",nullable=false)
-	@Column(name="STATUS",comment="状态",length=10L,type=java.sql.Types.INTEGER,nativeType="INT",nullable=false)
+	@Schema(description = "Status", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STATUS",comment="Status",length=32L,type=JdbcTypes.INTEGER,nativeType="INTEGER",nullable=false)
 	private Integer status;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 	/** default constructor */
 	public DeviceOrderVO() {
 	}

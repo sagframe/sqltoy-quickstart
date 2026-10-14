@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.dao;
 
 import org.sagacity.sqltoy.config.model.Translate;
@@ -13,40 +10,34 @@ import org.springframework.stereotype.Repository;
 import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
- * 演示dao的编写,正常情况下sqltoy并不需要写dao(service层调用SqlToyLazyDao即可完成)
- * 
+ * Demo of how to write a DAO. Normally sqltoy needs no DAO layer at all —
+ * services call LightDao / SqlToyCRUDService directly.
+ *
  * @author zhongxuchen
- * @version 1.0.0,Date:2020-07-16
+ * @version 1.0.0, Date:2020-07-16
  */
 @Repository("staffInfoDao")
 public class StaffInfoDao extends SpringDaoSupport {
 	/**
-	 * @TODO 提供一个分页并动态设置缓存翻译的演示
-	 * @param pageModel
-	 * @param staffInfoVO
-	 * @return
+	 * @TODO paged single-table query with cache translate set up programmatically
 	 */
 	public Page<StaffInfoVO> findStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
-		// sql可以直接在代码中编写,复杂sql建议在xml中定义
-		// 单表entity查询场景下sql字段可以写成java类的属性名称
-		// 单表查询一般适用于接口内部查询
+		// sql can be written inline in code; for complex sql prefer the xml form
+		// in single-table entity queries the sql fields can be java property names
 		String sql = "#[staffName like :staffName]#[and createTime>=:beginDate]#[and createTime<=:endDate]";
 		return findPageEntity(pageModel, StaffInfoVO.class, EntityQuery.create().where(sql).values(staffInfoVO)
-				// 字典缓存必须要设置cacheType
-				// 单表对象查询需设置keyColumn构成select keyColumn as column模式
+				// dictionary caches must set cacheType;
+				// single-table entity queries need keyColumn to form the "select keyColumn as column" pattern
 				.translates(new Translate("dictKeyName").setColumn("sexTypeName").setCacheType("SEX_TYPE")
 						.setKeyColumn("sexType"))
 				.translates(new Translate("organIdName").setColumn("organName").setKeyColumn("organId")));
 	}
 
 	/**
-	 * @TODO 提供一个分页并动态设置缓存翻译的演示
-	 * @param pageModel
-	 * @param staffInfoVO
-	 * @return
+	 * @TODO paged query by sqlId with cache translate set up programmatically
 	 */
 	public Page<StaffInfoVO> findStaff1(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO) {
-		// 直接传sql或sqlId的时使用QueryExecutor
+		// QueryExecutor is used when passing a raw sql or a sqlId
 		return super.findPageByQuery(pageModel, new QueryExecutor("qstart_findStaff", staffInfoVO)
 				.translates(new Translate("organIdName").setColumn("organName").setIndex(2))).getPageResult();
 	}

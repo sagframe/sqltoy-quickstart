@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.plugins;
 
 import org.sagacity.sqltoy.utils.NumberUtil;
@@ -10,10 +7,9 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description worker thread for the updateFetch concurrency demo
  * @author zhong
- * @version v1.0, Date:2021-1-13
- * @modify 2021-1-13,修改说明
+ * @version v1.0, Date:2021-01-13
  */
 public class UpdateFetchThread extends Thread {
 	private TransLedgerService transLedgerService;
@@ -28,7 +24,7 @@ public class UpdateFetchThread extends Thread {
 
 	@Override
 	public void run() {
-		int meter = 0;
+		int failures = 0;
 		int count = 50;
 		for (int i = 0; i < count; i++) {
 			try {
@@ -42,13 +38,13 @@ public class UpdateFetchThread extends Thread {
 			try {
 				result = transLedgerService.updateTrans(transVO);
 				if (result == null) {
-					meter++;
+					failures++;
 				}
 			} catch (Exception e) {
-				meter++;
+				failures++;
 			}
 		}
-		System.err.println("groupId=" + groupId + ";执行次数=" + count + ";完成量=" + (count - meter));
+		System.err.println("groupId=" + groupId + "; executions=" + count + "; succeeded=" + (count - failures));
 	}
 
 }

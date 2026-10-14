@@ -1,18 +1,14 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.service;
 
 /**
  * @project sqltoy-showcase
- * @description 初始化数据库数据
- * @author chenrenfei <a href="mailto:zhongxuchen@gmail.com">联系作者</a>
- * @version id:InitDataService.java,Revision:v1.0,Date:2019年8月6日
+ * @description database initialization (legacy MySQL path)
+ * @author chenrenfei <a href="mailto:zhongxuchen@gmail.com">contact the author</a>
+ * @version id:InitDataService.java, Revision:v1.0, Date:2019-08-06
  */
 public interface InitDBService {
 	/**
-	 * @TODO 初始化数据库
-	 * @param dataSqlFile
+	 * @TODO execute an init sql script against the database
 	 */
 	public void initDatabase(String dataSqlFile);
 

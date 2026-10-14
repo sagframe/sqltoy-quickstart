@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.service.impl;
 
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
@@ -14,10 +11,9 @@ import com.sqltoy.quickstart.vo.OrganInfoVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description organization service demo (tree-structured data)
  * @author zhongxuchen
- * @version v1.0, Date:2020-7-22
- * @modify 2020-7-22,修改说明
+ * @version v1.0, Date:2020-07-22
  */
 @Service("organInfoService")
 public class OrganInfoServiceImpl implements OrganInfoService {
@@ -26,12 +22,12 @@ public class OrganInfoServiceImpl implements OrganInfoService {
 
 	@Transactional
 	public void saveOrganInfo(OrganInfoVO organInfoVO) {
-		// 先保存机构
+		// save the organization first
 		sqlToyLazyDao.saveOrUpdate(organInfoVO);
-		// id字段根据vo找表的主键会自动匹配上,其它的NODE_ROUTE\NODE_LEVEL\IS_LEAF 为标准命名无需额外设置
-		// 需要告知pid对应的字段(vo属性会自动映射到表字段)
-		//sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).idField("organCode").pidField("organPid"));
-		//idField 如果是主键则无需设置
+		// the id field is matched to the table primary key automatically;
+		// NODE_ROUTE / NODE_LEVEL / IS_LEAF are standard names and need no extra setup
+		// only the pid field must be told to the model (vo properties map to columns automatically)
+		// idField can be omitted when it is the primary key
 		sqlToyLazyDao.wrapTreeTableRoute(new TreeTableModel(organInfoVO).idField("organCode").pidField("organPid"));
 	}
 

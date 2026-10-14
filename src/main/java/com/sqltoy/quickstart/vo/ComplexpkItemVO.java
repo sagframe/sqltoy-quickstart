@@ -17,17 +17,25 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import org.sagacity.sqltoy.config.model.ReferentialAction;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="ComplexpkItemVO",description="复合主键级联操作子表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Complex-PK cascade item table")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_complexpk_item",comment="复合主键级联操作子表",pk_constraint="PRIMARY")
-@Indexes(indexes={@Index(name="FK_COMPLEXH_REF_ITEM",columns={"TRANS_DATE","TRANS_ID"},sortTypes={"ASC","ASC"})
+@SqlToyEntity
+@Entity(tableName="SQLTOY_COMPLEXPK_ITEM",comment="Complex-PK cascade item table",pk_constraint="CONSTRAINT_65")
+@Indexes(indexes={@Index(name="FK_COMPLEXH_REF_ITEM_INDEX_6",columns={"TRANS_DATE","TRANS_ID"},sortTypes={"ASC","ASC"})
 })
+/*---end-class-annotations-area---auto-managed---*/
 public class ComplexpkItemVO implements Serializable {
 	
 	/**
@@ -36,40 +44,40 @@ public class ComplexpkItemVO implements Serializable {
 	private static final long serialVersionUID = 2570764298251994911L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="id",description="ID",nullable=false)
+	@Schema(description = "ID", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="ID",comment="ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="ID",comment="ID",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String id;
 
-	@Schema(name="transDate",description="交易日期",nullable=true)
-	@Foreign(table="sqltoy_complexpk_head",field="TRANS_DATE",deleteRestict=1,updateRestict=1,constraintName="FK_COMPLEXH_REF_ITEM")
-	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
+	@Schema(description = "Transaction date")
+	@Foreign(table="SQLTOY_COMPLEXPK_HEAD",field="TRANS_DATE",deleteRestict=ReferentialAction.RESTRICT,updateRestict=ReferentialAction.RESTRICT,constraintName="FK_COMPLEXH_REF_ITEM")
+	@Column(name="TRANS_DATE",comment="Transaction date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=true)
 	private LocalDate transDate;
 
-	@Schema(name="transId",description="业务代码",nullable=true)
-	@Foreign(table="sqltoy_complexpk_head",field="TRANS_CODE",deleteRestict=1,updateRestict=1,constraintName="FK_COMPLEXH_REF_ITEM")
-	@Column(name="TRANS_ID",comment="业务代码",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Business code")
+	@Foreign(table="SQLTOY_COMPLEXPK_HEAD",field="TRANS_CODE",deleteRestict=ReferentialAction.RESTRICT,updateRestict=ReferentialAction.RESTRICT,constraintName="FK_COMPLEXH_REF_ITEM")
+	@Column(name="TRANS_ID",comment="Business code",length=30L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String transId;
 
-	@Schema(name="productId",description="商品编码",nullable=false)
-	@Column(name="PRODUCT_ID",comment="商品编码",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Product code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="PRODUCT_ID",comment="Product code",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String productId;
 
-	@Schema(name="quantity",description="数量",nullable=false)
-	@Column(name="QUANTITY",comment="数量",length=8L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Quantity", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="QUANTITY",comment="Quantity",length=8L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal quantity;
 
-	@Schema(name="price",description="价格",nullable=false)
-	@Column(name="PRICE",comment="价格",length=8L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Price", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="PRICE",comment="Price",length=8L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal price;
 
-	@Schema(name="amt",description="总金额",nullable=false)
-	@Column(name="AMT",comment="总金额",length=10L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Total amount", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="AMT",comment="Total amount",length=10L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal amt;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 	/** default constructor */
 	public ComplexpkItemVO() {
 	}

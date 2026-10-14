@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.service.impl;
 
 import java.sql.ResultSet;
@@ -25,14 +22,13 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 演示
+ * @description staff service demo
  * @author zhongxuchen
- * @version v1.0, Date:2020年7月20日
- * @modify 2020年7月20日,修改说明
+ * @version v1.0, Date:2020-07-20
  */
 @Service("staffInfoService")
 public class StaffInfoServiceImpl implements StaffInfoService {
-	// 这里是演示用，常规情況下无需写dao
+	// for demo purposes only; normally no DAO is needed
 	@Autowired
 	StaffInfoDao staffInfoDao;
 
@@ -43,33 +39,31 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 		return staffInfoDao.findStaff(pageModel, staffInfoVO);
 	}
 
-	// updateFetch 应用场景一般用于诸如库存台账、资金台账这类需要查询并锁住记录，进行部分逻辑处理后修改记录
+	// updateFetch targets ledgers (inventory, funds): lock the row, apply logic, update, return the result
 	/**
-	 * @TODO 演示updateFetch用法(这里仅仅演示用法,场景并不贴切)
-	 * @return
+	 * @TODO demo of updateFetch usage (illustrative only, not a realistic scenario)
 	 */
 	@Transactional
 	public List<StaffInfoVO> updateFetch() {
 		StaffInfoVO staffInfo = new StaffInfoVO();
 		staffInfo.setStaffId("S2029");
 		staffInfo.setStaffCode("S2029");
-		staffInfo.setStaffName("陈2029");
+		staffInfo.setStaffName("Staff 2029");
 		staffInfo.setOrganId("100007");
 		staffInfo.setSexType("M");
 		staffInfo.setEmail("test8@139.com");
 		staffInfo.setEntryDate(LocalDate.now());
 		staffInfo.setStatus(1);
 
-		// sqlToyLazyDao.save(staffInfo);
 		String sql = "select t.STAFF_ID,t.STAFF_NAME,t.ADDRESS,t.ENTRY_DATE,t.ORGAN_ID,t.ORGAN_ID ORGAN_NAME,t.UPDATE_TIME"
 				+ " from sqltoy_staff_info t where staff_id=?";
 		return lightDao.updateFetch(new QueryExecutor(sql).values("S2029").resultType(StaffInfoVO.class),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
 						String staffName = rs.getString("STAFF_NAME");
-						// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
-						if (staffName.contains("陈")) {
-							rs.updateString("ADDRESS", rs.getString("ADDRESS") + "更新!");
+						// updateFetch typically builds on existing column values; otherwise a plain update would do
+						if (staffName.contains("Staff")) {
+							rs.updateString("ADDRESS", rs.getString("ADDRESS") + " updated");
 						}
 						rs.updateObject("UPDATE_TIME", LocalDateTime.now());
 					}
@@ -90,18 +84,16 @@ public class StaffInfoServiceImpl implements StaffInfoService {
 	}
 
 	/**
-	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录修改
-	 * @return
+	 * @TODO demo: condition-based update without writing sql
 	 */
 	@Transactional
 	public Long updateByQuery() {
 		return lightDao.updateByQuery(StaffInfoVO.class,
-				EntityUpdate.create().set("createBy", "chenrenfei").where("staffName like ?").values("张"));
+				EntityUpdate.create().set("createBy", "chenrenfei").where("staffName like ?").values("Chen%"));
 	}
 
 	/**
-	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录删除
-	 * @return
+	 * @TODO demo: condition-based delete without writing sql
 	 */
 	@Transactional
 	public Long deleteByQuery() {

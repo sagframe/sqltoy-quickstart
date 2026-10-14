@@ -1,10 +1,15 @@
 -- H2 schema for the quickstart lessons (same table names as the MySQL script mock/quickstart_init.sql)
+-- standard audit columns on every business table: CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, STATUS
 DROP TABLE IF EXISTS sqltoy_organ_info;
 CREATE TABLE sqltoy_organ_info (
     ORGAN_ID   VARCHAR(8)  NOT NULL,
     ORGAN_NAME VARCHAR(60),
     SHOW_INDEX INT DEFAULT 0,
+    CREATE_BY  VARCHAR(22),
+    CREATE_TIME TIMESTAMP,
+    UPDATE_BY  VARCHAR(22),
     UPDATE_TIME TIMESTAMP,
+    STATUS     INT DEFAULT 1,
     CONSTRAINT pk_sqltoy_organ PRIMARY KEY (ORGAN_ID)
 );
 
@@ -32,6 +37,9 @@ CREATE TABLE sqltoy_dict_detail (
     DICT_NAME   VARCHAR(60),
     STATUS      INT DEFAULT 1,
     SHOW_INDEX  INT DEFAULT 0,
+    CREATE_BY   VARCHAR(22),
+    CREATE_TIME TIMESTAMP,
+    UPDATE_BY   VARCHAR(22),
     UPDATE_TIME TIMESTAMP,
     CONSTRAINT pk_sqltoy_dict PRIMARY KEY (DICT_TYPE, DICT_KEY)
 );
@@ -45,7 +53,10 @@ CREATE TABLE lesson_device_order (
     DEVICE_TYPE VARCHAR(30),
     TRANS_DATE  DATE,
     TOTAL_AMT   DECIMAL(12, 2),
-    STATUS      INT DEFAULT 1,
+    CREATE_BY   VARCHAR(22),
     CREATE_TIME TIMESTAMP,
+    UPDATE_BY   VARCHAR(22),
+    UPDATE_TIME TIMESTAMP,
+    STATUS      INT DEFAULT 1,
     CONSTRAINT pk_lesson_order PRIMARY KEY (ORDER_ID)
 );

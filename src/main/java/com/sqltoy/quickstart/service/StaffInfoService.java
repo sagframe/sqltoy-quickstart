@@ -8,38 +8,32 @@ import com.sqltoy.quickstart.vo.StaffInfoVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description staff information service
  * @author zhong
- * @version v1.0, Date:2020年7月17日
- * @modify 2020年7月17日,修改说明
+ * @version v1.0, Date:2020-07-17
  */
 public interface StaffInfoService {
 	public Page<StaffInfoVO> queryStaff(Page<StaffInfoVO> pageModel, StaffInfoVO staffInfoVO);
 
 	/**
-	 * @TODO 演示锁记录查询、修改并返回修改后的结果
-	 * @return
+	 * @TODO demo: locked query, update, and return of the updated result in one interaction
 	 */
 	public List<StaffInfoVO> updateFetch();
 
 	/**
-	 * @TODO 演示锁记录并修改
-	 * @param id
-	 * @param address
+	 * @TODO demo: lock a record and update it
 	 */
 	public void updateLockStaff(String id, String address);
 
 	public List<StaffInfoVO> callStore();
 
 	/**
-	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录修改
-	 * @return
+	 * @TODO demo: condition-based update without writing sql
 	 */
 	public Long updateByQuery();
 
 	/**
-	 * @TODO 演示代码中非直接sql模式设置条件模式进行记录删除
-	 * @return
+	 * @TODO demo: condition-based delete without writing sql
 	 */
 	public Long deleteByQuery();
 }

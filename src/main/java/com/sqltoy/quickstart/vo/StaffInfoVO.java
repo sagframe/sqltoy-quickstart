@@ -14,15 +14,22 @@ import java.time.LocalDate;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="StaffInfoVO",description="员工信息表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Staff information")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_staff_info",comment="员工信息表",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_STAFF_INFO",comment="Staff information",pk_constraint="CONSTRAINT_66")
+/*---end-class-annotations-area---auto-managed---*/
 public class StaffInfoVO implements Serializable {
 	
 	/**
@@ -31,89 +38,89 @@ public class StaffInfoVO implements Serializable {
 	private static final long serialVersionUID = 8872936239782687517L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="staffId",description="员工ID",nullable=false)
+	@Schema(description = "Staff ID", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="STAFF_ID",comment="员工ID",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="STAFF_ID",comment="Staff ID",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String staffId;
 
-	@Schema(name="staffCode",description="工号",nullable=false)
-	@Column(name="STAFF_CODE",comment="工号",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Staff code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STAFF_CODE",comment="Staff code",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String staffCode;
 
-	@Schema(name="staffName",description="姓名",nullable=false)
-	@Column(name="STAFF_NAME",comment="姓名",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Name", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STAFF_NAME",comment="Name",length=30L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String staffName;
 
-	@Schema(name="organId",description="部门",nullable=false)
-	@Column(name="ORGAN_ID",comment="部门",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Department", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="ORGAN_ID",comment="Department",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String organId;
 
-	@Schema(name="sexType",description="性别",nullable=false)
-	@Column(name="SEX_TYPE",comment="性别",length=1L,type=java.sql.Types.CHAR,nativeType="CHAR",nullable=false)
+	@Schema(description = "Gender", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="SEX_TYPE",comment="Gender",length=1L,type=JdbcTypes.CHAR,nativeType="CHARACTER",nullable=false)
 	private String sexType;
 
-	@Schema(name="birthday",description="出生日期",nullable=true)
-	@Column(name="BIRTHDAY",comment="出生日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
+	@Schema(description = "Date of birth")
+	@Column(name="BIRTHDAY",comment="Date of birth",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=true)
 	private LocalDate birthday;
 
-	@Schema(name="entryDate",description="入职日期",nullable=false)
-	@Column(name="ENTRY_DATE",comment="入职日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
+	@Schema(description = "Entry date", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="ENTRY_DATE",comment="Entry date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=false)
 	private LocalDate entryDate;
 
-	@Schema(name="termDate",description="离职日期",nullable=true)
-	@Column(name="TERM_DATE",comment="离职日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=true)
+	@Schema(description = "Termination date")
+	@Column(name="TERM_DATE",comment="Termination date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=true)
 	private LocalDate termDate;
 
-	@Schema(name="photo",description="照片",nullable=true)
-	@Column(name="PHOTO",comment="照片",length=2147483647L,type=java.sql.Types.BLOB,nativeType="LONGBLOB",nullable=true)
-	private byte[] photo;
+	@Schema(description = "Photo")
+	@Column(name="PHOTO",comment="Photo",length=2147483647L,type=JdbcTypes.BLOB,nativeType="BINARY LARGE OBJECT",nullable=true)
+	private String photo;
 
-	@Schema(name="country",description="国家",nullable=true)
-	@Column(name="COUNTRY",comment="国家",length=10L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Country")
+	@Column(name="COUNTRY",comment="Country",length=10L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String country;
 
-	@Schema(name="censusRegister",description="籍贯",nullable=true)
-	@Column(name="CENSUS_REGISTER",comment="籍贯",length=150L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Place of origin")
+	@Column(name="CENSUS_REGISTER",comment="Place of origin",length=150L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String censusRegister;
 
-	@Schema(name="address",description="家庭地址",nullable=true)
-	@Column(name="ADDRESS",comment="家庭地址",length=250L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Home address")
+	@Column(name="ADDRESS",comment="Home address",length=250L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String address;
 
-	@Schema(name="email",description="邮箱",nullable=true)
-	@Column(name="EMAIL",comment="邮箱",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Email")
+	@Column(name="EMAIL",comment="Email",length=100L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String email;
 
-	@Schema(name="telNo",description="移动电话",nullable=true)
-	@Column(name="TEL_NO",comment="移动电话",length=500L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Mobile phone")
+	@Column(name="TEL_NO",comment="Mobile phone",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String telNo;
 
-	@Schema(name="post",description="岗位",nullable=true)
-	@Column(name="POST",comment="岗位",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Post")
+	@Column(name="POST",comment="Post",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String post;
 
-	@Schema(name="postGrade",description="职位级别",nullable=true)
-	@Column(name="POST_GRADE",comment="职位级别",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Post grade")
+	@Column(name="POST_GRADE",comment="Post grade",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String postGrade;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 
-	@Schema(name="status",description="状态",nullable=false)
-	@Column(name="STATUS",comment="状态",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Status", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="STATUS",comment="Status",length=1L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
 	/** default constructor */
 	public StaffInfoVO() {

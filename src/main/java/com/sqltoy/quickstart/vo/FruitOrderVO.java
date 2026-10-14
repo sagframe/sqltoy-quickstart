@@ -12,15 +12,21 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="FruitOrderVO",description="查询汇总演示-水果订单表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Fruit orders (aggregation/pivot demo)")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_fruit_order",comment="查询汇总演示-水果订单表",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_FRUIT_ORDER",comment="Fruit orders (aggregation/pivot demo)",pk_constraint="CONSTRAINT_68")
+/*---end-class-annotations-area---auto-managed---*/
 public class FruitOrderVO implements Serializable {
 	
 	/**
@@ -29,26 +35,26 @@ public class FruitOrderVO implements Serializable {
 	private static final long serialVersionUID = 6351778226462253330L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="fruitName",description="水果名称",nullable=false)
+	@Schema(description = "Fruit name", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Column(name="FRUIT_NAME",comment="水果名称",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="FRUIT_NAME",comment="Fruit name",length=100L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String fruitName;
 
-	@Schema(name="orderMonth",description="订单月份",nullable=false)
+	@Schema(description = "Order month", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Column(name="ORDER_MONTH",comment="订单月份",length=10L,type=java.sql.Types.INTEGER,nativeType="INT",nullable=false)
+	@Column(name="ORDER_MONTH",comment="Order month",length=32L,type=JdbcTypes.INTEGER,nativeType="INTEGER",nullable=false)
 	private Integer orderMonth;
 
-	@Schema(name="saleCount",description="销售数量",nullable=false)
-	@Column(name="SALE_COUNT",comment="销售数量",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Sale count", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="SALE_COUNT",comment="Sale count",length=10L,scale=2,type=JdbcTypes.DECIMAL,nativeType="NUMERIC",nullable=false)
 	private BigDecimal saleCount;
 
-	@Schema(name="salePrice",description="销售单价",nullable=false)
-	@Column(name="SALE_PRICE",comment="销售单价",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Sale price", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="SALE_PRICE",comment="Sale price",length=10L,scale=2,type=JdbcTypes.DECIMAL,nativeType="NUMERIC",nullable=false)
 	private BigDecimal salePrice;
 
-	@Schema(name="totalAmt",description="总金额",nullable=false)
-	@Column(name="TOTAL_AMT",comment="总金额",length=10L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Total amount", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TOTAL_AMT",comment="Total amount",length=10L,scale=2,type=JdbcTypes.DECIMAL,nativeType="NUMERIC",nullable=false)
 	private BigDecimal totalAmt;
 	/** default constructor */
 	public FruitOrderVO() {

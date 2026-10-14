@@ -1,19 +1,19 @@
-/**
- * 
- */
 package com.sqltoy.plugins;
 
 import org.sagacity.sqltoy.utils.NumberUtil;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sqltoy.quickstart.service.TransLedgerService;
 import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
- * @author zhong
+ * Worker thread for the updateSaveFetch concurrency demo.
  *
+ * @author zhong
  */
 public class UpdateSaveFetchThread extends Thread {
+
+	private static final ObjectMapper MAPPER = new ObjectMapper();
 
 	private TransLedgerService transLedgerService;
 	private int groupId;
@@ -27,7 +27,7 @@ public class UpdateSaveFetchThread extends Thread {
 
 	@Override
 	public void run() {
-		int meter = 0;
+		int failures = 0;
 		for (int i = 0; i < count; i++) {
 			try {
 				Thread.sleep(NumberUtil.getRandomNum(3, 15));
@@ -40,15 +40,15 @@ public class UpdateSaveFetchThread extends Thread {
 			TransLedgerVO result = null;
 			try {
 				result = transLedgerService.updateSaveTrans(transVO);
-				System.err.println(JSON.toJSONString(result));
+				System.err.println(MAPPER.writeValueAsString(result));
 				if (result == null) {
-					meter++;
+					failures++;
 				}
 			} catch (Exception e) {
-				meter++;
+				failures++;
 			}
 		}
-		System.err.println("groupId=" + groupId + ";执行次数=" + count + ";完成量=" + (count - meter));
+		System.err.println("groupId=" + groupId + "; executions=" + count + "; succeeded=" + (count - failures));
 	}
 
 }

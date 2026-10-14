@@ -15,17 +15,25 @@ import lombok.experimental.Accessors;
 import org.sagacity.sqltoy.config.annotation.Foreign;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import org.sagacity.sqltoy.config.model.ReferentialAction;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="DictDetailVO",description="字典明细表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Dictionary detail")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_dict_detail",comment="字典明细表",pk_constraint="PRIMARY")
-@Indexes(indexes={@Index(name="FK_DICT_TYPE_REF_ITEM",columns={"DICT_TYPE"},sortTypes={"ASC"})
+@SqlToyEntity
+@Entity(tableName="SQLTOY_DICT_DETAIL",comment="Dictionary detail",pk_constraint="CONSTRAINT_61")
+@Indexes(indexes={@Index(name="FK_DICT_TYPE_REF_ITEM_INDEX_6",columns={"DICT_TYPE"},sortTypes={"ASC"})
 })
+/*---end-class-annotations-area---auto-managed---*/
 public class DictDetailVO implements Serializable {
 	
 	/**
@@ -34,35 +42,35 @@ public class DictDetailVO implements Serializable {
 	private static final long serialVersionUID = 4263323295248169755L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="dictKey",description="字典KEY",nullable=false)
+	@Schema(description = "Dict key", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Column(name="DICT_KEY",comment="字典KEY",length=50L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="DICT_KEY",comment="Dict key",length=50L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String dictKey;
 
-	@Schema(name="dictType",description="字典类型代码",nullable=false)
+	@Schema(description = "Dict type code", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Foreign(table="sqltoy_dict_type",field="DICT_TYPE",deleteRestict=1,updateRestict=1,constraintName="FK_DICT_TYPE_REF_ITEM")
-	@Column(name="DICT_TYPE",comment="字典类型代码",length=50L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Foreign(table="SQLTOY_DICT_TYPE",field="DICT_TYPE",deleteRestict=ReferentialAction.RESTRICT,updateRestict=ReferentialAction.RESTRICT,constraintName="FK_DICT_TYPE_REF_ITEM")
+	@Column(name="DICT_TYPE",comment="Dict type code",length=50L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String dictType;
 
-	@Schema(name="dictName",description="字典值",nullable=false)
-	@Column(name="DICT_NAME",comment="字典值",length=200L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Dict value", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="DICT_NAME",comment="Dict value",length=200L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String dictName;
 
-	@Schema(name="showIndex",description="显示顺序",nullable=false)
-	@Column(name="SHOW_INDEX",comment="显示顺序",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Display order", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="SHOW_INDEX",comment="Display order",length=8L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="NUMERIC",nullable=false)
 	private Integer showIndex;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 
-	@Schema(name="status",description="状态",nullable=false)
-	@Column(name="STATUS",comment="状态",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Status", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="STATUS",comment="Status",length=1L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
 	/** default constructor */
 	public DictDetailVO() {

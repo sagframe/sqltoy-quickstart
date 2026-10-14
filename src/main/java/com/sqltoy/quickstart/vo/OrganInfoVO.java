@@ -12,15 +12,22 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="OrganInfoVO",description="机构信息表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Organization information")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_organ_info",comment="机构信息表",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_ORGAN_INFO",comment="Organization information",pk_constraint="CONSTRAINT_8")
+/*---end-class-annotations-area---auto-managed---*/
 public class OrganInfoVO implements Serializable {
 	
 	/**
@@ -29,61 +36,61 @@ public class OrganInfoVO implements Serializable {
 	private static final long serialVersionUID = 8373756153547203019L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="organId",description="机构ID",nullable=false)
+	@Schema(description = "Organ ID", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="ORGAN_ID",comment="机构ID",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="ORGAN_ID",comment="Organ ID",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String organId;
 
-	@Schema(name="organName",description="机构名称",nullable=false)
-	@Column(name="ORGAN_NAME",comment="机构名称",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Organ name", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="ORGAN_NAME",comment="Organ name",length=100L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String organName;
 
-	@Schema(name="organCode",description="机构代码",nullable=false)
-	@Column(name="ORGAN_CODE",comment="机构代码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Organ code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="ORGAN_CODE",comment="Organ code",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String organCode;
 
-	@Schema(name="costNo",description="成本中心代码",nullable=true)
-	@Column(name="COST_NO",comment="成本中心代码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Cost center code")
+	@Column(name="COST_NO",comment="Cost center code",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String costNo;
 
-	@Schema(name="organPid",description="父机构ID",nullable=false)
-	@Column(name="ORGAN_PID",comment="父机构ID",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Parent organ ID", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="ORGAN_PID",comment="Parent organ ID",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String organPid;
 
-	@Schema(name="nodeRoute",description="节点路径",nullable=true)
-	@Column(name="NODE_ROUTE",comment="节点路径",length=200L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Node route")
+	@Column(name="NODE_ROUTE",comment="Node route",length=200L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String nodeRoute;
 
-	@Schema(name="nodeLevel",description="节点等级",nullable=true)
-	@Column(name="NODE_LEVEL",comment="节点等级",length=1L,type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=true)
+	@Schema(description = "Node level")
+	@Column(name="NODE_LEVEL",comment="Node level",length=1L,type=JdbcTypes.INTEGER,nativeType="NUMERIC",nullable=true)
 	private Integer nodeLevel;
 
-	@Schema(name="isLeaf",description="是否叶子节点",nullable=true)
-	@Column(name="IS_LEAF",comment="是否叶子节点",length=1L,type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=true)
+	@Schema(description = "Is leaf node")
+	@Column(name="IS_LEAF",comment="Is leaf node",length=1L,type=JdbcTypes.INTEGER,nativeType="NUMERIC",nullable=true)
 	private Integer isLeaf;
 
-	@Schema(name="showIndex",description="显示顺序",nullable=false)
-	@Column(name="SHOW_INDEX",comment="显示顺序",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Display order", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="SHOW_INDEX",comment="Display order",length=8L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="NUMERIC",nullable=false)
 	private Integer showIndex;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 
-	@Schema(name="status",description="状态",nullable=false)
-	@Column(name="STATUS",comment="状态",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Status", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="STATUS",comment="Status",length=1L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
 	/** default constructor */
 	public OrganInfoVO() {

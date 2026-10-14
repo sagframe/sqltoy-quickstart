@@ -17,76 +17,79 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0
  */
-@Schema(name = "SecureCaseVO", description = "安全加解密演示")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Secure encrypt/decrypt demo")
 @Data
 @Accessors(chain = true)
-@SecureConfig(secures = { @Secure(field = "telNoMask", secureType = SecureType.TEL),
-		@Secure(field = "telNo", secureType = SecureType.ENCRYPT),
-		@Secure(field = "telNoMask", secureType = SecureType.TEL,sourceField="telNo"),
-		@Secure(field = "homeAddressMask", secureType = SecureType.DISCRETE_RATE, maskRate = 50, sourceField = "homeAddress"),
-		@Secure(field = "homeAddress", secureType = SecureType.ENCRYPT) })
-@Entity(tableName = "sqltoy_secure_case", comment = "安全加解密演示", pk_constraint = "PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_SECURE_CASE",comment="Secure encrypt/decrypt demo",pk_constraint="CONSTRAINT_4")
+@SecureConfig(secures = { @Secure(field = "telNoMask", secureType = SecureType.TEL),@Secure(field = "telNo", secureType = SecureType.ENCRYPT),@Secure(field = "telNoMask", secureType = SecureType.TEL,sourceField="telNo"),@Secure(field = "homeAddressMask", secureType = SecureType.DISCRETE_RATE, maskRate = 50, sourceField = "homeAddress"),@Secure(field = "homeAddress", secureType = SecureType.ENCRYPT) })
+/*---end-class-annotations-area---auto-managed---*/
 public class SecureCaseVO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5349728950824234491L;
-	/*---begin-auto-generate-don't-update-this-area--*/
+	/*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name = "staffId", description = "工号", nullable = false)
-	@Id(strategy = "generator", generator = "org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name = "STAFF_ID", comment = "工号", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Staff code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
+	@Column(name="STAFF_ID",comment="Staff code",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String staffId;
 
-	@Schema(name = "staffName", description = "姓名", nullable = false)
-	@Column(name = "STAFF_NAME", comment = "姓名", length = 30L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Name", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STAFF_NAME",comment="Name",length=30L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String staffName;
 
-	@Schema(name = "telNo", description = "移动电话", nullable = false)
-	@Column(name = "TEL_NO", comment = "移动电话", length = 500L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Mobile phone", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TEL_NO",comment="Mobile phone",length=500L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String telNo;
 
-	@Schema(name = "telNoMask", description = "电话检索", nullable = false)
-	@Column(name = "TEL_NO_MASK", comment = "电话检索", length = 30L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Phone search index", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TEL_NO_MASK",comment="Phone search index",length=30L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String telNoMask;
 
-	@Schema(name = "homeAddress", description = "家庭地址", nullable = false)
-	@Column(name = "HOME_ADDRESS", comment = "家庭地址", length = 500L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Home address", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="HOME_ADDRESS",comment="Home address",length=500L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String homeAddress;
 
-	@Schema(name = "homeAddressMask", description = "家庭地址检索", nullable = false)
-	@Column(name = "HOME_ADDRESS_MASK", comment = "家庭地址检索", length = 100L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Home address search index", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="HOME_ADDRESS_MASK",comment="Home address search index",length=100L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String homeAddressMask;
 
-	@Schema(name = "createBy", description = "创建人", nullable = false)
-	@Column(name = "CREATE_BY", comment = "创建人", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name = "createTime", description = "创建时间", nullable = false)
-	@Column(name = "CREATE_TIME", comment = "创建时间", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name = "updateBy", description = "最后修改人", nullable = false)
-	@Column(name = "UPDATE_BY", comment = "最后修改人", length = 22L, type = java.sql.Types.VARCHAR, nativeType = "VARCHAR", nullable = false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name = "updateTime", description = "最后修改时间", nullable = false)
-	@Column(name = "UPDATE_TIME", comment = "最后修改时间", length = 19L, type = java.sql.Types.DATE, nativeType = "DATETIME", nullable = false)
-	private LocalDateTime updateTime;
-
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 	/** default constructor */
 	public SecureCaseVO() {
 	}
-
+	
 	/** pk constructor */
-	public SecureCaseVO(String staffId) {
-		this.staffId = staffId;
+	public SecureCaseVO(String staffId)
+	{
+		this.staffId=staffId;
 	}
-	/*---end-auto-generate-don't-update-this-area--*/
+/*---end-auto-generate-don't-update-this-area--*/
 }

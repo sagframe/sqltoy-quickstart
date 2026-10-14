@@ -1,18 +1,13 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.vo;
 
 import java.time.LocalDate;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description date-range parameter object
  * @author zhong
- * @version v1.0, Date:2020-12-3
- * @modify 2020-12-3,修改说明
+ * @version v1.0, Date:2020-12-03
  */
-
 public class DateRange {
 
 	private String staffName;

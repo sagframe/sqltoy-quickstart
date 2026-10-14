@@ -2,43 +2,42 @@
 <sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy https://sagframe.github.io/schema/sqltoy.xsd">
-	<!-- -->
-	<!-- 演示分库 -->
+	<!-- database sharding demo -->
 	<sql id="qstart_db_sharding_case">
 		<sharding-datasource strategy="hashDataSource"
 			params="userId" />
 		<value>
 			<![CDATA[
-			select * from sqltoy_user_log t 
-			-- userId 作为分库关键字段属于必备条件
-			where t.user_id=:userId 
+			select * from sqltoy_user_log t
+			-- userId is the sharding key and therefore a mandatory condition
+			where t.user_id=:userId
 			#[and t.log_date>=:beginDate]
 			#[and t.log_date<=:endDate]
 				]]>
 		</value>
 	</sql>
 
-	<!-- 演示分表 -->
+	<!-- table sharding demo -->
 	<sql id="qstart_sharding_table_case">
 		<sharding-table tables="sqltoy_trans_info_15d"
 			strategy="realHisTable" params="beginDate" />
 		<value>
 			<![CDATA[
-			select * from sqltoy_trans_info_15d t 
+			select * from sqltoy_trans_info_15d t
 			where t.trans_date>=:beginDate
 			#[and t.trans_date<=:endDate]
 				]]>
 		</value>
 	</sql>
 
-	<!-- 演示树形表递归查询 -->
+	<!-- tree-table recursive query demo -->
 	<sql id="qstart_treeTable_search">
 		<value>
 			<![CDATA[
-			select * from sqltoy_organ_info t 
-			where exists 
+			select * from sqltoy_organ_info t
+			where exists
 			(
-				select 1 from sqltoy_organ_info t1 
+				select 1 from sqltoy_organ_info t1
 				where t1.ORGAN_ID=t.ORGAN_ID
 				and instr(t1.NODE_ROUTE,:nodeRoute)
 			)
@@ -46,74 +45,84 @@
 		</value>
 	</sql>
 
-	<!-- 快速分页和分页优化演示 -->
+	<!-- fast pagination + pagination optimize demo -->
 	<sql id="qstart_fastPage">
-		<!-- 分页优化器,通过缓存实现查询条件一致的情况下在一定时间周期内缓存总记录数量，从而无需每次查询总记录数量 -->
-		<!-- alive-max:最大存放多少个不同查询条件的总记录量; alive-seconds:查询条件记录量存活时长(比如120秒,超过阀值则重新查询) -->
+		<!-- pagination optimize: with identical query conditions the total record count is cached for a period,
+		     so it is not re-queried on every call.
+		     alive-max: how many distinct conditions keep a cached count; alive-seconds: how long a count stays alive
+		     (e.g. 120 seconds; past the threshold it is queried again) -->
 		<page-optimize parallel="true" alive-max="100"
 			alive-seconds="120" />
-		<!-- 安全脱敏,type提供了几种标准的脱敏模式 mask-rate:脱敏比例 mask-code:自定义脱敏掩码,一般***,默认为*** 
-			head-size:前面保留多长字符 tail-size:尾部保留多长字符 -->
+		<!-- data masking: type selects a standard masking mode; mask-rate/mask-code customize the mask (default ***);
+		     head-size/tail-size keep leading/trailing characters visible -->
 		<secure-mask columns="address" type="address" />
 		<secure-mask columns="tel_no" type="tel" />
 		<value>
 			<![CDATA[
-			select t1.*,t2.ORGAN_NAME 
-			-- @fast() 实现先分页取10条(具体数量由pageSize确定),然后再进行管理
+			select t1.*,t2.ORGAN_NAME
+			-- @fast() pages first and takes 10 rows (pageSize decides), then performs the join
 			from @fast(select t.*
 			           from sqltoy_staff_info t
-			           where t.STATUS=1 
-			             #[and t.STAFF_NAME like :staffName] 
+			           where t.STATUS=1
+			             #[and t.STAFF_NAME like :staffName]
 			           order by t.ENTRY_DATE desc
-			            ) t1 
+			            ) t1
 			left join sqltoy_organ_info t2 on  t1.organ_id=t2.ORGAN_ID
 				]]>
 		</value>
-		<!-- 这里为极特殊情况下提供了自定义count-sql来实现极致性能优化 -->
+		<!-- for extremely special cases a custom count-sql can be provided for ultimate performance -->
 		<!-- <count-sql></count-sql> -->
 	</sql>
 
 
-	<!-- 整个配置很长，但多数是注释便于读者更加理解一些特殊的用法 -->
-	<!-- 综合查询缓存翻译、缓存条件过滤演示： 1)通过缓存将代码转化为名称，避免关联查询，极大简化sql并提升查询效率 2)通过缓存名称模糊匹配获取精准的编码作为条件，避免关联like 
-		模糊查询 -->
+	<!-- this configuration is long, but most of it is comments explaining special usage -->
+	<!-- combined cache-translate and cache-arg demo:
+		1) translate codes into names via cache, avoiding joins — simpler sql and faster queries
+		2) reverse-match exact codes from names via cache, avoiding a joined LIKE query -->
 	<sql id="qstart_order_search">
-		<!-- 缓存翻译设备类型 cache:具体的缓存定义的名称 cache-type:一般针对数据字典，提供一个分类条件过滤 columns:sql中的查询字段名称，可以逗号分隔对多个字段进行翻译 
-			cache-indexs:缓存数据名称对应的列,不填则默认为第二列(从0开始,1则表示第二列)，例如缓存的数据结构是:key、name、fullName,则第三列表示全称 -->
+		<!-- cache translate for device type:
+			cache: the name of the cache definition;
+			cache-type: for dictionary caches, the category filter;
+			columns: the query field(s) to translate, comma-separated;
+			cache-indexs: which column of the cache data holds the name (defaults to the second column, index 1) -->
 		<translate cache="dictKeyName" cache-type="DEVICE_TYPE"
 			columns="deviceTypeName" cache-indexs="1" />
-		<!-- 缓存翻译购销类型 -->
+		<!-- translate purchase/sale type -->
 		<translate cache="dictKeyName"
 			cache-type="PURCHASE_SALE_TYPE" columns="psTypeName" />
-		<!-- 缓存翻译订单状态 -->
+		<!-- translate order status -->
 		<translate cache="dictKeyName" cache-type="ORDER_STATUS"
 			columns="statusName" />
-		<!-- 员工名称翻译,如果同一个缓存则可以同时对几个字段进行翻译 -->
+		<!-- translate staff names; one cache can translate several columns at once -->
 		<translate cache="staffIdName"
 			columns="staffName,createName" />
-		<!-- 机构名称翻译 -->
+		<!-- translate organization names -->
 		<translate cache="organIdName" columns="organName" />
 		<filters>
 			<cache-arg cache-name="staffIdName" param="staffName" prior-match-equal="true"
 				alias-name="staffIds">
-				<!-- 可选配置:这里的filter是排除的概念,将符合条件的排除掉(可以不使用) compare-param:可以是具体的一个条件参数名称,也可以是一个固定值 
-					cache-index:针对缓存具体哪一列进行值对比 compare-type:目前分 eq和neq两种情况 这里表示将状态无效的员工过滤掉 -->
+				<!-- optional: this filter EXCLUDES matching entries from the reverse match.
+					compare-param: a condition parameter name or a fixed value;
+					cache-index: which cache column to compare against; compare-type: eq or neq.
+					here: exclude staff whose status (3rd column) equals 1 (invalid) -->
 				<filter compare-param="1" cache-index="2" compare-type="eq" />
 			</cache-arg>
-			<!-- 千万不要to_str(trans_date)>=:xxx 模式,sqltoy提供了日期、数字等类型转换,另外了解format的选项可以大幅简化代码处理 -->
+			<!-- never write to_str(trans_date)>=:xxx — sqltoy provides date/number type conversion,
+			     and the format option simplifies this class of processing -->
 			<to-date params="beginDate" format="yyyy-MM-dd"
 				increment-time="24" increment-unit="hours" />
-			<!-- 对截止日期加1,从而达到类似于 trans_date<='yyyy-MM-dd 23:59:59' 平衡时分秒因素 -->
+			<!-- add 1 day to the end date, equivalent to trans_date<='yyyy-MM-dd 23:59:59' -->
 			<to-date params="endDate" format="yyyy-MM-dd" increment-time="1" increment-unit="days"/>
 		</filters>
 		<value>
 			<![CDATA[
 			select 	ORDER_ID,
 					DEVICE_TYPE,
-					-- 其实可以在数据库层进行创新(启发一下)，用函数式  @translate(dictKeyNameCache,DEVICE_TYPE,DEVICE_TYPE) deviceTypeName
-					DEVICE_TYPE deviceTypeName,-- 设备分类名称
+					-- a functional style also works at the database level (for inspiration):
+					-- @translate(dictKeyNameCache,DEVICE_TYPE,DEVICE_TYPE) deviceTypeName
+					DEVICE_TYPE deviceTypeName,-- device type name
 					PS_TYPE,
-					PS_TYPE as psTypeName, -- 购销类别名称
+					PS_TYPE as psTypeName, -- purchase/sale type name
 					TOTAL_CNT,
 					TOTAL_AMT,
 					BUYER,
@@ -121,19 +130,19 @@
 					TRANS_DATE,
 					DELIVERY_TERM,
 					STAFF_ID,
-					STAFF_ID staffName, -- 员工姓名
+					STAFF_ID staffName, -- staff name
 					ORGAN_ID,
-					ORGAN_ID organName, -- 机构名称
+					ORGAN_ID organName, -- organization name
 					CREATE_BY,
-					CREATE_BY createName, -- 创建人名称
+					CREATE_BY createName, -- creator name
 					CREATE_TIME,
 					UPDATE_BY,
 					UPDATE_TIME,
 					STATUS,
-					STATUS statusName -- 状态名称
-			from sqltoy_device_order t 
+					STATUS statusName -- status name
+			from sqltoy_device_order t
 			where #[t.ORDER_ID=:orderId]
-			      -- 当前用户能够访问的授权组织机构，控制数据访问权限(一般登录后直接放于用户session中)
+			      -- organizations the current user may access (data permission, usually kept in the user session after login)
 				  #[and t.ORGAN_ID in (:authedOrganIds)]
 				  #[and t.STAFF_ID in (:staffIds)]
 				  #[and t.TRANS_DATE>=:beginDate]
@@ -142,111 +151,113 @@
 		</value>
 	</sql>
 
-	<!-- 演示分组汇总 -->
+	<!-- group summary demo -->
 	<sql id="qstart_group_summary_case">
 		<value>
 			<![CDATA[
-			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 			from sqltoy_fruit_order t
 			order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<summary sum-columns="sale_count,sale_price,total_amt" 
+		<summary sum-columns="sale_count,sale_price,total_amt"
 			reverse="true" sum-site="top" skip-single-row="true">
-			<!-- 层级顺序保持从高到低 -->
-			<global sum-label="总计"  label-column="fruit_name" />
-			<group group-column="fruit_name" sum-label="小计" 
+			<!-- keep the hierarchy order from high to low -->
+			<global sum-label="Total"  label-column="fruit_name" />
+			<group group-column="fruit_name" sum-label="Subtotal"
 				label-column="fruit_name" />
 			<group group-column="" sum-label="" label-column="" />
 		</summary>
 	</sql>
 
-	<!-- 列与列高级环比演示 -->
+	<!-- column-to-column period-over-period demo -->
 	<sql id="qstart_cols_relative_case">
 		<value>
 			<![CDATA[
-			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 			from sqltoy_fruit_order t
 			order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<!-- 数据旋转,行转列,将order_month 按列显示，每个月份下面有三个指标 -->
+		<!-- rotate rows into columns: order_month becomes column headings, three measures under each month -->
 		<pivot start-column="sale_count" end-column="total_amt"
 			group-columns="fruit_name" category-columns="order_month" />
-		<!-- 列与列之间进行环比计算 -->
+		<!-- compute period-over-period between columns -->
 		<cols-chain-relative group-size="3"
 			reduce-one="true" relative-indexs="1,2" start-column="1"
 			format="#.00%" />
 	</sql>
 
-	<!-- 列与列高级环比演示 -->
+	<!-- column-to-column period-over-period demo (mysql variant) -->
 	<sql id="mysql_qstart_cols_relative_case">
 		<value>
 			<![CDATA[
-			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+			select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 			from sqltoy_fruit_order t
 			order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<!-- 数据旋转,行转列,将order_month 按列显示，每个月份下面有三个指标 -->
+		<!-- rotate rows into columns: order_month becomes column headings, three measures under each month -->
 		<pivot start-column="sale_count" end-column="total_amt"
 			group-columns="fruit_name" category-columns="order_month" />
-		<!-- 列与列之间进行环比计算 -->
+		<!-- compute period-over-period between columns -->
 		<cols-chain-relative group-size="3"
 			reduce-one="true" relative-indexs="1,2" start-column="1"
 			format="#.00%" />
 	</sql>
 
-	<!-- 行与行高级环比演示 -->
+	<!-- row-to-row period-over-period demo -->
 	<sql id="qstart_rows_relative_case">
 		<value>
 			<![CDATA[
-				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 				from sqltoy_fruit_order t
 				order by t.order_month desc,t.fruit_name
 			]]>
 		</value>
-		<!-- group-size是 -->
+		<!-- rows are chained per fruit_name group -->
 		<rows-chain-relative group-column="fruit_name"
 			relative-columns="sale_count,total_amt" />
 	</sql>
-	<!-- 行转列 -->
+	<!-- rows to columns (pivot) -->
 	<sql id="qstart_pivot_case">
 		<value>
 			<![CDATA[
-				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 				from sqltoy_fruit_order t
 				order by t.fruit_name ,t.order_month
 			]]>
 		</value>
-		<!-- 数据旋转,行转列,将order_month 按列显示，每个月份下面有三个指标 -->
+		<!-- rotate rows into columns: order_month becomes column headings, three measures under each month -->
 		<pivot start-column="sale_count" end-column="total_amt"
 			group-columns="fruit_name" category-columns="order_month" />
 	</sql>
-	<!-- 列转行 -->
+	<!-- columns to rows (unpivot) -->
 	<sql id="qstart_unpivot_case">
 		<value>
 			<![CDATA[
-				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt 
+				select t.fruit_name,t.order_month,t.sale_count,t.sale_price,t.total_amt
 				from sqltoy_fruit_order t
 				order by t.order_month desc,t.fruit_name
 			]]>
 		</value>
 		<unpivot
-			columns-to-rows="sale_count:销售量,sale_price:销售金额,total_amt:总销售额"
+			columns-to-rows="sale_count:sale count,sale_price:sale amount,total_amt:total sales"
 			new-columns-labels="indexName,indexValue" />
 	</sql>
 
-	<!-- 演示link操作,如果分页请用@fast() 取10条后再关联，最终会返回10条记录 -->
+	<!-- link demo: concatenate column values per group; for pagination use @fast() first, then link -->
 	<sql id="qstart_link_case">
 		<value>
 			<![CDATA[
 				select t.ORGAN_ID ,t.ORGAN_ID ORGAN_NAME, t.STAFF_NAME , t.SEX_TYPE,t.SEX_TYPE sexTypeName from sqltoy_staff_info t
-				order by t.ORGAN_ID 
+				order by t.ORGAN_ID
 			]]>
 		</value>
-		<!-- 可设置多个列的值分别拼接,如有缓存翻译，会先翻译后合并 使用前提:sql语句自身进行合理排序 id-column:分组列 columns:需要拼接的列 
-			sign:拼接的字符 distinct:拼接是否去重 -->
+		<!-- several columns can be concatenated separately; with cache translate the values are translated first.
+		     prerequisite: the sql itself provides a sensible ordering.
+		     id-columns: the grouping column; columns: the columns to concatenate;
+		     sign: the separator; distinct: deduplicate while concatenating -->
 		<link id-columns="ORGAN_ID" columns="STAFF_NAME,sexTypeName"
 			sign="," distinct="true" />
 		<translate cache="dictKeyName" columns="sexTypeName"
@@ -261,33 +272,35 @@
                 from   sqltoy_ORGAN_info t1
 			]]>
 		</value>
-		<!-- 单列极端场景 -->
+		<!-- single-column extreme case -->
 		<link columns="organIds" sign="," />
 	</sql>
 
-	<!-- 循环的格式分:@loop(:loopParam,loopContent) 和 @loop(:loopParam,loopContent,linkSign),为了确保loop内部切割准确，可以@loop(:loopParam," 
-		loopContent ","linkSign"),可以用双引号、单引号、花括号进行包裹 -->
+	<!-- @loop forms: @loop(:loopParam,loopContent) and @loop(:loopParam,loopContent,linkSign);
+	     to make inner splitting unambiguous wrap the parts in quotes or braces:
+	     @loop(:loopParam," loopContent ","linkSign") -->
 	<sql id="qstart_loop_sql">
 		<value>
 			<![CDATA[
 				select ORDER_ID
 				       @loop(:fields,",:fields[i]")
-				from sqltoy_device_order t 
+				from sqltoy_device_order t
 				where #[t.ORDER_ID=:orderId]
-				  -- @blank(:param) 目的是迎合sqltoy #[] 中参数为null剔除的功能，当值不为null时@blank()被替代为空白字符串(当然也可以用@if来代替@blank)
+				  -- @blank(:param) plays along with sqltoy's #[] null-removal: when the value is not null
+				  -- @blank() is replaced by an empty string (@if can be used instead of @blank)
 				  #[@if(size(:staffIds)>0) and (@loop(:staffIds," t.STAFF_ID=':staffIds[i]' "," or ","1","100"))]
-				  #[@blank(:startDates) 
+				  #[@blank(:startDates)
 				       and ( @loop(:startDates,
-				                     " t.TRANS_DATE between STR_TO_DATE(':startDates[i]','%Y-%m-%d') 
+				                     " t.TRANS_DATE between STR_TO_DATE(':startDates[i]','%Y-%m-%d')
 				                       and STR_TO_DATE(':endDates[i]','%Y-%m-%d') " ,
 				                       " or "))]
 			]]>
 		</value>
 	</sql>
 
-	<!-- 演示自定义sql返回类型非对应含加密属性的pojo 时通过配置对字段进行解密 -->
+	<!-- decrypt fields when the sql returns a pojo with encrypted properties -->
 	<sql id="qstart_secure_decrypt">
-		<!-- 解密配置 -->
+		<!-- decryption config -->
 		<secure-decrypt columns="tel_no,home_address" />
 		<value>
 			<![CDATA[

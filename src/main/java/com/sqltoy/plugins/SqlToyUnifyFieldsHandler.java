@@ -1,9 +1,5 @@
-/**
- * 
- */
 package com.sqltoy.plugins;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,92 +10,68 @@ import org.sagacity.sqltoy.model.DataAuthFilterConfig;
 import org.sagacity.sqltoy.model.IgnoreCaseSet;
 import org.sagacity.sqltoy.model.IgnoreKeyCaseMap;
 import org.sagacity.sqltoy.plugins.IUnifyFieldsHandler;
-import org.sagacity.sqltoy.utils.DateUtil;
 
 /**
  * @project sqltoy-showcase
- * @description 统一字段赋值范例
- * @author chenrenfei <a href="mailto:zhongxuchen@gmail.com">联系作者</a>
- * @version id:SqlToyUnifyFieldsHandler.java,Revision:v1.0,Date:2018年1月18日
+ * @description demo of unified audit-field assignment
+ * @author chenrenfei <a href="mailto:zhongxuchen@gmail.com">contact the author</a>
+ * @version id:SqlToyUnifyFieldsHandler.java, Revision:v1.0, Date:2018-01-18
  */
 public class SqlToyUnifyFieldsHandler implements IUnifyFieldsHandler {
 	private String defaultUserName = "system-auto";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sagframe.sqltoy.plugin.IUnifyFieldsHandler#createUnifyFields()
-	 */
 	@Override
 	public Map<String, Object> createUnifyFields() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		LocalDateTime nowDate = DateUtil.getDateTime();
-		Timestamp nowTime = DateUtil.getTimestamp(null);
-		// 获取用户信息
+		LocalDateTime now = LocalDateTime.now();
+		// fetch the current user from your security context (Spring Security etc.)
 		String userId = getUserId();
-		// 不存在的字段名称会自动忽略掉(因此下述属性未必是每个表中必须存在的)
+		// standard audit columns; fields that do not exist on a table are ignored automatically
 		map.put("createBy", userId);
-		map.put("createDate", nowDate);
-		map.put("createTime", nowTime);
+		map.put("createTime", now);
 		map.put("updateBy", userId);
-		map.put("updateDate", nowDate);
-		map.put("updateTime", nowTime);
-		map.put("systemTime", nowTime);
-		// enabled 是否启用状态
-		map.put("enabled", 1);
+		map.put("updateTime", now);
 		return map;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.sagframe.sqltoy.plugin.IUnifyFieldsHandler#updateUnifyFields()
-	 */
 	@Override
 	public Map<String, Object> updateUnifyFields() {
-		Timestamp timestamp = DateUtil.getTimestamp(null);
-		Map<String, Object> map = new HashMap<String, Object>();
-		// 获取用户信息，不存在的字段名称会自动忽略掉(因此下述属性未必是每个表中必须存在的)
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("updateBy", getUserId());
-		map.put("updateTime", timestamp);
-		map.put("updateDate", timestamp);
-		map.put("systemTime", timestamp);
+		map.put("updateTime", LocalDateTime.now());
 		return map;
 	}
 
 	/**
-	 * 强制修改的字段，如果没有强制修改，直接返回null
+	 * fields that must be updated even when null; return null when there are none
 	 */
 	@Override
 	public IgnoreCaseSet forceUpdateFields() {
-		IgnoreCaseSet forceUpdateFields = new IgnoreCaseSet();
-		forceUpdateFields.add("updateTime");
-		forceUpdateFields.add("systemTime");
-		return forceUpdateFields;
+		return null;
 	}
 
 	/**
-	 * 统一数据权限传参、越权校验
-	 * sql上写上 and tenent_id in (:authedTenantIds)
+	 * unified data-authentication parameters and privilege-escalation checks;
+	 * reference them in sql as: and tenant_id in (:authedTenantIds)
 	 */
 	@Override
 	public IgnoreKeyCaseMap<String, DataAuthFilterConfig> dataAuthFilters() {
 		IgnoreKeyCaseMap<String, DataAuthFilterConfig> map = new IgnoreKeyCaseMap<String, DataAuthFilterConfig>();
-		//模拟授权机构
+		// simulated authorized organizations
 		Set<String> organIds = new HashSet<String>();
 		organIds.add("100005");
 		organIds.add("100007");
-		//sql中用:authedOrganIds 引入授权机构条件参数
+		// use :authedOrganIds in sql to reference the authorized organizations
 		map.put("authedOrganIds", new DataAuthFilterConfig().setForcelimit(true).setValues(organIds));
 		return map;
 	}
 
 	/**
-	 * @todo 获取当前用户Id信息
+	 * @todo fetch the current user id
 	 * @return
 	 */
 	private String getUserId() {
-		// 通过SpringSecurity 获取当前用户ID,请根据实际项目情况调整此处
+		// return the current user from Spring Security in a real project, e.g.:
 		// return (SpringSecurityUtils.getCurrentUser() != null) ?
 		// SpringSecurityUtils.getCurrentUser().getId() : defaultUserName;
 		return defaultUserName;

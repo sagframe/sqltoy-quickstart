@@ -1,22 +1,16 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.service;
 
 import com.sqltoy.quickstart.vo.OrganInfoVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description organization service
  * @author zhongxuchen
- * @version v1.0, Date:2020-7-22
- * @modify 2020-7-22,修改说明
+ * @version v1.0, Date:2020-07-22
  */
 public interface OrganInfoService {
 	/**
-	 * @TODO 演示树结构数据封装
-	 * @param organInfoVO
-	 * @return
+	 * @TODO demo: saving tree-structured data
 	 */
 	public void saveOrganInfo(OrganInfoVO organInfoVO);
 }

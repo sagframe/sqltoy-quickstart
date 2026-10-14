@@ -15,15 +15,22 @@ import org.sagacity.sqltoy.config.annotation.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="DictTypeVO",description="字典分类表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Dictionary type")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_dict_type",comment="字典分类表",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_DICT_TYPE",comment="Dictionary type",pk_constraint="CONSTRAINT_1")
+/*---end-class-annotations-area---auto-managed---*/
 public class DictTypeVO implements Serializable {
 	
 	/**
@@ -32,41 +39,41 @@ public class DictTypeVO implements Serializable {
 	private static final long serialVersionUID = 7652087330184138442L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="dictType",description="字典类型代码",nullable=false)
+	@Schema(description = "Dict type code", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="DICT_TYPE",comment="字典类型代码",length=50L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="DICT_TYPE",comment="Dict type code",length=50L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String dictType;
 
-	@Schema(name="dictTypeName",description="字典类型名称",nullable=false)
-	@Column(name="DICT_TYPE_NAME",comment="字典类型名称",length=100L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Dict type name", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="DICT_TYPE_NAME",comment="Dict type name",length=100L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String dictTypeName;
 
-	@Schema(name="comments",description="说明",nullable=true)
-	@Column(name="COMMENTS",comment="说明",length=500L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Comments")
+	@Column(name="COMMENTS",comment="Comments",length=500L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String comments;
 
-	@Schema(name="showIndex",description="显示顺序",nullable=false)
-	@Column(name="SHOW_INDEX",comment="显示顺序",length=8L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Display order", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="SHOW_INDEX",comment="Display order",length=8L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="NUMERIC",nullable=false)
 	private Integer showIndex;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 
-	@Schema(name="status",description="状态",nullable=false)
-	@Column(name="STATUS",comment="状态",length=1L,defaultValue="1",type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Status", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Column(name="STATUS",comment="Status",length=1L,defaultValue="1",type=JdbcTypes.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
 	/**
 	 * 主键关联子表信息

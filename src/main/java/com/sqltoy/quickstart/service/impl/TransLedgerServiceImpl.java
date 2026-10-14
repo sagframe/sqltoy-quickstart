@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.sqltoy.quickstart.service.impl;
 
 import java.math.BigDecimal;
@@ -20,10 +17,9 @@ import com.sqltoy.quickstart.vo.TransLedgerVO;
 
 /**
  * @project sqltoy-quickstart
- * @description 请在此说明类的功能
+ * @description transaction ledger service (updateFetch / updateSaveFetch demos)
  * @author zhong
- * @version v1.0, Date:2021-1-13
- * @modify 2021-1-13,修改说明
+ * @version v1.0, Date:2021-01-13
  */
 @Service("transLedgerService")
 public class TransLedgerServiceImpl implements TransLedgerService {
@@ -34,16 +30,16 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 	public TransLedgerVO updateTrans(TransLedgerVO transVO) {
 		transVO.setQuantity(1);
 		transVO.setAmt(BigDecimal.ONE);
-		// lockMode.upgrade 对应for update 会等待前面的事务完成
-		// lockMode.upgrade_skiplock 则不等待前面事务完成跳过相关事务
-		// 如果lockMode不符合要求，可以在sql语句中直接写 for update xxx ,sqltoy则优先以你的优先
+		// LockMode.UPGRADE maps to "for update" and waits for the preceding transaction;
+		// LockMode.UPGRADE_NOWAIT / SKIP LOCKED variants do not wait;
+		// you can also write "for update xxx" directly in the sql — sqltoy gives yours priority
 		String sql = "select * from SQLTOY_TRANS_LEDGER t where t.order_id=?";
 		@SuppressWarnings("unchecked")
 		List<TransLedgerVO> result = (List<TransLedgerVO>) lightDao.updateFetch(new QueryExecutor(sql)
 				.values(transVO.getOrderId()).resultType(TransLedgerVO.class).lock(LockMode.UPGRADE),
 				new UpdateRowHandler() {
 					public void updateRow(ResultSet rs, int index) throws Exception {
-						// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
+						// updateFetch typically builds on existing column values; otherwise a plain update would do
 						rs.updateInt("QUANTITY", rs.getInt("QUANTITY") + transVO.getQuantity());
 						rs.updateBigDecimal("AMT", rs.getBigDecimal("AMT").add(transVO.getAmt()));
 					}
@@ -55,11 +51,12 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 	}
 
 	/**
-	 * updateSaveFetch 一般用于台账类高并发强事务(库存台账、资金台账)操作，一次交互完成多种操作
-	 * 1、根据主键查询并锁住记录
-	 * 2、记录不存在，执行save保存操作
-	 * 3、记录存在，执行数据叠加更新操作
-	 * 4、返回更新后的结果
+	 * updateSaveFetch targets strongly transactional, high-concurrency ledgers
+	 * (inventory, funds) and completes everything in one database interaction:
+	 * 1. load and lock the row by primary key
+	 * 2. insert when the record does not exist
+	 * 3. apply an incremental update when it exists
+	 * 4. return the updated result
 	 */
 	@Override
 	public TransLedgerVO updateSaveTrans(TransLedgerVO transVO) {
@@ -68,7 +65,7 @@ public class TransLedgerServiceImpl implements TransLedgerService {
 		return lightDao.updateSaveFetch(transVO, new UpdateRowHandler() {
 			@Override
 			public void updateRow(ResultSet rs, int index) throws Exception {
-				// 一般updateFetch会依托表中的现有值做一些逻辑处理,否则可以直接update
+				// updateFetch typically builds on existing column values; otherwise a plain update would do
 				rs.updateInt("QUANTITY", rs.getInt("QUANTITY") + transVO.getQuantity());
 				rs.updateBigDecimal("AMT", rs.getBigDecimal("AMT").add(transVO.getAmt()));
 			}

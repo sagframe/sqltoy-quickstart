@@ -17,15 +17,22 @@ import org.sagacity.sqltoy.config.annotation.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="ComplexpkHeadVO",description="复合主键级联操作主表")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Complex-PK cascade head table")
 @Data
 @Accessors(chain = true)
-@Entity(tableName="sqltoy_complexpk_head",comment="复合主键级联操作主表",pk_constraint="PRIMARY")
+@SqlToyEntity
+@Entity(tableName="SQLTOY_COMPLEXPK_HEAD",comment="Complex-PK cascade head table",pk_constraint="CONSTRAINT_6")
+/*---end-class-annotations-area---auto-managed---*/
 public class ComplexpkHeadVO implements Serializable {
 	
 	/**
@@ -34,39 +41,39 @@ public class ComplexpkHeadVO implements Serializable {
 	private static final long serialVersionUID = 8333098323861603937L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="transDate",description="交易日期",nullable=false)
+	@Schema(description = "Transaction date", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
+	@Column(name="TRANS_DATE",comment="Transaction date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=false)
 	private LocalDate transDate;
 
-	@Schema(name="transCode",description="业务代码",nullable=false)
+	@Schema(description = "Business code", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id
-	@Column(name="TRANS_CODE",comment="业务代码",length=30L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="TRANS_CODE",comment="Business code",length=30L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String transCode;
 
-	@Schema(name="totalCnt",description="总数量",nullable=false)
-	@Column(name="TOTAL_CNT",comment="总数量",length=12L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Total quantity", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TOTAL_CNT",comment="Total quantity",length=12L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal totalCnt;
 
-	@Schema(name="totalAmt",description="总金额",nullable=false)
-	@Column(name="TOTAL_AMT",comment="总金额",length=12L,scale=3,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Total amount", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TOTAL_AMT",comment="Total amount",length=12L,scale=3,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal totalAmt;
 
-	@Schema(name="createBy",description="创建人",nullable=false)
-	@Column(name="CREATE_BY",comment="创建人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Created by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_BY",comment="Created by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String createBy;
 
-	@Schema(name="createTime",description="创建时间",nullable=false)
-	@Column(name="CREATE_TIME",comment="创建时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime createTime;
+	@Schema(description = "Create time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="CREATE_TIME",comment="Create time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp createTime;
 
-	@Schema(name="updateBy",description="最后修改人",nullable=false)
-	@Column(name="UPDATE_BY",comment="最后修改人",length=22L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Last updated by", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_BY",comment="Last updated by",length=22L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String updateBy;
 
-	@Schema(name="updateTime",description="最后修改时间",nullable=false)
-	@Column(name="UPDATE_TIME",comment="最后修改时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime updateTime;
+	@Schema(description = "Last update time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="UPDATE_TIME",comment="Last update time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp updateTime;
 	/**
 	 * 主键关联子表信息
 	 */

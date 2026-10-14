@@ -18,16 +18,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import org.sagacity.sqltoy.model.JdbcTypes;
+import org.sagacity.sqltoy.config.annotation.SqlToyEntity;
+import java.sql.Timestamp;
+
 /**
  * @project sqltoy-quickstart
  * @author zhongxuchen
  * @version 1.0.0 
  */
-@Schema(name="TransInfo15dVO",description="支付交易流水表(15天表)")
+/*---begin-class-annotations-area---auto-managed---*/
+@Schema(description = "Payment transaction log (15-day table)")
 @Data
 @Accessors(chain = true)
+@SqlToyEntity
+@Entity(tableName="SQLTOY_TRANS_INFO_15D",comment="Payment transaction log (15-day table)",pk_constraint="CONSTRAINT_D")
 @Sharding(table = @Strategy(name = "realHisTable", fields = "transDate"))
-@Entity(tableName="sqltoy_trans_info_15d",comment="支付交易流水表(15天表)",pk_constraint="PRIMARY")
+/*---end-class-annotations-area---auto-managed---*/
 public class TransInfo15dVO implements Serializable {
 	
 	/**
@@ -36,45 +43,45 @@ public class TransInfo15dVO implements Serializable {
 	private static final long serialVersionUID = 3025156483258790277L;
 /*---begin-auto-generate-don't-update-this-area--*/	
 
-	@Schema(name="transId",description="交易ID",nullable=false)
+	@Schema(description = "Transaction ID", requiredMode = Schema.RequiredMode.REQUIRED)
 	@Id(strategy="generator",generator="org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
-	@Column(name="TRANS_ID",comment="交易ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Column(name="TRANS_ID",comment="Transaction ID",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String transId;
 
-	@Schema(name="transCode",description="交易代码",nullable=false)
-	@Column(name="TRANS_CODE",comment="交易代码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Transaction code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_CODE",comment="Transaction code",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String transCode;
 
-	@Schema(name="transChannel",description="交易渠道",nullable=false)
-	@Column(name="TRANS_CHANNEL",comment="交易渠道",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Transaction channel", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_CHANNEL",comment="Transaction channel",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String transChannel;
 
-	@Schema(name="transAmt",description="交易金额",nullable=false)
-	@Column(name="TRANS_AMT",comment="交易金额",length=14L,scale=2,type=java.sql.Types.DECIMAL,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Transaction amount", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_AMT",comment="Transaction amount",length=14L,scale=2,type=JdbcTypes.DECIMAL,nativeType="DECIMAL",nullable=false)
 	private BigDecimal transAmt;
 
-	@Schema(name="status",description="交易状态",nullable=false)
-	@Column(name="STATUS",comment="交易状态",length=1L,type=java.sql.Types.INTEGER,nativeType="DECIMAL",nullable=false)
+	@Schema(description = "Transaction status", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="STATUS",comment="Transaction status",length=1L,type=JdbcTypes.INTEGER,nativeType="DECIMAL",nullable=false)
 	private Integer status;
 
-	@Schema(name="resultCode",description="交易返回码",nullable=false)
-	@Column(name="RESULT_CODE",comment="交易返回码",length=20L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "Transaction result code", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="RESULT_CODE",comment="Transaction result code",length=20L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String resultCode;
 
-	@Schema(name="transTime",description="交易时间",nullable=false)
-	@Column(name="TRANS_TIME",comment="交易时间",length=19L,type=java.sql.Types.DATE,nativeType="DATETIME",nullable=false)
-	private LocalDateTime transTime;
+	@Schema(description = "Transaction time", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_TIME",comment="Transaction time",length=26L,scale=6,type=JdbcTypes.TIMESTAMP,nativeType="TIMESTAMP",nullable=false)
+	private Timestamp transTime;
 
-	@Schema(name="transDate",description="交易日期",nullable=false)
-	@Column(name="TRANS_DATE",comment="交易日期",length=10L,type=java.sql.Types.DATE,nativeType="DATE",nullable=false)
+	@Schema(description = "Transaction date", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="TRANS_DATE",comment="Transaction date",length=10L,type=JdbcTypes.DATE,nativeType="DATE",nullable=false)
 	private LocalDate transDate;
 
-	@Schema(name="userId",description="用户ID",nullable=false)
-	@Column(name="USER_ID",comment="用户ID",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=false)
+	@Schema(description = "User ID", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Column(name="USER_ID",comment="User ID",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=false)
 	private String userId;
 
-	@Schema(name="cardNo",description="交易卡号",nullable=true)
-	@Column(name="CARD_NO",comment="交易卡号",length=32L,type=java.sql.Types.VARCHAR,nativeType="VARCHAR",nullable=true)
+	@Schema(description = "Card number")
+	@Column(name="CARD_NO",comment="Card number",length=32L,type=JdbcTypes.VARCHAR,nativeType="CHARACTER VARYING",nullable=true)
 	private String cardNo;
 	/** default constructor */
 	public TransInfo15dVO() {
