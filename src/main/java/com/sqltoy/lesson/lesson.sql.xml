@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqltoy xmlns="http://www.sagframe.com/schema/sqltoy"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.sagframe.com/schema/sqltoy https://sagframe.github.io/schema/sqltoy.xsd">
+
+	<!-- Lesson 2: optional filters. Each #[...] condition joins the SQL only when its parameter is set -->
+	<sql id="lesson02_staff_search">
+		<value>
+		<![CDATA[
+		select t.STAFF_ID,t.STAFF_CODE,t.STAFF_NAME,t.ORGAN_ID,t.SEX_TYPE,t.ENTRY_DATE
+		from sqltoy_staff_info t
+		where t.STATUS=1
+		#[and t.ORGAN_ID in (:organIds)]
+		#[and t.STAFF_NAME like :staffName]
+		#[and t.ENTRY_DATE>=:beginDate]
+		#[and t.ENTRY_DATE<=:endDate]
+		]]>
+		</value>
+	</sql>
+
+	<!-- Lesson 3: pagination. page-optimize caches the count; @fast() pages first, then joins -->
+	<sql id="lesson03_staff_page">
+		<page-optimize parallel="true" alive-max="100" alive-seconds="120" />
+		<value>
+		<![CDATA[
+		select t1.*,t2.ORGAN_NAME
+		from @fast(
+			select t.STAFF_ID,t.STAFF_CODE,t.STAFF_NAME,t.ORGAN_ID,t.ENTRY_DATE
+			from sqltoy_staff_info t
+			where t.STATUS=1
+			#[and t.STAFF_NAME like :staffName]
+			order by t.ENTRY_DATE desc
+		) t1
+		left join sqltoy_organ_info t2 on t1.ORGAN_ID=t2.ORGAN_ID
+		]]>
+		</value>
+	</sql>
+
+	<!-- Lesson 4: cache translate. No JOIN in the SQL — organIdName and dict names are resolved in memory -->
+	<sql id="lesson04_staff_with_names">
+		<translate cache="organIdName" columns="organName" />
+		<translate cache="dictKeyName" cache-type="SEX_TYPE" columns="sexTypeName" />
+		<value>
+		<![CDATA[
+		select t.STAFF_ID,t.STAFF_NAME,t.ORGAN_ID,t.ORGAN_ID organName,t.SEX_TYPE,t.SEX_TYPE sexTypeName
+		from sqltoy_staff_info t
+		where t.STATUS=1
+		#[and t.STAFF_NAME like :staffName]
+		]]>
+		</value>
+	</sql>
+
+	<!-- Lesson 5: Oracle-style SQL running on H2. nvl(...) is auto-converted to coalesce(...)
+	     at load time (see the debug SQL log); @virtualTable() strips "from dual" on databases without DUAL -->
+	<sql id="lesson05_nvl_style">
+		<value>
+		<![CDATA[
+		select nvl(sum(t.TOTAL_AMT),0) total_amt
+		from lesson_device_order t
+		where t.STATUS=1
+		]]>
+		</value>
+	</sql>
+
+	<sql id="lesson05_virtual_table">
+		<value>
+		<![CDATA[
+		select 'HQ' organ_id,'Head Office' organ_name @virtualTable()
+		union all
+		select t.ORGAN_ID,t.ORGAN_NAME from sqltoy_organ_info t
+		]]>
+		</value>
+	</sql>
+</sqltoy>

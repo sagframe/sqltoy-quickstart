@@ -1,73 +1,68 @@
 spring:
     #将sqltoy 放于开始位置，避免很多开发者忽视了spring.sqltoy 开头，变成了sqltoy开头导致无法加载
     sqltoy:
-        # 多个路径用逗号分隔(请务必看仔细)
-        sqlResourcesDir: classpath:com/sqltoy/quickstart
+        # 多个路径用逗号分隔:quickstart 目录存放全功能 sql 示例,lesson 目录是 README 课程(Lesson 1~5)使用的 sql
+        sqlResourcesDir: classpath:com/sqltoy/quickstart,classpath:com/sqltoy/lesson
         # 默认为classpath:sqltoy-translate.xml，一致则可以不用设置
         translateConfig: classpath:sqltoy-translate.xml
-        # 针对json等特殊类型做处理(可选配置)sqltoy5.6.79.RC3 默认支持JSON/JSONB处理
-        #typeHandler: com.sqltoy.plugins.JsonTypeHandler
-        # 跨数据库函数自适配功能,默认是关闭的
-        #functionConverts: default
+        # 跨数据库函数自适配(lesson 5 演示 nvl 在 H2 上自动转换为 coalesce)
+        functionConverts: default
         # 默认为false，debug模式将打印执行sql,并自动检测sql文件更新并重新加载
         debug: true
         # 出现重复sqlId是否抛出异常终止启动,默认值为true
         #breakWhenSqlRepeat: true
         # 如果是单一类型数据库填写有利于减少一些判断(即排除类似于:mysql\oracle多种类型混用场景)
-        #dialect: mysql
+        #dialect: h2
         # 设置特定方言转调其他方言实现，如oscar-->oracle
         dialectMap:
                oscar: oracle
-        # 设置默认使用的datasource(可选配置)
-        #defaultDataSource: dataSource
-        # 设置获取数据源的策略实现类,只在多数据源场景下需要设置,DefaultDataSourceSelector是默认实现
-        #dataSourceSelector: org.sagacity.sqltoy.plugins.datasource.impl.DefaultDataSourceSelector
-        # 提供统一字段:createBy createTime updateBy updateTime 等字段补漏性(为空时)赋值(可选配置)
+        # 提供统一字段:createBy createTime updateBy updateTime 等字段补漏性(为空时)赋值
         unifyFieldsHandler: com.sqltoy.plugins.SqlToyUnifyFieldsHandler
-        # sql执行超过多长时间则进行日志输出,用于监控哪些慢sql(可选配置:默认30秒)
+        # sql执行超过多长时间则进行日志输出,用于监控哪些慢sql
         printSqlTimeoutMillis: 300000
-        # 分页最大提取数据限制，默认10万
-        #pageFetchSizeLimit: 500000
         # 数据库保留字兼容处理(原则上不要使用数据库保留字,多个用逗号分隔)
         reservedWords: maxvalue,minvalue
-        # 切换缓存类型，默认为ehcache(在sqltoy中缓存存放cache[cacheName,HashMap<key,Object[]]结构,所以缓存框架并不影响性能)
-        #cacheType: caffeine
-        #自定义缓存框架设定
-        #translateCacheManager: com.xxxx.xxxCacheImpl
         #使用sqltoy自带的RSA加解密
         securePrivateKey: classpath:mock/rsa_private.key
         securePublicKey: classpath:mock/rsa_public.key
-        # 自定义加解密实现
-        #fieldsSecureProvider: 可自行实现org.sagacity.sqltoy.plugins.secure.FieldsSecureProvider
+    datasource:
+       name: dataSource
+       type: com.alibaba.druid.pool.DruidDataSource
+       driver-class-name: org.h2.Driver
+       username: sa
+       password: ""
+       # H2 建库时执行 mock/h2 下的建表和初始化脚本(缓存翻译是首次使用时才查库,但增量更新检测线程会周期性查表,
+       # 建库即有表可彻底避免任何组件在表就绪前访问;比 spring.sql.init 的执行顺序更确定)
+       url: jdbc:h2:mem:quickstart;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:mock/h2/schema-h2.sql'\;RUNSCRIPT FROM 'classpath:mock/h2/data-h2.sql'
+       druid:
+         initial-size: 2
+         min-idle: 2
+         maxActive: 10
+         maxWait: 60000
+         validationQuery: SELECT 1
+         testWhileIdle: true
+         testOnBorrow: true
+---
+# 切换 MySQL:--spring.profiles.active=mysql (本地需有 MySQL 并先手工执行 mock/quickstart_init.sql)
+spring:
+    config:
+        activate:
+            on-profile: mysql
     datasource:
        name: dataSource
        type: com.alibaba.druid.pool.DruidDataSource
        driver-class-name: com.mysql.cj.jdbc.Driver
        username: quickstart
        password: quickstart
-       defaultAutoCommit: false
-       # 注意characterEncoding=utf-8 参数,在mysql6~7 版本下不设置like 中文时会无法匹配
-       url: jdbc:mysql://192.168.56.105:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+       url: jdbc:mysql://localhost:3306/quickstart?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
        druid:
          initial-size: 5
          min-idle: 5
          maxActive: 20
-         # 配置获取连接等待超时的时间
          maxWait: 60000
-         numTestsPerEvictionRun: 3
          keepAlive: true
-         # 切记切记不要打开poolPreparedStatements 和设置maxOpenPreparedStatements，druid这里有bug，会报关闭的语句，让你找不到错误的原因
-         #poolPreparedStatements: false
-         #注意maxOpenPreparedStatements设置>0 就等同于设置poolPreparedStatements=true
-         #maxOpenPreparedStatements: 20
-         # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
          timeBetweenEvictionRunsMillis: 60000
-         # 配置一个连接在池中最小生存的时间，单位是毫秒
          minEvictableIdleTimeMillis: 600000
-         validationQuery: SELECT 1 FROM DUAL
+         validationQuery: SELECT 1
          testWhileIdle: true
          testOnBorrow: true
-         testOnReturn: false
-         removeAbandoned: true
-         removeAbandonedTimeout: 300
-    
