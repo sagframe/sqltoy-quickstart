@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.net.ServerSocket;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +39,21 @@ class Lesson01CrudAndBusinessIdTest {
 	// starts before the Spring context: sqltoy picks the port up via spring.data.redis
 	@DynamicPropertySource
 	static void startEmbeddedRedis(DynamicPropertyRegistry registry) {
+		// let the OS pick a free port: a fixed one would turn an unrelated
+		// local service into a hard error for this lesson
+		int port;
+		try (ServerSocket probe = new ServerSocket(0)) {
+			port = probe.getLocalPort();
+		} catch (Exception e) {
+			throw new IllegalStateException("no free port for embedded redis", e);
+		}
 		try {
-			redis = new RedisServer(16379);
+			redis = new RedisServer(port);
 			redis.start();
 		} catch (Exception e) {
 			throw new IllegalStateException("failed to start embedded redis", e);
 		}
-		registry.add("spring.data.redis.port", () -> 16379);
+		registry.add("spring.data.redis.port", () -> port);
 	}
 
 	@AfterAll

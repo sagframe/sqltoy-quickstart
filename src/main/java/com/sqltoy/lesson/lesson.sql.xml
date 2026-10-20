@@ -72,17 +72,6 @@
 		</value>
 	</sql>
 
-	<!-- Lesson 6: locked row, deducted against its current value, returned — one round trip -->
-	<sql id="lesson06_ledger_deduct">
-		<value>
-		<![CDATA[
-		select t.ORDER_ID,t.QUANTITY,t.AMT
-		from lesson_trans_ledger t
-		where t.ORDER_ID=:orderId
-		]]>
-		</value>
-	</sql>
-
 	<!-- Lesson 7: pivot months into columns, two measures under each month -->
 	<sql id="lesson07_sales_pivot">
 		<value>
@@ -124,5 +113,248 @@
 			group-columns="PRODUCT" category-columns="ORDER_MONTH" />
 		<cols-chain-relative group-size="2" relative-indexs="1" start-column="1"
 			format="#.00%" />
+	</sql>
+	<!-- Lesson 8: function-conversion deep dive on H2 (functionConverts=default).
+	     Every statement is deliberately written in a "foreign" dialect (Oracle to_char/to_date,
+	     MySQL find_in_set/date_format/substr, standard trim(from ...)); sqltoy rewrites it at
+	     load time and the debug log prints the SQL that actually ran -->
+
+	<!-- 8.1 find_in_set in projection context keeps the MySQL contract: the integer element
+	     position ('b' is element 2 of 'a,b,c', not-found is 0) -->
+	<sql id="lesson08_find_in_set_projection">
+		<value>
+		<![CDATA[
+		select find_in_set('b','a,b,c') pos, find_in_set('x','a,b,c') miss @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.2 find_in_set position comparison "=2" in WHERE context (the boolean >0/=0 family
+	     is covered by 8.3) -->
+	<sql id="lesson08_find_in_set_position_cmp">
+		<value>
+		<![CDATA[
+		select t.STAFF_ID,t.STAFF_NAME,t.ORGAN_ID
+		from sqltoy_staff_info t
+		where t.STATUS=1
+		  and find_in_set(t.ORGAN_ID,'100001,100005,100007')=2
+		order by t.STAFF_ID
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.3 find_in_set boolean forms in WHERE context (>0 hit / =0 miss) -->
+	<sql id="lesson08_find_in_set_boolean">
+		<value>
+		<![CDATA[
+		select t.STAFF_ID
+		from sqltoy_staff_info t
+		where t.STATUS=1
+		  and find_in_set(t.ORGAN_ID,'100001,100005')>0
+		order by t.STAFF_ID
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.4 substr with a literal start of 0 is unified to "from the beginning" (databases
+	     disagree: mysql returns empty, oracle treats 0 as 1, pg/sqlserver cut one character
+	     short, db2 errors); negative start = last n characters, mysql contract -->
+	<sql id="lesson08_substr_zero_start">
+		<value>
+		<![CDATA[
+		select substr('hello',0,2) s0, substring('hello',0,3) s1, substr('hello',-2) s2 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.5 to_char on H2: bare HH = 24-hour by framework convention (H2 natively prints
+	     12-hour for HH, so sqltoy rewrites it to HH24), lowercase hh stays 12-hour; the
+	     quoted-literal first arg is cast to TIMESTAMP (H2 rejects varchar there) -->
+	<sql id="lesson08_to_char_24h">
+		<value>
+		<![CDATA[
+		select to_char('2026-10-20 14:30:45','yyyy-mm-dd HH:mi:ss') t24,
+		       to_char('2026-10-20 14:30:45','yyyy-mm-dd hh:mi:ss') t12 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.6 to_date on H2 becomes parsedatetime, with the Oracle format model mapped to Java
+	     tokens: mm is MONTH (MM) and mi is minute (mm) — feeding 'yyyy-mm-dd' straight to
+	     Java would silently parse the month as minutes -->
+	<sql id="lesson08_to_date_h2">
+		<value>
+		<![CDATA[
+		select to_date('2026-10-20','yyyy-mm-dd') d,
+		       to_date('2026-10-20 14:30:45','yyyy-mm-dd HH24:MI:SS') ts @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.7 date_format (MySQL syntax) with Oracle/Java-style formats: the format model is
+	     normalized to %tokens first, then mapped to H2's formatdatetime — a raw 'yyyy-mm-dd'
+	     would hit Java tokens where mm means minute -->
+	<sql id="lesson08_date_format_oracle_style">
+		<value>
+		<![CDATA[
+		select date_format('2026-10-20 14:30:45','yyyy-mm-dd') df1,
+		       date_format('2026-10-20 14:30:45','yyyy-mm-dd HH:mm:ss') df2 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 8.8 trim(from col): the keyword-less standard form that several databases reject;
+	     sqltoy rewrites it explicitly (on H2: trim(both ' ' from col)), keyword forms pass through -->
+	<sql id="lesson08_trim_from">
+		<value>
+		<![CDATA[
+		select trim(from '  padded  ') t,
+		       trim(leading 'x' from 'xxhelloxx') l,
+		       trim(trailing 'x' from 'xxhelloxx') r @virtualTable()
+		]]>
+		</value>
+	</sql>
+	<!-- Lesson 9: Lesson 8's promise — "change nothing but the datasource URL" — checked
+	     against real databases (docker-compose.yml: postgres / sqlserver / oracle / mysql).
+	     The same literal-based statements run on every dialect; each Lesson09* test class
+	     boots its own Spring context against one container, so every statement goes through
+	     the real load-time functionConverts=default pipeline of that dialect -->
+
+	<!-- 9.1 find_in_set projection context -> integer element position on every dialect
+	     (pg strpos / sqlserver charindex / oracle instr+|| / mysql native) -->
+	<sql id="lesson09_find_in_set_projection">
+		<value>
+		<![CDATA[
+		select find_in_set('b','a,b,c') pos, find_in_set('x','a,b,c') miss @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.2 find_in_set position comparison "=2" in WHERE -->
+	<sql id="lesson09_find_in_set_position_cmp">
+		<value>
+		<![CDATA[
+		select t.x
+		from (
+			select 'b' x @virtualTable()
+			union all select 'a' @virtualTable()
+			union all select 'c' @virtualTable()
+		) t
+		where find_in_set(t.x,'a,b,c')=2
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.3 substr literal start 0 unified to 1 + negative-start guard -->
+	<sql id="lesson09_substr_zero_start">
+		<value>
+		<![CDATA[
+		select substr('hello',0,2) s0, substr('hello',-2) s2 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.4 to_char: bare HH = 24-hour convention, lowercase hh = 12-hour; the quoted-literal
+	     first arg is cast/wrapped per dialect (pg ::timestamp, oracle to_date, sqlserver CAST,
+	     mysql implicit) -->
+	<sql id="lesson09_to_char_24h">
+		<value>
+		<![CDATA[
+		select to_char('2026-10-20 14:30:45','yyyy-mm-dd HH:mi:ss') t24,
+		       to_char('2026-10-20 14:30:45','yyyy-mm-dd hh:mi:ss') t12 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.5 to_date with time tokens must preserve 14:30:45 on every dialect (pg switches to
+	     to_timestamp, sqlserver maps to convert style 120, mysql to STR_TO_DATE, oracle native) -->
+	<sql id="lesson09_to_date_time">
+		<value>
+		<![CDATA[
+		select to_date('2026-10-20 14:30:45','yyyy-mm-dd HH24:MI:SS') ts @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.6 trim(from col): oracle 23ai (ORA-30000) and mysql (1064) reject the standard
+	     form, so sqltoy rewrites it to plain trim(col); sqlserver gets rtrim(ltrim(col)) -->
+	<sql id="lesson09_trim_from">
+		<value>
+		<![CDATA[
+		select trim(from '  padded  ') t @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.7 date_trunc week = ISO Monday on every dialect (sqlserver is rendered via a
+	     DATEFIRST-independent day-count anchor; DATEDIFF(week) would silently depend on
+	     SET DATEFIRST); 2026-10-20 is a Tuesday, so the week starts on 2026-10-19 -->
+	<sql id="lesson09_datetrunc_week">
+		<value>
+		<![CDATA[
+		select date_trunc('week','2026-10-20 10:00:00') wk @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.8 four-argument instr(str,sub,pos,occurrence): oracle/h2 pass through natively,
+	     sqlserver and mysql route to REGEXP_INSTR, pg 15+ to regexp_instr -->
+	<sql id="lesson09_instr_4arg">
+		<value>
+		<![CDATA[
+		select instr('hello world','o',1,2) p @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.9 left/right with zero length must be empty on every dialect: oracle/sqlite have
+	     no left/right, and the substr(str,-0) rewrite would return the WHOLE string there,
+	     so sqltoy renders substr(str,1,0) instead -->
+	<sql id="lesson09_left_right_zero">
+		<value>
+		<![CDATA[
+		select left('hello',0) l0, right('hello',0) r0, left('hello',2) l2 @virtualTable()
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.10 SQLServer-style string_agg(...) within group (order by ...): pg gets the native
+	     in-paren form string_agg(x,sep order by x), oracle listagg, mysql group_concat with
+	     ORDER BY ... SEPARATOR, sqlserver passes through -->
+	<sql id="lesson09_string_agg_within_group">
+		<value>
+		<![CDATA[
+		select string_agg(t.x,',') within group (order by t.x) xs
+		from (
+			select 'b' x @virtualTable()
+			union all select 'a' @virtualTable()
+			union all select 'c' @virtualTable()
+		) t
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.11 multi-segment group_concat(n1,n2) = per-row string concatenation, aggregated;
+	     varchar segments run on every dialect -->
+	<sql id="lesson09_group_concat_multi_segment">
+		<value>
+		<![CDATA[
+		select group_concat(t.n1,t.n2) c12
+		from (select '1' n1,'2' n2 @virtualTable()) t
+		]]>
+		</value>
+	</sql>
+
+	<!-- 9.12 numeric multi-segment group_concat: on sqlserver the segments must be joined
+	     with CONCAT (null-guarded), not "+" — the plus operator would silently ADD numbers
+	     (1+2='3' instead of '12'). Executed by the SQLServer test only (pg would need
+	     explicit casts for integer || integer) -->
+	<sql id="lesson09_group_concat_numeric">
+		<value>
+		<![CDATA[
+		select group_concat(t.n1,t.n2) c12
+		from (select 1 n1,2 n2 @virtualTable()) t
+		]]>
+		</value>
 	</sql>
 </sqltoy>

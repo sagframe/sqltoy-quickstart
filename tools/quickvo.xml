@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- standalone quickvo config (run via quickvo.bat / quickvo.sh from this directory;
+     relative paths below resolve against tools/). The Maven-plugin equivalent lives at
+     ../src/main/resources/quickvo.xml and runs from the project root. -->
+<quickvo xmlns="http://www.sagacity.com/schema/quickvo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.sagacity.com/schema/quickvo https://sagframe.github.io/schema/quickvo.xsd">
+	<property name="project.version" value="1.0.0" />
+	<property name="project.name" value="sqltoy-quickstart" />
+
+	<!-- default package prefix -->
+	<property name="project.package" value="com.sqltoy" />
+	<property name="include.schema" value="false" />
+	<!-- whether setters return this (fluent style, default true) -->
+	<property name="field.support.linked.set" value="true" />
+
+	<!-- out-of-the-box demo: the same in-memory H2 lesson schema the Maven plugin config uses
+	     (INIT=RUNSCRIPT creates the tables when the connection opens; needs the h2 jar in libs/).
+	     For your own database replace url/driver/schema/catalog and drop its JDBC driver into libs/. -->
+	<datasource name="quickstart" url="jdbc:h2:mem:quickvogen;INIT=RUNSCRIPT FROM '../src/main/resources/mock/h2/schema-h2.sql'"
+		driver="org.h2.Driver" schema="PUBLIC" catalog="" username="sa" password="" />
+	<!-- real-database example (mysql driver jar goes into libs/):
+	<datasource name="quickstart" url="jdbc:mysql://localhost:3306/sqltoy?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
+		driver="com.mysql.cj.jdbc.Driver" schema="sqltoy" catalog="" username="root" password="***" />
+	-->
+
+	<!-- dist: where the generated java sources are written (relative to this directory) -->
+	<tasks dist="../src/main/java" encoding="UTF-8">
+		<!-- active toggles the task; include/exclude are table-name patterns; api-doc selects annotations -->
+		<task active="true" author="zhongxuchen" include="^SQLTOY_\w+|^LESSON_\w+" datasource="quickstart" api-doc="swagger-v3">
+			<!-- substr removes a table-name prefix before building the class name #{subName} -->
+			<entity package="${project.package}.lesson.gen" substr="Sqltoy" name="#{subName}VO" lombok-chain="true"/>
+		</task>
+	</tasks>
+
+	<!-- primary-key strategies: identity columns get a strategy automatically, others are inferred from
+	     type and length. strategy: sequence (needs the sequence name) | assign (manual) |
+	     generator (default 22-digit | nanotime 26-digit | snowflake | uuid | redis | custom class) -->
+	<primary-key>
+		<table name="SQLTOY_\w+|LESSON_\w+|SYS_\w+" strategy="generator" generator="default" />
+	</primary-key>
+
+	<!-- type mapping: native-types matches database-specific type names; jdbc-type the java.sql.Types value
+	     used in @Column; java-type the property type; import-types extra imports -->
+	<type-mapping>
+		<!-- one example kept: map BIGINT to BigInteger (snowflake-friendly) -->
+		<sql-type native-types="BIGINT" jdbc-type="BIGINT" java-type="java.math.BigInteger" />
+	</type-mapping>
+</quickvo>

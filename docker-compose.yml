@@ -1,0 +1,44 @@
+# The four databases used by Lesson 9 (the real-database counterpart of Lesson 8).
+# Ports and credentials match the Lesson09* test classes; those tests skip themselves
+# automatically when a container is not reachable, so plain `mvn test` (Lessons 1-8,
+# H2 only) works without docker.
+#
+#   docker compose up -d     # start the databases (first pull takes a while)
+#   mvn test                 # Lessons 1-9 all run
+#   docker compose down      # stop (add -v to also drop the data volumes)
+services:
+  postgres:
+    image: postgres:18.6
+    container_name: sqltoy-postgres
+    environment:
+      POSTGRES_PASSWORD: Sqltoy@2026
+    ports:
+      - "5433:5432"
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: sqltoy-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: developer
+      MSSQL_SA_PASSWORD: Sqltoy@2026
+    ports:
+      - "1434:1433"
+
+  oracle:
+    # ~9GB image; the -slim variant works too. Lesson 9 connects to the FREEPDB1 service.
+    image: gvenzl/oracle-free:23.9-full
+    container_name: sqltoy-oracle
+    environment:
+      ORACLE_PASSWORD: Sqltoy@2026
+    ports:
+      - "1521:1521"
+
+  mysql:
+    image: mysql:latest
+    container_name: sqltoy-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Sqltoy@2026
+      MYSQL_DATABASE: sqltoy
+    ports:
+      - "3307:3306"

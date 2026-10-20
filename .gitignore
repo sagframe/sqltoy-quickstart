@@ -20,3 +20,5 @@
 hs_err_pid*
 /bin/
 .project
+# standalone quickvo jars (see tools/README.md)
+tools/libs/*.jar

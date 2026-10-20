@@ -3,10 +3,10 @@ English | [简体中文](README.zh-CN.md)
 # SqlToy Quick Start
 
 [![CI](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml)
-[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.7-blue)](https://github.com/sagframe/sagacity-sqltoy)
+[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.8-blue)](https://github.com/sagframe/sagacity-sqltoy)
 ![Java 17+](https://img.shields.io/badge/Java-17%2B-blue)
 
-**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Two [going-further lessons](#going-further) cover high-contention ledgers and management reports.
+**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Three [going-further lessons](#going-further) cover high-contention ledgers, management reports and a function-conversion deep dive; an optional [Lesson 9](#lesson-9--the-same-sql-on-real-databases) re-runs the same SQL against real docker databases.
 
 Each lesson is a JUnit test in the [`com.sqltoy.lesson`](src/test/java/com/sqltoy/lesson) package, phrased as an everyday problem rather than a feature name. The project runs on an in-memory H2 database (schema and seed data load automatically) plus an embedded Redis for Lesson 1, so it works right after cloning:
 
@@ -80,7 +80,7 @@ orderId #2 = PO26101400000002
 orderId #3 = PO26101400000003
 ```
 
-The test starts an **embedded Redis** on port 16379 — no local Redis install needed. sqltoy only requires a bean named `redisTemplate` (auto-configured by `spring-boot-starter-data-redis`); the application itself starts fine without a reachable Redis until keys are actually generated.
+The test starts an **embedded Redis** on an automatically chosen free port — no local Redis install needed, and a busy port can never break the lesson. sqltoy only requires a bean named `redisTemplate` (auto-configured by `spring-boot-starter-data-redis`); the application itself starts fine without a reachable Redis until keys are actually generated.
 
 🔗 Deep dive: [Object CRUD](https://sagframe.github.io/sqltoy-docs/#/en/crud/sqltoy_crud) · [Primary key strategies](https://sagframe.github.io/sqltoy-docs/#/en/primarykey/sqltoy_primarykey) · [Generating entities from a database: quickvo](https://sagframe.github.io/sqltoy-docs/#/en/prepare/quickvo)
 
@@ -275,7 +275,7 @@ Change nothing but the datasource URL and these statements keep working — this
 
 ## Going further
 
-Two more lessons for the problems that show up after the basics: high-contention ledgers and management reports. Same format, same runnable tests.
+Three more lessons for the problems that show up after the basics: high-contention ledgers, management reports, and the function-conversion machinery behind Lesson 5. Same format, same runnable tests.
 
 ### Lesson 6 — Race-proof ledgers in one round-trip
 
@@ -344,11 +344,40 @@ month-over-month (pivot + relative columns):
 
 🔗 Deep dive: [Complex queries — pivot / summary / relative](https://sagframe.github.io/sqltoy-docs/#/en/query/sqltoy_complex_query)
 
+### Lesson 8 — Function conversion deep dive
+
+Lesson 5 showed `nvl → coalesce`. Lesson 8 widens the lens: statements deliberately written in a "foreign" dialect — MySQL's `find_in_set`, Oracle's `to_char`/`to_date`, standard `trim(from ...)` — all run on the zero-install H2 database, because `functionConverts=default` rewrites them at load time ([`Lesson08FunctionConvertTest`](src/test/java/com/sqltoy/lesson/Lesson08FunctionConvertTest.java)). What the debug log shows being executed:
+
+```text
+find_in_set('b','a,b,c')             -> a position expression returning 2 (MySQL contract kept)
+substr('hello',0,2)                  -> substring('hello',1,2) = 'he'  (literal start 0 unified)
+to_char('…','yyyy-mm-dd HH:mi:ss')   -> to_char(CAST(… AS TIMESTAMP),'yyyy-mm-dd HH24:mi:ss')
+to_date('2026-10-20','yyyy-mm-dd')   -> parsedatetime('2026-10-20','yyyy-MM-dd')  (mm = month!)
+trim(from '  padded  ')              -> trim(both ' ' from '  padded  ')
+```
+
+Conventions worth memorizing: in format models bare `HH` is 24-hour and lowercase `hh` is 12-hour, `mm` is month and `mi` is minute; `find_in_set` returns the integer element position in a select list and accepts both boolean (`>0`) and position (`=2`) comparisons in WHERE.
+
+🔗 Deep dive: [Dialect adaptation & function conversion](https://sagframe.github.io/sqltoy-docs/#/en/dialect/sqltoy_function)
+
 ---
 
 ## Using a real database
 
 Everything runs on the in-memory H2 database by default, so the project works right after cloning. To connect a real database instead: add its JDBC driver to `pom.xml`, point `spring.datasource` in [`application.yml`](src/main/resources/application.yml) at it, and create the demo tables — [`mock/h2/schema-h2.sql`](src/main/resources/mock/h2/schema-h2.sql) holds the full DDL (translate it to your database's dialect, or let [quickvo](#generate-entities-from-the-database-quickvo) reverse-engineer your own schema). sqltoy adapts to 25 dialects automatically (that is what Lesson 5 demonstrates).
+
+### Lesson 9 — The same SQL on real databases
+
+Lesson 8 runs on H2; Lesson 9 proves the "change nothing but the datasource URL" promise against four real databases. [`docker-compose.yml`](docker-compose.yml) defines them (PostgreSQL, SQL Server, Oracle 23ai, MySQL — ports and credentials match the tests):
+
+```bash
+docker compose up -d    # first pull takes a while (the Oracle image is ~9 GB)
+mvn test                # the Lesson09* tests now run against the real databases
+```
+
+Each [`Lesson09*`](src/test/java/com/sqltoy/lesson) test class boots its own Spring context against one container; the statements are literal-based, so no schema seeding is needed, and a class skips itself when its container is not running — plain `mvn test` stays green without docker. The debug log prints each dialect's converted SQL, e.g. `trim(from '  padded  ')` becomes `trim('  padded  ')` on Oracle/MySQL (both reject the standard form) and `rtrim(ltrim(…))` on SQL Server; `date_trunc('week',…)` becomes `TRUNC(…,'IW')` on Oracle and a DATEFIRST-independent `DATEADD/DATEDIFF` anchor on SQL Server; `string_agg(…) within group (…)` becomes the native in-paren `string_agg(x,',' order by x)` on PostgreSQL.
+
+🔗 Deep dive: [Dialect adaptation & function conversion](https://sagframe.github.io/sqltoy-docs/#/en/dialect/sqltoy_function)
 
 ### Generate entities from the database (quickvo)
 
@@ -363,7 +392,7 @@ mvn quickvo:quickvo
 What the output looks like — the generated [`StaffInfoVO`](src/main/java/com/sqltoy/lesson/gen/StaffInfoVO.java):
 
 ```java
-@Generated by quickvo-maven-plugin 2.0.2
+@Generated by quickvo-maven-plugin 2.0.3
 @Data
 @Accessors(chain = true)
 @SqlToyEntity
@@ -380,7 +409,7 @@ public class StaffInfoVO implements Serializable {
 }
 ```
 
-In a real project you point the datasource in [`quickvo.xml`](src/main/resources/quickvo.xml) at your own database — typically a legacy one you are migrating — add its JDBC driver, and run the same command. [`GeneratedEntityTest`](src/test/java/com/sqltoy/lesson/GeneratedEntityTest.java) proves the generated code is fully functional: CRUD through a generated VO works out of the box, including the primary-key generator and audit-field auto-fill.
+In a real project you point the datasource in [`quickvo.xml`](src/main/resources/quickvo.xml) at your own database — typically a legacy one you are migrating — add its JDBC driver, and run the same command. Prefer the standalone tool without Maven? See the [`tools/`](tools) directory. [`GeneratedEntityTest`](src/test/java/com/sqltoy/lesson/GeneratedEntityTest.java) proves the generated code is fully functional: CRUD through a generated VO works out of the box, including the primary-key generator and audit-field auto-fill.
 
 🔗 Deep dive: [quickvo](https://sagframe.github.io/sqltoy-docs/#/en/prepare/quickvo) · [quickvo-maven-plugin](https://sagframe.github.io/sqltoy-docs/#/en/prepare/quickvo_plugin)
 
@@ -390,7 +419,9 @@ In a real project you point the datasource in [`quickvo.xml`](src/main/resources
 src/main/java/com/sqltoy/lesson/     Hand-written lesson entities, DTO and lesson.sql.xml (start here)
 src/main/java/com/sqltoy/lesson/gen/ quickvo-generated exhibit: the same tables, generated code
 src/main/resources/mock/h2/          H2 schema (with comments) + seed data
-src/test/java/com/sqltoy/lesson/     Lesson01–Lesson05 (runnable in any IDE)
+src/test/java/com/sqltoy/lesson/     Lesson01–Lesson09 (runnable in any IDE)
+tools/                               Standalone quickvo setup (no Maven needed)
+docker-compose.yml                   The four real databases behind Lesson 9 (optional)
 ```
 
 ## Learn more

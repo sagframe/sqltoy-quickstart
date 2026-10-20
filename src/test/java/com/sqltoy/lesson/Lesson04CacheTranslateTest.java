@@ -3,6 +3,7 @@ package com.sqltoy.lesson;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -40,5 +41,22 @@ class Lesson04CacheTranslateTest {
 		assertEquals("R&D Center", rows.get(0).getOrganName());
 		assertEquals("Female", rows.get(0).getSexTypeName());
 		assertTrue(rows.stream().anyMatch(r -> "Male".equals(r.getSexTypeName())));
+	}
+
+	@Test
+	void cacheApiFeedsDropdowns() {
+		// the same caches are also a plain API — this is how front-end select / checkbox /
+		// suggest components get their options without a database round trip per request
+		// (see the "other cache usages" section of the cache-translate doc)
+		HashMap<String, Object[]> organCache = lightDao.getTranslateCache("organIdName", null);
+		System.out.println("organIdName cache entries: " + organCache.size());
+		assertEquals(3, organCache.size());
+		// value = the cache sql row: [ORGAN_ID, ORGAN_NAME]
+		assertEquals("R&D Center", organCache.get("100005")[1]);
+
+		// dictionary-style caches take the type parameter
+		HashMap<String, Object[]> sexCache = lightDao.getTranslateCache("dictKeyName", "SEX_TYPE");
+		assertEquals(2, sexCache.size());
+		assertEquals("Female", sexCache.get("F")[1]);
 	}
 }
