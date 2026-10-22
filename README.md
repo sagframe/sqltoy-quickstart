@@ -6,7 +6,7 @@ English | [简体中文](README.zh-CN.md)
 [![SqlToy](https://img.shields.io/badge/SqlToy-6.0.8-blue)](https://github.com/sagframe/sagacity-sqltoy)
 ![Java 17+](https://img.shields.io/badge/Java-17%2B-blue)
 
-**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Three [going-further lessons](#going-further) cover high-contention ledgers, management reports and a function-conversion deep dive; an optional [Lesson 9](#lesson-9--the-same-sql-on-real-databases) re-runs the same SQL against real docker databases.
+**Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Four [going-further lessons](#going-further) cover high-contention ledgers, management reports, a function-conversion deep dive and lambda conditions; an optional [Lesson 9](#lesson-9--the-same-sql-on-real-databases) re-runs the same SQL against real docker databases.
 
 Each lesson is a JUnit test in the [`com.sqltoy.lesson`](src/test/java/com/sqltoy/lesson) package, phrased as an everyday problem rather than a feature name. The project runs on an in-memory H2 database (schema and seed data load automatically) plus an embedded Redis for Lesson 1, so it works right after cloning:
 
@@ -360,6 +360,39 @@ Conventions worth memorizing: in format models bare `HH` is 24-hour and lowercas
 
 🔗 Deep dive: [Dialect adaptation & function conversion](https://sagframe.github.io/sqltoy-docs/#/en/dialect/sqltoy_function)
 
+### Lesson 10 — Lambda conditions: Lesson 2's filters as code
+
+Lesson 2 wrote optional filters as `#[...]` in XML; the lambda API expresses the same conditions with entity getter references (`StaffMember::getStatus`) — column names are checked against the entity at assembly time, and every value still binds through a JDBC `?` ([`Lesson10LambdaQueryTest`](src/test/java/com/sqltoy/lesson/Lesson10LambdaQueryTest.java)). Terminals do the work: `find / getOne / findPage / count / exists` for queries, `set / setExpr` for updates — and calling a join step (`leftJoin(...).on(...)`) switches the same builder to a LEFT JOIN without changing the entry point:
+
+```java
+List<StaffMember> rows = lightDao.lambdaQuery(StaffMember.class)
+        .leftJoin(DeviceOrder.class)
+        .on(StaffMember::getOrganId, DeviceOrder::getOrganId)
+        .eq(StaffMember::getStatus, 1)
+        .eq(DeviceOrder::getDeviceType, "SERVER")
+        .find();
+```
+
+Guard rails included: `getOne()` throws instead of silently returning row 1 when several match, and an update with no where condition throws unless you state `.matchAll()`.
+
+The wildcard demo — the same search-box value, two intents (`likeExact` arrived in 6.0.9; rows are `100%OFF` and `100XOFF`):
+
+```java
+.like(DeviceOrder::getBuyer, "100%")       // % is a wildcard pattern -> 2 rows
+.likeExact(DeviceOrder::getBuyer, "100%")  // % is a literal          -> 1 row
+```
+
+Expression updates let the database do the math on the current value — no read-modify-write race:
+
+```java
+lightDao.lambdaUpdate(DeviceOrder.class)
+        .setExpr(DeviceOrder::getTotalAmt, "totalAmt * ?", new BigDecimal("1.1"))
+        .eq(DeviceOrder::getOrderId, "EXPR-01")
+        .update();
+```
+
+🔗 Deep dive: [Lambda queries and updates](https://sagframe.github.io/sqltoy-docs/#/en/query/lambda_query)
+
 ---
 
 ## Using a real database
@@ -419,7 +452,7 @@ In a real project you point the datasource in [`quickvo.xml`](src/main/resources
 src/main/java/com/sqltoy/lesson/     Hand-written lesson entities, DTO and lesson.sql.xml (start here)
 src/main/java/com/sqltoy/lesson/gen/ quickvo-generated exhibit: the same tables, generated code
 src/main/resources/mock/h2/          H2 schema (with comments) + seed data
-src/test/java/com/sqltoy/lesson/     Lesson01–Lesson09 (runnable in any IDE)
+src/test/java/com/sqltoy/lesson/     Lesson01–Lesson10 (runnable in any IDE)
 tools/                               Standalone quickvo setup (no Maven needed)
 docker-compose.yml                   The four real databases behind Lesson 9 (optional)
 ```
