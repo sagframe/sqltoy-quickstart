@@ -3,7 +3,7 @@ English | [简体中文](README.zh-CN.md)
 # SqlToy Quick Start
 
 [![CI](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml)
-[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.8-blue)](https://github.com/sagframe/sagacity-sqltoy)
+[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.9-blue)](https://github.com/sagframe/sagacity-sqltoy)
 ![Java 17+](https://img.shields.io/badge/Java-17%2B-blue)
 
 **Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Four [going-further lessons](#going-further) cover high-contention ledgers, management reports, a function-conversion deep dive and lambda conditions; an optional [Lesson 9](#lesson-9--the-same-sql-on-real-databases) re-runs the same SQL against real docker databases.
