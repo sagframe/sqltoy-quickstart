@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
 		<sqltoy.version>6.0.9</sqltoy.version>
-		<swagger-annotations.version>2.2.49</swagger-annotations.version>
+		<swagger-annotations.version>2.2.55</swagger-annotations.version>
 	</properties>
 	<dependencies>
 		<!-- Lombok: used by entities and generated code -->
