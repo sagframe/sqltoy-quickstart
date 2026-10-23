@@ -80,6 +80,7 @@
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
+			<version>1.18.15</version>
 		</dependency>
 		<!-- @Schema annotations on quickvo-generated VOs -->
 		<dependency>
