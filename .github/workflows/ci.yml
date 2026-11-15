@@ -19,4 +19,8 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
       - name: Run tests
-        run: mvn -B test
+        # runOrder=alphabetical：钉死测试类执行顺序（Lesson01 先于 Lesson10 初始化 redis 主键生成器）。
+        # 背景：sqltoy ≤6.0.10 的主键生成器实例缓存是 JVM 级静态，测试类顺序变化会串用错误的
+        # redis 连接工厂（见 sagacity-sqltoy 6.0.11 修复）；默认 filesystem 顺序随 OS/checkout 漂移。
+        # bump 到 6.0.11 后顺序不再敏感，此参数可移除（保留亦无害，确定性是好实践）。
+        run: mvn -B test -Dsurefire.runOrder=alphabetical
