@@ -71,9 +71,9 @@ class Lesson10NewFeatures61Test {
 
 	@Test
 	void lambdaTranslatesFullModel() {
-		// full Translate model — same parameters as EntityQuery/QueryExecutor
+		// full Translate model: constructor + setters, supports cacheType and more
 		List<StaffMember> rows = lightDao.lambdaQuery(StaffMember.class)
-			 .translates(Translate.of("organIdName", "organId", "organName"))
+			 .translates(new Translate("organIdName").setKeyColumn("organId").setColumn("organName"))
 			 .like(StaffMember::getStaffName, "Chen")
 			 .find();
 		assertEquals(2, rows.size());
