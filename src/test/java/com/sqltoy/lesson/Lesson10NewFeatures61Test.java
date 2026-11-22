@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.sagacity.sqltoy.dao.LightDao;
-import org.sagacity.sqltoy.config.annotation.Translate;
+import org.sagacity.sqltoy.config.model.Translate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.support.TransactionTemplate;
