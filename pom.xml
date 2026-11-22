@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
-		<sqltoy.version>6.0.11</sqltoy.version>
+		<sqltoy.version>6.0.12</sqltoy.version>
 		<swagger-annotations.version>2.2.55</swagger-annotations.version>
 	</properties>
 	<dependencies>
