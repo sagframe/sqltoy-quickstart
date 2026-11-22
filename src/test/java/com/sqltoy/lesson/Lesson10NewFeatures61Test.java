@@ -53,7 +53,10 @@ class Lesson10NewFeatures61Test {
 			 .eq(StaffMember::getSexType, "F")
 			 .find();
 		assertTrue(rows.size() >= 2);
-		rows.forEach(r -> assertEquals("R&D Center", r.getOrganName()));
+		// organName resolved purely in memory from the organIdName cache
+		rows.forEach(r -> assertNotNull(r.getOrganName(),
+				"organName must be translated, got null for organId=" + r.getOrganId()));
+		assertTrue(rows.stream().anyMatch(r -> "R&D Center".equals(r.getOrganName())));
 	}
 
 	@Test
@@ -61,7 +64,7 @@ class Lesson10NewFeatures61Test {
 		// same-column in-place translation: the column's raw value is the cache key
 		// and is replaced by the translated value (no extra column added)
 		List<StaffMember> rows = lightDao.lambdaQuery(StaffMember.class)
-			 .translate("dictKeyName", StaffMember::getSexTypeName)
+			 .translates(new Translate("dictKeyName").setCacheType("SEX_TYPE").setColumn("sexTypeName"))
 			 .eq(StaffMember::getStatus, 1)
 			 .find();
 		// every SEX_TYPE code (M/F) has become its label in place
