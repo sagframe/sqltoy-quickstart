@@ -3,7 +3,7 @@ English | [简体中文](README.zh-CN.md)
 # SqlToy Quick Start
 
 [![CI](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/sagframe/sqltoy-quickstart/actions/workflows/ci.yml)
-[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.11-blue)](https://github.com/sagframe/sagacity-sqltoy)
+[![SqlToy](https://img.shields.io/badge/SqlToy-6.0.12-blue)](https://github.com/sagframe/sagacity-sqltoy)
 ![Java 17+](https://img.shields.io/badge/Java-17%2B-blue)
 
 **Five runnable lessons that take you from CRUD to cross-database SQL — with nothing to install.** Four [going-further lessons](#going-further) cover high-contention ledgers, management reports, a function-conversion deep dive and lambda conditions; an optional [Lesson 9](#lesson-9--the-same-sql-on-real-databases) re-runs the same SQL against real docker databases.
@@ -392,6 +392,42 @@ lightDao.lambdaUpdate(DeviceOrder.class)
 ```
 
 🔗 Deep dive: [Lambda queries and updates](https://sagframe.github.io/sqltoy-docs/#/en/query/lambda_query)
+
+---
+
+### Lesson 11 — 6.0.12 highlights: lambda cache translate & entity-style updateFetch
+
+Two 6.0.12 features, phrased as everyday problems ([`Lesson10NewFeatures61Test`](src/test/java/com/sqltoy/lesson/Lesson10NewFeatures61Test.java)).
+
+**Per-query cache translation on lambda queries.** Lesson 4 resolved `organId → organName` through the `organIdName` cache; back then the declaration lived on the SQL or the `@Translate` annotation. 6.0.12 lets a single lambda query declare its own translates — no JOIN, no annotation, and the key column is appended to the select list automatically:
+
+```java
+// key field translated into target field (auto "ORGAN_ID AS ORGAN_NAME")
+List<StaffMember> rows = lightDao.lambdaQuery(StaffMember.class)
+        .translate("organIdName", StaffMember::getOrganId, StaffMember::getOrganName)
+        .eq(StaffMember::getSexType, "F")
+        .find();
+
+// same-column in-place translation: the column's raw value is the cache key
+lightDao.lambdaQuery(StaffMember.class)
+        .translates(new Translate("dictKeyName").setCacheType("SEX_TYPE")
+                .setKeyColumn("sexType").setColumn("sexTypeName"))
+        .eq(StaffMember::getStatus, 1)
+        .find();
+```
+
+**Entity-style `updateFetch`.** Lesson 6 locked ledgers with an sql-based `updateFetch`. When the row is located by its primary key (or unique props), the 6.0.12 object form needs no sql at all — lock, validate, mutate the entity, get it back in one round trip. A missing row returns `null` and is **not** inserted (that is `updateSaveFetch`'s job):
+
+```java
+TransLedger stock = lightDao.updateFetch(probe, (entity, rowIndex) -> {
+    if (entity.getQuantity() < 1) {
+        throw new IllegalStateException("quantity underflow"); // rolls back
+    }
+    entity.setQuantity(entity.getQuantity() - 1);
+});
+```
+
+🔗 Deep dive: [Lambda translate](https://sagframe.github.io/sqltoy-docs/#/query/lambda_query) · [updateFetch family](https://sagframe.github.io/sqltoy-docs/#/crud/sqltoy_crud)
 
 ---
 
