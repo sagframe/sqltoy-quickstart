@@ -64,7 +64,7 @@ class Lesson10NewFeatures61Test {
 		// same-column in-place translation: the column's raw value is the cache key
 		// and is replaced by the translated value (no extra column added)
 		List<StaffMember> rows = lightDao.lambdaQuery(StaffMember.class)
-			 .translates(new Translate("dictKeyName").setCacheType("SEX_TYPE").setColumn("sexTypeName"))
+			 .translates(new Translate("dictKeyName").setCacheType("SEX_TYPE").setKeyColumn("sexType").setColumn("sexTypeName"))
 			 .eq(StaffMember::getStatus, 1)
 			 .find();
 		// every SEX_TYPE code (M/F) has become its label in place
