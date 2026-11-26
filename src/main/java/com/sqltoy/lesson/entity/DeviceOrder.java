@@ -1,5 +1,6 @@
 package com.sqltoy.lesson.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,21 +15,24 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * Lesson 1: Redis-based business primary key.
+ * 第 1 课：基于 Redis 的业务主键。
  *
- * The key is composed as signature + date + zero-padded sequence, e.g.
- * "PO" + "261014" + "00000001" = PO26101400000001. The sequence comes from a
- * Redis INCR counter (SQLTOY_GL_ID:tableName:signature), so it is unique and
- * strictly increasing across all application nodes.
+ * <p>主键由 前缀 + 日期 + 左补零序列号 组成，例如
+ * <p>"PO" + "261014" + "00000001" = PO26101400000001。序列来自 Redis INCR
+ * <p>计数器（<code>SQLTOY_GL_ID:tableName:signature</code），因此在所有应用节点间唯一且严格递增。
  */
 @Data
 @Accessors(chain = true)
 @Entity(tableName = "lesson_device_order")
 public class DeviceOrder implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
-	// @BusinessId on the @Id field: the primary key IS the business key
+	/**
+	 * 订单 ID
+	 * <p><code>@BusinessId</code> 在 <code>@Id</code> 字段上：主键就是业务主键
+	 */
 	@Id
 	@BusinessId(generator = "org.sagacity.sqltoy.plugins.id.impl.RedisIdGenerator", signature = "PO@df(yyMMdd)", length = 16)
 	@Column(name = "ORDER_ID", length = 16)

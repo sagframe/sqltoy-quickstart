@@ -1,5 +1,6 @@
 package com.sqltoy.lesson.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,15 +14,16 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * Hand-written entity for the lessons — no code generator required.
- * The 22-digit primary key is assigned by DefaultIdGenerator when left null.
+ * 课程用手写实体 — 无需代码生成器。
+ * 主键留空时，由 DefaultIdGenerator 生成 22 位主键。
  */
 @Data
 @Accessors(chain = true)
 @Entity(tableName = "sqltoy_staff_info")
 public class StaffMember implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	@Id(strategy = "generator", generator = "org.sagacity.sqltoy.plugins.id.impl.DefaultIdGenerator")
 	@Column(name = "STAFF_ID", length = 22)
