@@ -13,6 +13,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
+		<!-- 1.18.48 is the first Lombok release with JDK 27 support -->
+		<lombok.version>1.18.48</lombok.version>
 		<sqltoy.version>6.0.14</sqltoy.version>
 		<swagger-annotations.version>2.2.55</swagger-annotations.version>
 		<h2.version>2.5.252</h2.version>
