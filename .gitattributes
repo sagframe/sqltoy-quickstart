@@ -1,0 +1,28 @@
+# Normalize line endings in the repository; keep binary files untouched.
+# After the first commit with this file, run: git add --renormalize .
+* text=auto
+
+# Text sources and configuration use LF in the repository
+*.java       text eol=lf
+*.xml        text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.properties text eol=lf
+*.sql        text eol=lf
+*.md         text eol=lf
+*.sh         text eol=lf
+*.json       text eol=lf
+
+# Windows scripts keep CRLF
+*.bat        text eol=crlf
+*.cmd        text eol=crlf
+
+# Binaries
+*.jar        binary
+*.war        binary
+*.zip        binary
+*.jpg        binary
+*.jpeg       binary
+*.png        binary
+*.gif        binary
+*.p12        binary

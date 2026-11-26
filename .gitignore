@@ -1,14 +1,10 @@
-# Compiled class file
-*.class
-.classpath
-.settings
-# Log file
-*.log
+# ---- Build output -------------------------------------------------------
 /target/
-# BlueJ files
-*.ctxt
+/bin/
+out/
 
-# Package Files #
+# ---- Compiled artifacts ------------------------------------------------
+*.class
 *.war
 *.nar
 *.ear
@@ -16,9 +12,32 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# ---- Logs and crash dumps ---------------------------------------------
+*.log
 hs_err_pid*
-/bin/
+replay_pid*
+
+# ---- BlueJ -------------------------------------------------------------
+*.ctxt
+
+# ---- IDE metadata (the project is Maven-native; IDE files are local) ---
+# Eclipse
+.classpath
 .project
-# standalone quickvo jars (see tools/README.md)
+.settings/
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+# VS Code
+.vscode/
+# NetBeans
+nbproject/
+
+# ---- OS metadata -------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ---- Standalone quickvo jars (see tools/README.md) ---------------------
 tools/libs/*.jar
